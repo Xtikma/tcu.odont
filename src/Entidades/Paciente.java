@@ -14,6 +14,7 @@ public class Paciente {
     private int idPaciente;
     private String nombre;
     private String primerApellido;
+    private String prueba;
     
     
 }
