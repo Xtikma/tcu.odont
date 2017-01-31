@@ -3,6 +3,7 @@ package Entidades;
 
 public class Paciente {
     
+    private int id;
     private String fechaNacimiento;
     private String nombre;
     private String primerApellido;
@@ -15,8 +16,9 @@ public class Paciente {
     private boolean primerIngreso;
     private boolean eliminado;
 
-    public Paciente(String fechaNacimiento, String nombre, String primerApellido, String segundoApellido,
+    public Paciente(int id, String fechaNacimiento, String nombre, String primerApellido, String segundoApellido,
             String valorIdentificacion, String genero, int beca, int edad, String carne, boolean primerIngreso, boolean eliminado) {
+        this.id = id;
         this.fechaNacimiento = fechaNacimiento;
         this.nombre = nombre;
         this.primerApellido = primerApellido;
@@ -28,6 +30,14 @@ public class Paciente {
         this.carne = carne;
         this.primerIngreso = primerIngreso;
         this.eliminado = eliminado;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getFechaNacimiento() {

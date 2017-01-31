@@ -3,10 +3,20 @@ package Entidades;
 
 public class TipoIdentificacion {
     
+    private int id;
     private String nombre;
 
-    public TipoIdentificacion(String nombre) {
+    public TipoIdentificacion(int id, String nombre) {
+        this.id = id;
         this.nombre = nombre;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getNombre() {

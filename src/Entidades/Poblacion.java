@@ -3,14 +3,24 @@ package Entidades;
 
 public class Poblacion {
     
+    private int id;
     private String nombre;
     private String institucion;
     private boolean becado;
 
-    public Poblacion(String nombre, String institucion, boolean becado) {
+    public Poblacion(int id, String nombre, String institucion, boolean becado) {
+        this.id = id;
         this.nombre = nombre;
         this.institucion = institucion;
         this.becado = becado;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getNombre() {
@@ -29,7 +39,7 @@ public class Poblacion {
         this.institucion = institucion;
     }
 
-    public boolean isBecado() {
+    public boolean getBecado() {
         return becado;
     }
 
