@@ -1,28 +1,35 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package AccesoDatos;
 
-import java.sql.Connection;
+import com.mysql.jdbc.Connection;
+import com.mysql.jdbc.exceptions.MySQLDataException;
 import java.sql.DriverManager;
+import java.sql.SQLException;
 
-/**
- *
- * @author Keylor
- */
 public class ConexionBD {
-    Connection conexion = null;
-    
-    public Connection conectar(){
+
+      /* ------------------------------------------------------------------------------------------------------------------------------ 
+     NOMBRE:      Conexion
+     DESCRIPCION: Método encargado de invocar la base de datos por medio de una libreria de Java. Invocando a un usuario de la base de datos en especifico. 
+     --------------------------------------------------------------------------------------------------------------------------------*/
+    public static Connection conexion() {
+        Connection conexionDB = null;
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            conexion = DriverManager.getConnection("jdbc:mysql://localhost/sicoseo", "root", "sicoseo");
-        } catch (Exception e) {
-            System.out.println(e.getMessage() + " Hola");
+            String servidor = "jdbc:mysql://localhost:3306/sicoseo";
+            String usuario = "root";
+            String constrasena = "sicoseo";
+            conexionDB = (Connection) DriverManager.getConnection(servidor, usuario, constrasena);
+        } catch (ClassNotFoundException ex) {
+            System.out.println(ex.getMessage());
+        } catch (MySQLDataException ex) {
+            System.out.println(ex.getMessage());
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        } finally {
+            return conexionDB;
         }
-        
-        return conexion;
     }
 }
