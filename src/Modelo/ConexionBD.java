@@ -13,13 +13,13 @@ public class ConexionBD {
      DESCRIPCION: Método encargado de invocar la base de datos por medio de una libreria de Java. Invocando a un usuario de la base de datos en especifico. 
      --------------------------------------------------------------------------------------------------------------------------------*/
     public static Connection conexion() {
-        Connection dbConnection = null;
+        Connection conexionDB = null;
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            String server = "jdbc:mysql://localhost:3306/sicoseo";
-            String user = "root";
-            String password = "sicoseo";
-            dbConnection = (Connection) DriverManager.getConnection(server, user, password);
+            String servidor = "jdbc:mysql://localhost:3306/sicoseo";
+            String usuario = "root";
+            String constrasena = "sicoseo";
+            conexionDB = (Connection) DriverManager.getConnection(servidor, usuario, constrasena);
         } catch (ClassNotFoundException ex) {
             System.out.println(ex.getMessage());
         } catch (MySQLDataException ex) {
@@ -29,7 +29,7 @@ public class ConexionBD {
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         } finally {
-            return dbConnection;
+            return conexionDB;
         }
     }
 }
