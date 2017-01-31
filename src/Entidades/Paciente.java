@@ -1,22 +1,120 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package Entidades;
 
-/**
- *
- * @author Keylor
- */
 public class Paciente {
     
-    private int idPaciente;
+    private String fechaNacimiento;
     private String nombre;
     private String primerApellido;
-    private String prueba;
-    public String hghgh;
-    public String hhhh;
-    
-    
+    private String segundoApellido;
+    private String valorIdentificacion;
+    private String genero;
+    private String carne;
+    private int beca;
+    private int edad;
+    private boolean primerIngreso;
+    private boolean eliminado;
+
+    public Paciente(String fechaNacimiento, String nombre, String primerApellido, String segundoApellido,
+            String valorIdentificacion, String genero, int beca, int edad, String carne, boolean primerIngreso, boolean eliminado) {
+        this.fechaNacimiento = fechaNacimiento;
+        this.nombre = nombre;
+        this.primerApellido = primerApellido;
+        this.segundoApellido = segundoApellido;
+        this.valorIdentificacion = valorIdentificacion;
+        this.genero = genero;
+        this.beca = beca;
+        this.edad = edad;
+        this.carne = carne;
+        this.primerIngreso = primerIngreso;
+        this.eliminado = eliminado;
+    }
+
+    public String getFechaNacimiento() {
+        return fechaNacimiento;
+    }
+
+    public void setFechaNacimiento(String fechaNacimiento) {
+        this.fechaNacimiento = fechaNacimiento;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getPrimerApellido() {
+        return primerApellido;
+    }
+
+    public void setPrimerApellido(String primerApellido) {
+        this.primerApellido = primerApellido;
+    }
+
+    public String getSegundoApellido() {
+        return segundoApellido;
+    }
+
+    public void setSegundoApellido(String segundoApellido) {
+        this.segundoApellido = segundoApellido;
+    }
+
+    public String getValorIdentificacion() {
+        return valorIdentificacion;
+    }
+
+    public void setValorIdentificacion(String valorIdentificacion) {
+        this.valorIdentificacion = valorIdentificacion;
+    }
+
+    public String getGenero() {
+        return genero;
+    }
+
+    public void setGenero(String genero) {
+        this.genero = genero;
+    }
+
+    public String getCarne() {
+        return carne;
+    }
+
+    public void setCarne(String carne) {
+        this.carne = carne;
+    }
+
+    public int getBeca() {
+        return beca;
+    }
+
+    public void setBeca(int beca) {
+        this.beca = beca;
+    }
+
+    public int getEdad() {
+        return edad;
+    }
+
+    public void setEdad(int edad) {
+        this.edad = edad;
+    }
+
+    public boolean getPrimerIngreso() {
+        return primerIngreso;
+    }
+
+    public void setPrimerIngreso(boolean primerIngreso) {
+        this.primerIngreso = primerIngreso;
+    }
+
+    public boolean getEliminado() {
+        return eliminado;
+    }
+
+    public void setEliminado(boolean eliminado) {
+        this.eliminado = eliminado;
+    }
 }
