@@ -81,13 +81,18 @@ public class ProcedimientoConsulta {
     public void setCantidad(int cantidad) {
         this.cantidad = cantidad;
     }
-    
+    /***
+     * Obtiene el objeto de procedimientoConsulta
+     * @param completo se utiliza para indicar que se espera recibir
+     * @return un objeto ProcedimientoConsulta con la información almacenada
+     */
     public ProcedimientoConsulta obtenerProcedimientoConsulta(boolean completo){
         if(completo == true){
             return new ProcedimientoConsulta(consulta, procedimiento, precioHistorico, cantidad);
         }else{
             return new ProcedimientoConsulta(idConsulta, idProcedimiento, precioHistorico, cantidad);
-        }
-        
+        }        
     }
+    
+    
 }
