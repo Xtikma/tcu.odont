@@ -4,7 +4,10 @@ package AccesoDatos;
 import Entidades.TipoIdentificacion;
 import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 public class ADTipoIdentificacion {
     
@@ -41,7 +44,29 @@ public class ADTipoIdentificacion {
         }
     }
     
-    public void ConsultarTipoIdentificacion() {
-        
+    public void ConsultarTipoIdentificacion(JTable tblTipoId) {
+        try {
+            ResultSet rsTipoId;
+            
+            DefaultTableModel model = (DefaultTableModel) tblTipoId.getModel();
+            int a = model.getRowCount() - 1;
+            for (int i = a; i >= 0; i--) {
+                model.removeRow(i);
+            }
+            CallableStatement cs = conexion.prepareCall("{call consultar_tipoIdentificacion()}");
+            rsTipoId = cs.executeQuery();
+            
+            while (rsTipoId.next()) {
+                try {
+                    model.addRow(new Object[]{rsTipoId.getString(1)});
+                } catch (SQLException ex) {
+                    System.out.println("Mensaje de Error"); //Poner mensaje de error real
+                }
+            }
+            tblTipoId.setModel(model);
+            conexion.close();
+        } catch (SQLException ex) {
+            System.out.println(ex.toString()); //Poner mensaje de error real
+        }
     }
 }
