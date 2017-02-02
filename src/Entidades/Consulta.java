@@ -147,5 +147,5 @@ public class Consulta {
         this.idLugar = idLugar;
     }
     
-    
+    //me estoy hartando
 }
