@@ -96,7 +96,10 @@ public class Consulta {
     }
     
     public void agregarProcedimiento(ProcedimientoConsulta procedimiento){
-        this.listaProcedimientos.add(procedimiento);
+        if (procedimiento != null) {
+            this.listaProcedimientos.add(procedimiento);
+        }
+        
     }
 
     public Doctor getDoctor() {
