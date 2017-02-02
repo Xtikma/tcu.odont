@@ -6,8 +6,6 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
@@ -73,7 +71,7 @@ public class ADPaciente {
     
     public void ConsultarTodosPacientes(JTable tblPacientes) {
         try {
-            ResultSet rsPacientes = null;
+            ResultSet rsPacientes;
             
             DefaultTableModel model = (DefaultTableModel) tblPacientes.getModel();
             int a = model.getRowCount() - 1;
