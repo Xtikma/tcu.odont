@@ -17,24 +17,12 @@ public class Categoria {
     private String nombre;
     private ArrayList<Procedimiento> procedimientos;
 
-    /***
-     * Constructor que recibe una lista de procedimientos ya agregados
-     * @param id identificador de la categoria
-     * @param nombre nombre de la categoria
-     * @param procedimientos arraylist con procedimientos, los mismos pertenecen
-     * a la categoria en memoria
-     */
     public Categoria(int id, String nombre, ArrayList<Procedimiento> procedimientos) {
         this.id = id;
         this.nombre = nombre;
         this.procedimientos = procedimientos;
     }
 
-    /***
-     * Constructor que no recibe una lista de procedimientos
-     * @param id 
-     * @param nombre 
-     */
     public Categoria(int id, String nombre) {
         this.id = id;
         this.nombre = nombre;
