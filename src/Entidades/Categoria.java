@@ -52,6 +52,10 @@ public class Categoria {
         this.procedimientos = procedimientos;
     }
     
+    /***
+     * Agrega un procedimiento a la lista si este no llego nulo
+     * @param proc 
+     */
     public void agregarProcedimiento(Procedimiento proc){
         if (proc != null) {
             this.procedimientos.add(proc);
