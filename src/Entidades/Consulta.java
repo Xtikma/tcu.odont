@@ -27,7 +27,7 @@ public class Consulta {
     private double totalConsulta;
     private ArrayList<ProcedimientoConsulta> listaProcedimientos;
 
-    public Consulta(int idConsulta, Paciente paciente, Date fechaConsulta, double totalConsulta) {
+    public Consulta(int idConsulta, Doctor doctor, Practicante practicante, LugarAtencion lugar, Paciente paciente, Date fechaConsulta, double totalConsulta, ArrayList<ProcedimientoConsulta> listaProcedimientos) {
         this.idConsulta = idConsulta;
         this.doctor = doctor;
         this.idDoctor = doctor.getIdDoctor();
@@ -36,16 +36,24 @@ public class Consulta {
         this.lugar = lugar;
         this.idLugar = lugar.getIdLugarAtencion();
         this.paciente = paciente;
+        this.idPaciente = paciente.getId();
         this.fechaConsulta = fechaConsulta;
         this.totalConsulta = totalConsulta;
+        this.listaProcedimientos = listaProcedimientos;
     }
 
-    public Consulta(int idConsulta, int idPaciente, Date fechaConsulta, double totalConsulta) {
+    public Consulta(int idConsulta, int idDoctor, int idPracticante, int idLugar, int idPaciente, Date fechaConsulta, double totalConsulta, ArrayList<ProcedimientoConsulta> listaProcedimientos) {
         this.idConsulta = idConsulta;
+        this.idDoctor = idDoctor;
+        this.idPracticante = idPracticante;
+        this.idLugar = idLugar;
         this.idPaciente = idPaciente;
         this.fechaConsulta = fechaConsulta;
         this.totalConsulta = totalConsulta;
+        this.listaProcedimientos = listaProcedimientos;
     }
+
+    
 
     public int getIdConsulta() {
         return idConsulta;
