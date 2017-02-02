@@ -103,54 +103,6 @@ public class Consulta {
     public void agregarProcedimiento(ProcedimientoConsulta procedimiento){
         this.listaProcedimientos.add(procedimiento);
     }
-
-    public Doctor getDoctor() {
-        return doctor;
-    }
-
-    public void setDoctor(Doctor doctor) {
-        this.doctor = doctor;
-    }
-
-    public int getIdDoctor() {
-        return idDoctor;
-    }
-
-    public void setIdDoctor(int idDoctor) {
-        this.idDoctor = idDoctor;
-    }
-
-    public Practicante getPracticante() {
-        return practicante;
-    }
-
-    public void setPracticante(Practicante practicante) {
-        this.practicante = practicante;
-    }
-
-    public int getIdPracticante() {
-        return idPracticante;
-    }
-
-    public void setIdPracticante(int idPracticante) {
-        this.idPracticante = idPracticante;
-    }
-
-    public LugarAtencion getLugar() {
-        return lugar;
-    }
-
-    public void setLugar(LugarAtencion lugar) {
-        this.lugar = lugar;
-    }
-
-    public int getIdLugar() {
-        return idLugar;
-    }
-
-    public void setIdLugar(int idLugar) {
-        this.idLugar = idLugar;
-    }
     
     
 }
