@@ -27,7 +27,7 @@ public class Consulta {
     private double totalConsulta;
     private ArrayList<ProcedimientoConsulta> listaProcedimientos;
 
-    public Consulta(int idConsulta, Paciente paciente, Date fechaConsulta, double totalConsulta) {
+    public Consulta(int idConsulta, Doctor doctor, Practicante practicante, LugarAtencion lugar, Paciente paciente, Date fechaConsulta, double totalConsulta, ArrayList<ProcedimientoConsulta> listaProcedimientos) {
         this.idConsulta = idConsulta;
         this.doctor = doctor;
         this.idDoctor = doctor.getIdDoctor();
@@ -38,13 +38,18 @@ public class Consulta {
         this.paciente = paciente;
         this.fechaConsulta = fechaConsulta;
         this.totalConsulta = totalConsulta;
+        this.listaProcedimientos = listaProcedimientos;
     }
 
-    public Consulta(int idConsulta, int idPaciente, Date fechaConsulta, double totalConsulta) {
+    public Consulta(int idConsulta, int idDoctor, int idPracticante, int idLugar, int idPaciente, Date fechaConsulta, double totalConsulta, ArrayList<ProcedimientoConsulta> listaProcedimientos) {
         this.idConsulta = idConsulta;
+        this.idDoctor = idDoctor;
+        this.idPracticante = idPracticante;
+        this.idLugar = idLugar;
         this.idPaciente = idPaciente;
         this.fechaConsulta = fechaConsulta;
         this.totalConsulta = totalConsulta;
+        this.listaProcedimientos = listaProcedimientos;
     }
 
     public int getIdConsulta() {
@@ -97,54 +102,6 @@ public class Consulta {
     
     public void agregarProcedimiento(ProcedimientoConsulta procedimiento){
         this.listaProcedimientos.add(procedimiento);
-    }
-
-    public Doctor getDoctor() {
-        return doctor;
-    }
-
-    public void setDoctor(Doctor doctor) {
-        this.doctor = doctor;
-    }
-
-    public int getIdDoctor() {
-        return idDoctor;
-    }
-
-    public void setIdDoctor(int idDoctor) {
-        this.idDoctor = idDoctor;
-    }
-
-    public Practicante getPracticante() {
-        return practicante;
-    }
-
-    public void setPracticante(Practicante practicante) {
-        this.practicante = practicante;
-    }
-
-    public int getIdPracticante() {
-        return idPracticante;
-    }
-
-    public void setIdPracticante(int idPracticante) {
-        this.idPracticante = idPracticante;
-    }
-
-    public LugarAtencion getLugar() {
-        return lugar;
-    }
-
-    public void setLugar(LugarAtencion lugar) {
-        this.lugar = lugar;
-    }
-
-    public int getIdLugar() {
-        return idLugar;
-    }
-
-    public void setIdLugar(int idLugar) {
-        this.idLugar = idLugar;
     }
     
     
