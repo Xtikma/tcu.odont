@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package sicoseo;
+package Presentacion;
 
 import AccesoDatos.ConexionBD;
 import java.sql.Connection;
