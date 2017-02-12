@@ -18,39 +18,50 @@ public class ADDoctor {
 
     private final Connection conexion = ConexionBD.conexion();
 
-    public void insertarDoctor(Doctor doctor) {
+    public boolean insertarDoctor(Doctor doctor) {
         try {
-            CallableStatement cc = conexion.prepareCall("{call insertar_doctor(?,?)}");
-            cc.setString(1, doctor.getNombre());
-            cc.setBoolean(2, doctor.isEliminado());
-            cc.executeUpdate();
-
+            CallableStatement cs = conexion.prepareCall("{call insertar_doctor(?,?)}");
+            cs.setString(1, doctor.getNombre());
+            cs.setBoolean(2, doctor.isEliminado());
+            int cambio = cs.executeUpdate();
+            if (cambio > 0) {
+                return true;
+            }
         } catch (SQLException ex) {
             System.out.println(ex.toString());
         }
+        return false;
     }
     
-     public void EliminarDoctor(Doctor doctor) {
+     public boolean EliminarDoctor(Doctor doctor) {
         try {
-            CallableStatement cc = conexion.prepareCall("{call eliminar_doctor(?)}");
-            cc.setInt(1, doctor.getIdDoctor());
-            cc.executeUpdate();
+            CallableStatement cs = conexion.prepareCall("{call eliminar_doctor(?)}");
+            cs.setInt(1, doctor.getIdDoctor());
+            int cambio = cs.executeUpdate();
+            if (cambio > 0) {
+                return true;
+            }
         } catch (SQLException ex) {
             System.out.println(ex.toString());
         }
+        return false;
     }
     
      
-     public void ModificarDoctor(Doctor doctor) {
+     public boolean ModificarDoctor(Doctor doctor) {
         try {
-            CallableStatement cc = conexion.prepareCall("{call modificar_doctor(?,?,?)}");
-            cc.setInt(1, doctor.getIdDoctor());
-            cc.setString(2,doctor.getNombre());
-            cc.setBoolean(3, doctor.isEliminado());
-            cc.executeUpdate();
+            CallableStatement cs = conexion.prepareCall("{call modificar_doctor(?,?,?)}");
+            cs.setInt(1, doctor.getIdDoctor());
+            cs.setString(2,doctor.getNombre());
+            cs.setBoolean(3, doctor.isEliminado());
+            int cambio = cs.executeUpdate();
+            if (cambio > 0) {
+                return true;
+            }
         } catch (SQLException ex) {
             System.out.println(ex.toString());
         }
+        return false;
     }
     
 

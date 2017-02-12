@@ -5,7 +5,9 @@
  */
 package Presentacion;
 
+import AccesoDatos.ADPaciente;
 import AccesoDatos.ConexionBD;
+import Entidades.Paciente;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -28,15 +30,20 @@ public class Sicoseo {
         Connection csql = ConexionBD.conexion();
         Statement myStmt;
         try {
-            myStmt = csql.createStatement();
-            ResultSet myRs = myStmt.executeQuery("select * from doctor");
-            
-            while (myRs.next()) {
-            System.out.println(myRs.getString("Nombre"));
-        }
-        } catch (SQLException ex) {
+            Paciente paciente = new Paciente(5, "2000-01-25", "Pedro", "Suarez", "Piedra", "B45033", "Masculino", 5, 17, "", true, true);
+            ADPaciente ad = new ADPaciente();
+            System.out.println(ad.ModificarPaciente(paciente));
+//            myStmt = csql.createStatement();
+//            ResultSet myRs = myStmt.executeQuery("select * from doctor");
+//            
+//            while (myRs.next()) {
+//            System.out.println(myRs.getString("Nombre"));
+//        }
+        } catch (Exception ex) {
             Logger.getLogger(Sicoseo.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        
         
 //        ConexionBD cx = new ConexionBD();
 //        Connection cnx = cx.conectar();

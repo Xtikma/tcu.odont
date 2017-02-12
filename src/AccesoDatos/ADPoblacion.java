@@ -10,39 +10,51 @@ public class ADPoblacion {
     
     private final Connection conexion = ConexionBD.conexion();
     
-    public void InsertarPoblacion(Poblacion poblacion) {
+    public boolean InsertarPoblacion(Poblacion poblacion) {
         try {
             CallableStatement cs = conexion.prepareCall("{call insertar_poblacion(?,?,?)}");
             cs.setString(1, poblacion.getNombre());
             cs.setString(2, poblacion.getInstitucion());
             cs.setBoolean(3, poblacion.getBecado());
-            cs.executeUpdate();
+            int cambio = cs.executeUpdate();
+            if (cambio > 0) {
+                return true;
+            }
         } catch (SQLException ex) {
             System.out.println(ex.toString());
         }
+        return false;
     }
     
-    public void ModificarPoblacion(Poblacion poblacion) {
+    public boolean ModificarPoblacion(Poblacion poblacion) {
         try {
             CallableStatement cs = conexion.prepareCall("{call modificar_poblacion(?,?,?,?)}");
             cs.setInt(1, poblacion.getId());
             cs.setString(2, poblacion.getNombre());
             cs.setString(3, poblacion.getInstitucion());
             cs.setBoolean(4, poblacion.getBecado());
-            cs.executeUpdate();
+            int cambio = cs.executeUpdate();
+            if (cambio > 0) {
+                return true;
+            }
         } catch (SQLException ex) {
             System.out.println(ex.toString());
         }
+        return false;
     }
     
-    public void EliminarPoblacion(Poblacion poblacion) {
+    public boolean EliminarPoblacion(Poblacion poblacion) {
         try {
             CallableStatement cs = conexion.prepareCall("{call eliminar_poblacion(?)}");
             cs.setInt(1, poblacion.getId());
-            cs.executeUpdate();
+            int cambio = cs.executeUpdate();
+            if (cambio > 0) {
+                return true;
+            }
         } catch (SQLException ex) {
             System.out.println(ex.toString());
         }
+        return false;
     }
     
     public void ConsultarPoblacion() {

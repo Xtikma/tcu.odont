@@ -19,41 +19,52 @@ public class ADLugarAtencion {
     
     private final Connection conexion = ConexionBD.conexion();
     
-    public void insertarLugarAtencion( LugarAtencion lugar) {
+    public boolean insertarLugarAtencion( LugarAtencion lugar) {
         try {
-            CallableStatement cc = conexion.prepareCall("{call insertar_lugar(?,?,?)}");
-            cc.setString(1, lugar.getLugar());
-            cc.setString(2, lugar.getDescripcion());
-            cc.setBoolean(3, lugar.isEliminado());
-            cc.executeUpdate();
-
+            CallableStatement cs = conexion.prepareCall("{call insertar_lugar(?,?,?)}");
+            cs.setString(1, lugar.getLugar());
+            cs.setString(2, lugar.getDescripcion());
+            cs.setBoolean(3, lugar.isEliminado());
+            int cambio = cs.executeUpdate();
+            if (cambio > 0) {
+                return true;
+            }
         } catch (SQLException ex) {
             System.out.println(ex.toString());
         }
+        return false;
     }
     
-     public void EliminarLugarAtencion(LugarAtencion lugar) {
+     public boolean EliminarLugarAtencion(LugarAtencion lugar) {
         try {
-            CallableStatement cc = conexion.prepareCall("{call eliminar_lugar(?)}");
-            cc.setInt(1, lugar.getIdLugarAtencion());
-            cc.executeUpdate();
+            CallableStatement cs = conexion.prepareCall("{call eliminar_lugar(?)}");
+            cs.setInt(1, lugar.getIdLugarAtencion());
+            int cambio = cs.executeUpdate();
+            if (cambio > 0) {
+                return true;
+            }
         } catch (SQLException ex) {
             System.out.println(ex.toString());
         }
+        return false;
     }
      
        
-     public void ModificarLugarAtencion(LugarAtencion lugar) {
+     public boolean ModificarLugarAtencion(LugarAtencion lugar) {
         try {
-            CallableStatement cc = conexion.prepareCall("{call modificar_lugar(?,?,?,?)}");
-            cc.setInt(1, lugar.getIdLugarAtencion());
-            cc.setString(2,lugar.getLugar());
-             cc.setString(3,lugar.getDescripcion());
-            cc.setBoolean(4, lugar.isEliminado());
-            cc.executeUpdate();
+            CallableStatement cs = conexion.prepareCall("{call modificar_lugar(?,?,?,?)}");
+            cs.setInt(1, lugar.getIdLugarAtencion());
+            cs.setString(2,lugar.getLugar());
+            cs.setString(3,lugar.getDescripcion());
+            cs.setBoolean(4, lugar.isEliminado());
+            int cambio = cs.executeUpdate();
+            if (cambio > 0) {
+                return true;
+            }
         } catch (SQLException ex) {
             System.out.println(ex.toString());
         }
+        return false;
     }
      
 }

@@ -13,7 +13,7 @@ public class ADPaciente {
     
     private final Connection conexion = ConexionBD.conexion();
     
-    public void InsertarPaciente(Paciente paciente) {
+    public boolean InsertarPaciente(Paciente paciente) {
         try {
             CallableStatement cs = conexion.prepareCall("{call insertar_paciente(?,?,?,?,?,?,?,?,?,?,?,?,?)}");
             cs.setString(1, paciente.getFechaNacimiento());
@@ -29,15 +29,19 @@ public class ADPaciente {
             cs.setBoolean(11, paciente.getEliminado());
             cs.setInt(12, 0); //IdPoblacion
             cs.setInt(13, 0); //IdTipoIndentificacion
-            cs.executeUpdate();
+            int cambio = cs.executeUpdate();
+            if (cambio > 0) {
+                return true;
+            }
         } catch (SQLException ex) {
             System.out.println(ex.toString()); //Poner mensaje de error real
         }
+        return false;
     }
     
-    public void ModificarPaciente(Paciente paciente) {
+    public boolean ModificarPaciente(Paciente paciente) {
         try {
-            CallableStatement cs = conexion.prepareCall("{call insertar_paciente(?,?,?,?,?,?,?,?,?,?,?,?,?,?)}");
+            CallableStatement cs = conexion.prepareCall("{call modificar_paciente(?,?,?,?,?,?,?,?,?,?,?,?,?,?)}");
             cs.setInt(1, paciente.getId());
             cs.setString(2, paciente.getFechaNacimiento());
             cs.setInt(3, paciente.getEdad());
@@ -50,23 +54,31 @@ public class ADPaciente {
             cs.setString(10, paciente.getCarne());
             cs.setBoolean(11, paciente.getPrimerIngreso());
             cs.setBoolean(12, paciente.getEliminado());
-            cs.setInt(13, 0); //IdPoblacion
-            cs.setInt(14, 0); //IdTipoIndentificacion
-            cs.executeUpdate();
+            cs.setInt(13, 6); //IdPoblacion
+            cs.setInt(14, 2); //IdTipoIndentificacion
+            int cambio = cs.executeUpdate();
+            if (cambio > 0) {
+                return true;
+            }
         } catch (SQLException ex) {
             System.out.println(ex.toString()); //Poner mensaje de error real
         }
+        return false;
     }
     
-    public void ActivarDesactivarPaciente(Paciente paciente) {
+    public boolean ActivarDesactivarPaciente(Paciente paciente) {
         try {
             CallableStatement cs = conexion.prepareCall("{call activar_desactivar_paciente(?,?)}");
             cs.setInt(1, paciente.getId());
             cs.setBoolean(2, paciente.getEliminado());
-            cs.executeUpdate();
+            int cambio = cs.executeUpdate();
+            if (cambio > 0) {
+                return true;
+            }
         } catch (SQLException ex) {
             System.out.println(ex.toString()); //Poner mensaje de error real
         }
+        return false;
     }
     
     public void ConsultarTodosPacientes(JTable tblPacientes) {

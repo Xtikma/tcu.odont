@@ -18,39 +18,48 @@ public class ADPracticante {
 
     private final Connection conexion = ConexionBD.conexion();
 
-    public void insertaPracticante(Practicante practicante) {
+    public boolean insertaPracticante(Practicante practicante) {
         try {
-            CallableStatement cc = conexion.prepareCall("{call insertar_practicante(?,?)}");
-            cc.setString(1, practicante.getNombre());
-            cc.setBoolean(2, practicante.isEliminado());
-            cc.executeUpdate();
-
+            CallableStatement cs = conexion.prepareCall("{call insertar_practicante(?,?)}");
+            cs.setString(1, practicante.getNombre());
+            cs.setBoolean(2, practicante.isEliminado());
+            int cambio = cs.executeUpdate();
+            if (cambio > 0) {
+                return true;
+            }
         } catch (SQLException ex) {
             System.out.println(ex.toString());
         }
-
+        return false;
     }
 
-    public void EliminarPracticante(Practicante practicante) {
+    public boolean EliminarPracticante(Practicante practicante) {
         try {
-            CallableStatement cc = conexion.prepareCall("{call eliminar_practicante(?)}");
-            cc.setInt(1, practicante.getIdPracticante());
-            cc.executeUpdate();
+            CallableStatement cs = conexion.prepareCall("{call eliminar_practicante(?)}");
+            cs.setInt(1, practicante.getIdPracticante());
+            int cambio = cs.executeUpdate();
+            if (cambio > 0) {
+                return true;
+            }
         } catch (SQLException ex) {
             System.out.println(ex.toString());
         }
+        return false;
     }
 
-    public void ModificarPracticante(Practicante practicante) {
+    public boolean ModificarPracticante(Practicante practicante) {
         try {
-            CallableStatement cc = conexion.prepareCall("{call modificar_practicante(?,?,?)}");
-            cc.setInt(1, practicante.getIdPracticante());
-            cc.setString(2, practicante.getNombre());
-            cc.setBoolean(3, practicante.isEliminado());
-            cc.executeUpdate();
+            CallableStatement cs = conexion.prepareCall("{call modificar_practicante(?,?,?)}");
+            cs.setInt(1, practicante.getIdPracticante());
+            cs.setString(2, practicante.getNombre());
+            cs.setBoolean(3, practicante.isEliminado());
+            int cambio = cs.executeUpdate();
+            if (cambio > 0) {
+                return true;
+            }
         } catch (SQLException ex) {
             System.out.println(ex.toString());
         }
-
+        return false;
     }
 }
