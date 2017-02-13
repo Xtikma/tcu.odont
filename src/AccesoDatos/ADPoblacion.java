@@ -4,7 +4,10 @@ package AccesoDatos;
 import Entidades.Poblacion;
 import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ADPoblacion {
     
@@ -57,7 +60,25 @@ public class ADPoblacion {
         return false;
     }
     
-    public void ConsultarPoblacion() {
-        
+    public List<Poblacion> ConsultarPoblacion() {
+        try {
+            ResultSet rsPoblacion = null;
+            
+            CallableStatement cs = conexion.prepareCall("{call consultar_poblacion()}");
+            rsPoblacion = cs.executeQuery();
+            List <Poblacion> listaPoblacion = new ArrayList();
+            while (rsPoblacion.next()) {
+                try {
+                    listaPoblacion.add(new Poblacion(rsPoblacion.getInt(1), rsPoblacion.getString(2), rsPoblacion.getString(3), rsPoblacion.getBoolean(4)));
+                } catch (SQLException ex) {
+                    System.out.println("Mensaje de Error"); //Poner mensaje de error real
+                }
+            }
+            conexion.close();
+            return listaPoblacion;
+        } catch (SQLException ex) {
+            System.out.println(ex.toString()); //Poner mensaje de error real
+        }
+        return null;
     }
 }

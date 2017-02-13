@@ -13,7 +13,7 @@ public class ADPaciente {
     
     private final Connection conexion = ConexionBD.conexion();
     
-    public boolean InsertarPaciente(Paciente paciente) {
+    public boolean InsertarPaciente(Paciente paciente, int idPoblacion, int idTipoId) {
         try {
             CallableStatement cs = conexion.prepareCall("{call insertar_paciente(?,?,?,?,?,?,?,?,?,?,?,?,?)}");
             cs.setString(1, paciente.getFechaNacimiento());
@@ -27,8 +27,8 @@ public class ADPaciente {
             cs.setString(9, paciente.getCarne());
             cs.setBoolean(10, paciente.getPrimerIngreso());
             cs.setBoolean(11, paciente.getEliminado());
-            cs.setInt(12, 0); //IdPoblacion
-            cs.setInt(13, 0); //IdTipoIndentificacion
+            cs.setInt(12, idPoblacion); //IdPoblacion
+            cs.setInt(13, idTipoId); //IdTipoIndentificacion
             int cambio = cs.executeUpdate();
             if (cambio > 0) {
                 return true;
@@ -79,6 +79,20 @@ public class ADPaciente {
             System.out.println(ex.toString()); //Poner mensaje de error real
         }
         return false;
+    }
+    
+    public Paciente ConsultarPacientePorId(int id) {
+        try {
+            ResultSet rsPaciente = null;
+            CallableStatement cs = conexion.prepareCall("{call consultar_paciente_por_id(?)}");
+            cs.setInt(1, id);
+            rsPaciente = cs.executeQuery();
+            
+            //Paciente paciente = new Paciente(rsPaciente.getString());
+        } catch (SQLException ex) {
+            System.out.println(ex.toString()); //Poner mensaje de error real
+        }
+        return null;
     }
     
     public void ConsultarTodosPacientes(JTable tblPacientes) {

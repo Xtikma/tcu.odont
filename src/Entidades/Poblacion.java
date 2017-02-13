@@ -46,4 +46,9 @@ public class Poblacion {
     public void setBecado(boolean becado) {
         this.becado = becado;
     }
+    
+    @Override
+    public String toString() {
+        return nombre;
+    }
 }
