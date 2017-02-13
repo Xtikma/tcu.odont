@@ -12,7 +12,10 @@ package AccesoDatos;
 import Entidades.Doctor;
 import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 public class ADDoctor {
 
@@ -32,8 +35,8 @@ public class ADDoctor {
         }
         return false;
     }
-    
-     public boolean EliminarDoctor(Doctor doctor) {
+
+    public boolean EliminarDoctor(Doctor doctor) {
         try {
             CallableStatement cs = conexion.prepareCall("{call eliminar_doctor(?)}");
             cs.setInt(1, doctor.getIdDoctor());
@@ -46,13 +49,12 @@ public class ADDoctor {
         }
         return false;
     }
-    
-     
-     public boolean ModificarDoctor(Doctor doctor) {
+
+    public boolean ModificarDoctor(Doctor doctor) {
         try {
             CallableStatement cs = conexion.prepareCall("{call modificar_doctor(?,?,?)}");
             cs.setInt(1, doctor.getIdDoctor());
-            cs.setString(2,doctor.getNombre());
+            cs.setString(2, doctor.getNombre());
             cs.setBoolean(3, doctor.isEliminado());
             int cambio = cs.executeUpdate();
             if (cambio > 0) {
@@ -63,6 +65,32 @@ public class ADDoctor {
         }
         return false;
     }
-    
+
+    public void consultarDoctor(JTable TdDoctor) {
+
+        try {
+            ResultSet rsDoctores = null;
+            DefaultTableModel modelo = (DefaultTableModel) TdDoctor.getModel();
+            
+            int a = modelo.getRowCount() - 1;
+            for (int i = a; i >= 0; i--) {
+                modelo.removeRow(i);
+            }
+           
+            CallableStatement cs = conexion.prepareCall("{call consultar_doctores()}");
+            rsDoctores = cs.executeQuery();
+
+            while (rsDoctores.next()) {
+                try {
+                    modelo.addRow(new Object[]{rsDoctores.getInt(1), rsDoctores.getString(2), rsDoctores.getBoolean(3)});
+                } catch (SQLException ex) {
+                    System.out.println("Mensaje de Error"); 
+                }
+            }
+            TdDoctor.setModel(modelo);
+        } catch (SQLException ex) {
+            System.out.println(ex.toString());
+        }
+    }
 
 }
