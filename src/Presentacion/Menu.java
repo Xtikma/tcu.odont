@@ -77,19 +77,19 @@ public class Menu extends javax.swing.JFrame {
                 lbl_iconMouseReleased(evt);
             }
         });
-        panelBase.add(lbl_icon, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 0, -1, -1));
+        panelBase.add(lbl_icon, new org.netbeans.lib.awtextra.AbsoluteConstraints(535, 0, -1, -1));
 
         panelMenu.setBackground(new java.awt.Color(102, 204, 255));
         panelMenu.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Menu", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 14), new java.awt.Color(255, 255, 255))); // NOI18N
-        panelMenu.setMaximumSize(new java.awt.Dimension(1275, 150));
-        panelMenu.setMinimumSize(new java.awt.Dimension(1275, 150));
-        panelMenu.setPreferredSize(new java.awt.Dimension(1275, 150));
+        panelMenu.setMaximumSize(new java.awt.Dimension(1008, 150));
+        panelMenu.setMinimumSize(new java.awt.Dimension(1008, 150));
+        panelMenu.setPreferredSize(new java.awt.Dimension(1008, 150));
 
         javax.swing.GroupLayout panelMenuLayout = new javax.swing.GroupLayout(panelMenu);
         panelMenu.setLayout(panelMenuLayout);
         panelMenuLayout.setHorizontalGroup(
             panelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1265, Short.MAX_VALUE)
+            .addGap(0, 998, Short.MAX_VALUE)
         );
         panelMenuLayout.setVerticalGroup(
             panelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -118,13 +118,13 @@ public class Menu extends javax.swing.JFrame {
         getContentPane().add(panelBase);
         panelBase.setBounds(0, 0, 1280, 700);
 
-        lblFondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/plogo.png"))); // NOI18N
+        lblFondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/fondo.png"))); // NOI18N
         lblFondo.setText("jLabel1");
         lblFondo.setMaximumSize(new java.awt.Dimension(1280, 700));
         lblFondo.setMinimumSize(new java.awt.Dimension(1280, 700));
-        lblFondo.setPreferredSize(new java.awt.Dimension(1280, 700));
+        lblFondo.setPreferredSize(new java.awt.Dimension(1100, 600));
         getContentPane().add(lblFondo);
-        lblFondo.setBounds(0, -30, 1280, 700);
+        lblFondo.setBounds(0, -20, 1100, 600);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -150,7 +150,7 @@ public class Menu extends javax.swing.JFrame {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc="Tema">
         JFrame.setDefaultLookAndFeelDecorated(true);
-        SubstanceLookAndFeel.setSkin("org.jvnet.substance.skin.GreenMagicSkin");
+        SubstanceLookAndFeel.setSkin("org.jvnet.substance.skin.OfficeBlue2007Skin");
         //</editor-fold>
 
         /* Create and display the form */
