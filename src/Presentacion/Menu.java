@@ -5,19 +5,44 @@
  */
 package Presentacion;
 
+import Animacion.Animacion;
+import java.awt.BorderLayout;
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import org.jvnet.substance.SubstanceLookAndFeel;
+
 /**
  *
  * @author doliv
  */
 public class Menu extends javax.swing.JFrame {
 
+    //Instancias
+    private MenuPrincipal menuPrincipal;
     /**
      * Creates new form Menu
      */
     public Menu() {
         initComponents();
+        this.setLocationRelativeTo(null);
+        cambiarMenuPricipal();
     }
 
+    private void cambiarMenuPricipal(){
+        try{
+            menuPrincipal = new MenuPrincipal();
+            menuPrincipal.setSize(1000, 500);
+            menuPrincipal.setLocation(0, 0);
+            panelPrincipal.removeAll();
+            panelPrincipal.add(menuPrincipal,BorderLayout.CENTER);
+            panelPrincipal.revalidate();
+            panelPrincipal.repaint();
+        }catch( Exception ex){
+            
+        }
+        
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -27,47 +52,105 @@ public class Menu extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        panelBase = new javax.swing.JPanel();
+        lbl_icon = new javax.swing.JLabel();
+        panelMenu = new javax.swing.JPanel();
+        panelPrincipal = new javax.swing.JPanel();
+        lblFondo = new javax.swing.JLabel();
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Sistema de Control de Servicios Odontológicos");
+        setMaximumSize(new java.awt.Dimension(1100, 600));
+        setMinimumSize(new java.awt.Dimension(1100, 600));
+        setPreferredSize(new java.awt.Dimension(1100, 600));
+        getContentPane().setLayout(null);
+
+        panelBase.setMaximumSize(new java.awt.Dimension(1280, 700));
+        panelBase.setMinimumSize(new java.awt.Dimension(1280, 700));
+        panelBase.setOpaque(false);
+        panelBase.setPreferredSize(new java.awt.Dimension(1280, 700));
+        panelBase.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        lbl_icon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/bajar_drk.png"))); // NOI18N
+        lbl_icon.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                lbl_iconMouseReleased(evt);
+            }
+        });
+        panelBase.add(lbl_icon, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 0, -1, -1));
+
+        panelMenu.setBackground(new java.awt.Color(102, 204, 255));
+        panelMenu.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Menu", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 14), new java.awt.Color(255, 255, 255))); // NOI18N
+        panelMenu.setMaximumSize(new java.awt.Dimension(1275, 150));
+        panelMenu.setMinimumSize(new java.awt.Dimension(1275, 150));
+        panelMenu.setPreferredSize(new java.awt.Dimension(1275, 150));
+
+        javax.swing.GroupLayout panelMenuLayout = new javax.swing.GroupLayout(panelMenu);
+        panelMenu.setLayout(panelMenuLayout);
+        panelMenuLayout.setHorizontalGroup(
+            panelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1265, Short.MAX_VALUE)
         );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+        panelMenuLayout.setVerticalGroup(
+            panelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 124, Short.MAX_VALUE)
         );
+
+        panelBase.add(panelMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -150, -1, -1));
+
+        panelPrincipal.setOpaque(false);
+        panelPrincipal.setPreferredSize(new java.awt.Dimension(1000, 500));
+        panelPrincipal.setRequestFocusEnabled(false);
+
+        javax.swing.GroupLayout panelPrincipalLayout = new javax.swing.GroupLayout(panelPrincipal);
+        panelPrincipal.setLayout(panelPrincipalLayout);
+        panelPrincipalLayout.setHorizontalGroup(
+            panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1000, Short.MAX_VALUE)
+        );
+        panelPrincipalLayout.setVerticalGroup(
+            panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 500, Short.MAX_VALUE)
+        );
+
+        panelBase.add(panelPrincipal, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 20, -1, -1));
+
+        getContentPane().add(panelBase);
+        panelBase.setBounds(0, 0, 1280, 700);
+
+        lblFondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/plogo.png"))); // NOI18N
+        lblFondo.setText("jLabel1");
+        lblFondo.setMaximumSize(new java.awt.Dimension(1280, 700));
+        lblFondo.setMinimumSize(new java.awt.Dimension(1280, 700));
+        lblFondo.setPreferredSize(new java.awt.Dimension(1280, 700));
+        getContentPane().add(lblFondo);
+        lblFondo.setBounds(0, -30, 1280, 700);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void lbl_iconMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_iconMouseReleased
+        int posicion = lbl_icon.getY();
+        if (posicion > 0) {//Subir
+            Animacion.subir(0, -150, 2, panelMenu);
+            Animacion.subir(155, 0, 2, lbl_icon);
+            lbl_icon.setIcon(new ImageIcon(getClass().getResource("/Recursos/bajar_drk.png")));
+        }else{//Bajar
+            Animacion.bajar(-150, 0, 2, panelMenu);
+            Animacion.bajar(0, 155, 2, lbl_icon);
+            lbl_icon.setIcon(new ImageIcon(getClass().getResource("/Recursos/subir_drk.png")));
+        }
+
+    }//GEN-LAST:event_lbl_iconMouseReleased
 
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Menu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Menu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Menu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Menu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
+        //<editor-fold defaultstate="collapsed" desc="Tema">
+        JFrame.setDefaultLookAndFeelDecorated(true);
+        SubstanceLookAndFeel.setSkin("org.jvnet.substance.skin.GreenMagicSkin");
         //</editor-fold>
 
         /* Create and display the form */
@@ -79,5 +162,10 @@ public class Menu extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel lblFondo;
+    private javax.swing.JLabel lbl_icon;
+    private javax.swing.JPanel panelBase;
+    private javax.swing.JPanel panelMenu;
+    private javax.swing.JPanel panelPrincipal;
     // End of variables declaration//GEN-END:variables
 }
