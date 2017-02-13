@@ -11,9 +11,11 @@ import java.awt.Component;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
+import org.jvnet.substance.SubstanceLookAndFeel;
 
 public class VPaciente extends javax.swing.JDialog {
 
@@ -50,6 +52,7 @@ public class VPaciente extends javax.swing.JDialog {
     private void initComponents() {
 
         buttonGroup = new javax.swing.ButtonGroup();
+        jScrollBar1 = new javax.swing.JScrollBar();
         LblNombre = new javax.swing.JLabel();
         LblPApellido = new javax.swing.JLabel();
         LblSApellido = new javax.swing.JLabel();
@@ -388,25 +391,8 @@ public class VPaciente extends javax.swing.JDialog {
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(VPaciente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(VPaciente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(VPaciente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(VPaciente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
+        JFrame.setDefaultLookAndFeelDecorated(true);
+        SubstanceLookAndFeel.setSkin("org.jvnet.substance.skin.OfficeBlue2007Skin");
         //</editor-fold>
 
         /* Create and display the dialog */
@@ -457,5 +443,6 @@ public class VPaciente extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JScrollBar jScrollBar1;
     // End of variables declaration//GEN-END:variables
 }

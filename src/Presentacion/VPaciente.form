@@ -7,6 +7,8 @@
         <AuxValue name="JavaCodeGenerator_SerializeTo" type="java.lang.String" value="VPaciente_buttonGroup"/>
       </AuxValues>
     </Component>
+    <Component class="javax.swing.JScrollBar" name="jScrollBar1">
+    </Component>
   </NonVisualComponents>
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="2"/>
