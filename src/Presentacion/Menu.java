@@ -9,6 +9,8 @@ import Animacion.Animacion;
 import java.awt.BorderLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import org.jvnet.substance.SubstanceLookAndFeel;
 
 /**
@@ -19,6 +21,7 @@ public class Menu extends javax.swing.JFrame {
 
     //Instancias
     private MenuPrincipal menuPrincipal;
+    private ConfigCatProc configCP;
     /**
      * Creates new form Menu
      */
@@ -26,22 +29,8 @@ public class Menu extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         this.setResizable(false);
-        cambiarMenuPricipal();
-    }
-
-    private void cambiarMenuPricipal(){
-        try{
-            menuPrincipal = new MenuPrincipal();
-            menuPrincipal.setSize(1000, 500);
-            menuPrincipal.setLocation(0, 0);
-            panelPrincipal.removeAll();
-            panelPrincipal.add(menuPrincipal,BorderLayout.CENTER);
-            panelPrincipal.revalidate();
-            panelPrincipal.repaint();
-        }catch( Exception ex){
-            
-        }
-        
+        this.setIconImage(new ImageIcon(getClass().getResource("/Recursos/ico.png")).getImage());
+        intercambiarPaneles(1);
     }
     
     /**
@@ -82,15 +71,15 @@ public class Menu extends javax.swing.JFrame {
 
         panelMenu.setBackground(new java.awt.Color(102, 204, 255));
         panelMenu.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Menu", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 14), new java.awt.Color(255, 255, 255))); // NOI18N
-        panelMenu.setMaximumSize(new java.awt.Dimension(1008, 150));
-        panelMenu.setMinimumSize(new java.awt.Dimension(1008, 150));
-        panelMenu.setPreferredSize(new java.awt.Dimension(1008, 150));
+        panelMenu.setMaximumSize(new java.awt.Dimension(1100, 150));
+        panelMenu.setMinimumSize(new java.awt.Dimension(1100, 150));
+        panelMenu.setPreferredSize(new java.awt.Dimension(1100, 150));
 
         javax.swing.GroupLayout panelMenuLayout = new javax.swing.GroupLayout(panelMenu);
         panelMenu.setLayout(panelMenuLayout);
         panelMenuLayout.setHorizontalGroup(
             panelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 998, Short.MAX_VALUE)
+            .addGap(0, 1090, Short.MAX_VALUE)
         );
         panelMenuLayout.setVerticalGroup(
             panelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -119,7 +108,7 @@ public class Menu extends javax.swing.JFrame {
         getContentPane().add(panelBase);
         panelBase.setBounds(0, 0, 1280, 700);
 
-        lblFondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/fondo.png"))); // NOI18N
+        lblFondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/fondooff.png"))); // NOI18N
         lblFondo.setText("jLabel1");
         lblFondo.setMaximumSize(new java.awt.Dimension(1280, 700));
         lblFondo.setMinimumSize(new java.awt.Dimension(1280, 700));
@@ -144,6 +133,43 @@ public class Menu extends javax.swing.JFrame {
 
     }//GEN-LAST:event_lbl_iconMouseReleased
 
+    /**
+     * Metodo que cambia los paneles en el panel principal de la ventana
+     * @param cod numero que indica en el swicth la ventana que se necesita
+     */
+    public void intercambiarPaneles(int cod){
+        try {
+            switch(cod){
+                case 0: //Menu Principal;
+                    menuPrincipal = new MenuPrincipal();
+                    menuPrincipal.setSize(1000, 500);
+                    menuPrincipal.setLocation(0, 0);
+                    insertarPanel(menuPrincipal);
+                    break;
+                    
+                case 1://Categoria y Procedimiento
+                    configCP = new ConfigCatProc();
+                    configCP.setSize(1000, 500);
+                    configCP.setLocation(0, 0);
+                    insertarPanel(configCP);
+                    break;
+                case 2:
+            }
+        } catch (Exception e) {
+        }
+    }
+    
+    public void insertarPanel(JPanel panel){
+        try {
+            panelPrincipal.removeAll();
+            panelPrincipal.add(panel, BorderLayout.CENTER);
+            panelPrincipal.revalidate();
+            panelPrincipal.repaint();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Existe un problema al cargar la ventana", "Problema visual", JOptionPane.ERROR);
+        }
+    }
+    
     /**
      * @param args the command line arguments
      */

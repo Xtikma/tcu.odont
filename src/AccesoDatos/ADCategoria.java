@@ -65,7 +65,7 @@ public class ADCategoria {
         } catch (SQLException e) {
         }
     }
-    
+    //Editarlo -.-
     public JTable obtenerCategorias(JTable tblCategorias){
         try {
             ResultSet rsCategorias = null;
