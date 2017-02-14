@@ -130,7 +130,7 @@ public class ListaPacientes extends javax.swing.JDialog {
     
     public void consultarTodosPacientes() {
         ADPaciente bd = new ADPaciente();
-        bd.ConsultarTodosPacientes(TblDoctor);
+        bd.ConsultarTodosPacientesActivos(TblDoctor);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

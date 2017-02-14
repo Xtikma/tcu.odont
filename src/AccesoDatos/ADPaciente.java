@@ -95,16 +95,16 @@ public class ADPaciente {
         return null;
     }
     
-    public void ConsultarTodosPacientes(JTable tblPacientes) {
+    public void ConsultarTodosPacientesActivos(JTable tblPacientes) {
         try {
-            ResultSet rsPacientes = null;
+            ResultSet rsPacientes;
             
             DefaultTableModel model = (DefaultTableModel) tblPacientes.getModel();
             int a = model.getRowCount() - 1;
             for (int i = a; i >= 0; i--) {
                 model.removeRow(i);
             }
-            CallableStatement cs = conexion.prepareCall("{call consultar_pacientes()}");
+            CallableStatement cs = conexion.prepareCall("{call consultar_pacientes_activos()}");
             rsPacientes = cs.executeQuery();
             
             while (rsPacientes.next()) {
@@ -119,7 +119,7 @@ public class ADPaciente {
             tblPacientes.setModel(model);
             conexion.close();
         } catch (SQLException ex) {
-            System.out.println(ex.toString()); //Poner mensaje de error real
+            System.out.println(ex.toString()+"asdasd"); //Poner mensaje de error real
         }
     }
 }
