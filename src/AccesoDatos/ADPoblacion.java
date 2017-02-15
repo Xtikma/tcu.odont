@@ -8,6 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 
 public class ADPoblacion {
     
@@ -24,7 +25,7 @@ public class ADPoblacion {
                 return true;
             }
         } catch (SQLException ex) {
-            System.out.println(ex.toString());
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error. Detalle:\n"+ex.toString(), "ERROR", JOptionPane.ERROR_MESSAGE);
         }
         return false;
     }
@@ -41,7 +42,7 @@ public class ADPoblacion {
                 return true;
             }
         } catch (SQLException ex) {
-            System.out.println(ex.toString());
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error. Detalle:\n"+ex.toString(), "ERROR", JOptionPane.ERROR_MESSAGE);
         }
         return false;
     }
@@ -55,7 +56,7 @@ public class ADPoblacion {
                 return true;
             }
         } catch (SQLException ex) {
-            System.out.println(ex.toString());
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error. Detalle:\n"+ex.toString(), "ERROR", JOptionPane.ERROR_MESSAGE);
         }
         return false;
     }
@@ -71,13 +72,13 @@ public class ADPoblacion {
                 try {
                     listaPoblacion.add(new Poblacion(rsPoblacion.getInt(1), rsPoblacion.getString(2), rsPoblacion.getString(3), rsPoblacion.getBoolean(4)));
                 } catch (SQLException ex) {
-                    System.out.println("Mensaje de Error"); //Poner mensaje de error real
+                    JOptionPane.showMessageDialog(null, "Ha ocurrido un error. Detalle:\n"+ex.toString(), "ERROR", JOptionPane.ERROR_MESSAGE);
                 }
             }
             conexion.close();
             return listaPoblacion;
         } catch (SQLException ex) {
-            System.out.println(ex.toString()); //Poner mensaje de error real
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error. Detalle:\n"+ex.toString(), "ERROR", JOptionPane.ERROR_MESSAGE);
         }
         return null;
     }

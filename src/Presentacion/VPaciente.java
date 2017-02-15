@@ -24,16 +24,20 @@ public class VPaciente extends javax.swing.JDialog {
     private ADPaciente adPaciente = new ADPaciente();
     private ADTipoIdentificacion adTipoId = new ADTipoIdentificacion();
     private ADPoblacion adPoblacion = new ADPoblacion();
+    private boolean edicion = false;
+    private int idPacienteModificar = 0;
 
+    //<editor-fold defaultstate="collapsed" desc=" Constructor para agregar paciente ">
     public VPaciente(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
+        edicion = false;
         initComponents();
-
+        setLocationRelativeTo(null);
         JFrame.setDefaultLookAndFeelDecorated(true);
         SubstanceLookAndFeel.setSkin("org.jvnet.substance.skin.OfficeBlue2007Skin");
-
         buttonGroup.add(RbMasculino);
         buttonGroup.add(RbFemenino);
+
         RbMasculino.setSelected(true);
         RbFemenino.setSelected(false);
 
@@ -43,7 +47,78 @@ public class VPaciente extends javax.swing.JDialog {
         List<Poblacion> listaPoblacion = adPoblacion.ConsultarPoblacion();
         CbPoblacion.setModel(new DefaultComboBoxModel(listaPoblacion.toArray()));
     }
+    //</editor-fold>
 
+    //<editor-fold defaultstate="collapsed" desc=" Constructor para editar paciente ">
+    public VPaciente(java.awt.Frame parent, boolean modal, int idPaciente) {
+        super(parent, modal);
+        edicion = true;
+        idPacienteModificar = idPaciente;
+        initComponents();
+        setLocationRelativeTo(null);
+        JFrame.setDefaultLookAndFeelDecorated(true);
+        SubstanceLookAndFeel.setSkin("org.jvnet.substance.skin.OfficeBlue2007Skin");
+        buttonGroup.add(RbMasculino);
+        buttonGroup.add(RbFemenino);
+        //llenar combobox TipoIdentificación
+        List<TipoIdentificacion> listaTipoId = adTipoId.ConsultarTipoIdentificacion();
+        CbTipoId.setModel(new DefaultComboBoxModel(listaTipoId.toArray()));
+        //llenar combobox Población
+        List<Poblacion> listaPoblacion = adPoblacion.ConsultarPoblacion();
+        CbPoblacion.setModel(new DefaultComboBoxModel(listaPoblacion.toArray()));
+
+        Paciente paciente = adPaciente.ConsultarPacientePorId(idPaciente);
+        //llenar campos de texto
+        TxtNombre.setText(paciente.getNombre());
+        TxtPApellido.setText(paciente.getPrimerApellido());
+        TxtsApellido.setText(paciente.getSegundoApellido());
+        TxtIdentificacion.setText(paciente.getValorIdentificacion());
+        TxtEdad.setText(paciente.getEdad() + "");
+        TxtCarne.setText(paciente.getCarne());
+        //llenar la fecha de nacimiento
+        String texto = paciente.getFechaNacimiento();
+        if (texto == null) {
+            TxtFechaNacimiento.setEnabled(false);
+            RbNoFecha.setSelected(true);
+        } else if (texto.matches("\\d\\d\\d\\d-\\d\\d-\\d\\d")) {
+            String[] temp = texto.split("-");
+            TxtFechaNacimiento.setText(temp[2] + "-" + temp[1] + "-" + temp[0]);
+        }
+        //seleccionar el tipo de identificación
+        TipoIdentificacion tipoId = null;
+        for (TipoIdentificacion x : listaTipoId) {
+            if (paciente.getNombreTipoId().equals(x.getNombre())) {
+                tipoId = x;
+            }
+        }
+        CbTipoId.setSelectedItem(tipoId);
+        //seleccionar la población
+        Poblacion poblacion = null;
+        for (Poblacion x : listaPoblacion) {
+            if (paciente.getNombrePoblacion().equals(x.getNombre())) {
+                poblacion = x;
+            }
+        }
+        CbPoblacion.setSelectedItem(poblacion);
+        //seleccionar el sexo
+        if ((paciente.getGenero()).equals("Masculino")) {
+            RbMasculino.setSelected(true);
+            RbFemenino.setSelected(false);
+        } else {
+            RbMasculino.setSelected(false);
+            RbFemenino.setSelected(true);
+        }
+        //marcar si es becado o no
+        if (paciente.getPrimerIngreso()) {
+            RbPrimerIngreso.setSelected(true);
+        } else {
+            RbPrimerIngreso.setSelected(false);
+        }
+        //seleccionar la beca
+        CbBeca.setSelectedIndex(paciente.getBeca());
+    }
+    //</editor-fold>
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -77,7 +152,7 @@ public class VPaciente extends javax.swing.JDialog {
         PanelEstudiante = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        RdPrimerIngreso = new javax.swing.JRadioButton();
+        RbPrimerIngreso = new javax.swing.JRadioButton();
         TxtCarne = new javax.swing.JTextField();
         CbBeca = new javax.swing.JComboBox<>();
         BtnCancelar = new javax.swing.JButton();
@@ -140,7 +215,7 @@ public class VPaciente extends javax.swing.JDialog {
 
         jLabel2.setText("Beca:");
 
-        RdPrimerIngreso.setText("Primer Ingreso");
+        RbPrimerIngreso.setText("Primer Ingreso");
 
         CbBeca.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "0", "1", "2", "3", "4", "5" }));
 
@@ -152,30 +227,30 @@ public class VPaciente extends javax.swing.JDialog {
                 .addGap(19, 19, 19)
                 .addGroup(PanelEstudianteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(PanelEstudianteLayout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(18, 18, 18)
-                        .addComponent(CbBeca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(PanelEstudianteLayout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addGap(18, 18, 18)
                         .addComponent(TxtCarne, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(RdPrimerIngreso)))
-                .addContainerGap(81, Short.MAX_VALUE))
+                        .addComponent(RbPrimerIngreso))
+                    .addGroup(PanelEstudianteLayout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addGap(18, 18, 18)
+                        .addComponent(CbBeca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         PanelEstudianteLayout.setVerticalGroup(
             PanelEstudianteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PanelEstudianteLayout.createSequentialGroup()
-                .addGap(36, 36, 36)
+                .addGap(12, 12, 12)
                 .addGroup(PanelEstudianteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(TxtCarne, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(RdPrimerIngreso))
+                    .addComponent(RbPrimerIngreso))
                 .addGap(18, 18, 18)
                 .addGroup(PanelEstudianteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(CbBeca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(17, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         BtnCancelar.setText("Cancelar");
@@ -207,74 +282,74 @@ public class VPaciente extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 19, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(jLabel5)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(TxtIdentificacion, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(157, 157, 157))
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                    .addComponent(jLabel6)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(RbMasculino)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(RbFemenino))
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel7)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel11)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(TxtEdad, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(107, 107, 107))))
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(LblPApellido)
-                                        .addComponent(LblSApellido))
-                                    .addGap(18, 18, 18)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(layout.createSequentialGroup()
-                                            .addComponent(TxtPApellido, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(jLabel8))
-                                        .addComponent(TxtsApellido, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGap(99, 99, 99))
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                    .addComponent(LblNombre)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(TxtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(jLabel3)
-                                    .addContainerGap()))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel13)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(CbPoblacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel4)
-                                        .addGap(19, 19, 19)
-                                        .addComponent(CbTipoId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel9)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(TxtFechaNacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(RbNoFecha)))
-                                .addContainerGap())))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(PanelEstudiante, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addContainerGap())))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(BtnGuardar)
-                .addGap(18, 18, 18)
-                .addComponent(BtnCancelar)
-                .addContainerGap())
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel5)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(TxtIdentificacion, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(157, 157, 157))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                        .addComponent(jLabel6)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(RbMasculino)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(RbFemenino))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(jLabel7)
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addComponent(jLabel11)
+                                            .addGap(18, 18, 18)
+                                            .addComponent(TxtEdad, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGap(107, 107, 107))))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(LblPApellido)
+                                            .addComponent(LblSApellido))
+                                        .addGap(18, 18, 18)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(TxtPApellido, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(jLabel8))
+                                            .addComponent(TxtsApellido, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGap(99, 99, 99))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                        .addComponent(LblNombre)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(TxtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jLabel3)
+                                        .addContainerGap()))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addComponent(jLabel13)
+                                            .addGap(18, 18, 18)
+                                            .addComponent(CbPoblacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addComponent(jLabel4)
+                                            .addGap(19, 19, 19)
+                                            .addComponent(CbTipoId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addComponent(jLabel9)
+                                            .addGap(18, 18, 18)
+                                            .addComponent(TxtFechaNacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGap(18, 18, 18)
+                                            .addComponent(RbNoFecha)))
+                                    .addContainerGap()))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(BtnGuardar)
+                                .addGap(18, 18, 18)
+                                .addComponent(BtnCancelar)
+                                .addGap(9, 9, 9))))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -327,10 +402,10 @@ public class VPaciente extends javax.swing.JDialog {
                     .addComponent(CbPoblacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(PanelEstudiante, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(BtnCancelar)
-                    .addComponent(BtnGuardar))
+                    .addComponent(BtnGuardar)
+                    .addComponent(BtnCancelar))
                 .addContainerGap())
         );
 
@@ -387,16 +462,24 @@ public class VPaciente extends javax.swing.JDialog {
                 return;
             }
 
-            Paciente paciente = new Paciente(0, fecha, TxtNombre.getText(), TxtPApellido.getText(), TxtsApellido.getText(), TxtIdentificacion.getText(),
+            Paciente paciente = new Paciente(idPacienteModificar, fecha, TxtNombre.getText(), TxtPApellido.getText(), TxtsApellido.getText(), TxtIdentificacion.getText(),
                     genero, beca, edad, TxtCarne.getText(), primerIngreso, false);
 
             int idPoblacion = ((Poblacion) CbPoblacion.getSelectedItem()).getId();
             int idTipoId = ((TipoIdentificacion) CbTipoId.getSelectedItem()).getId();
 
-            if (adPaciente.InsertarPaciente(paciente, idPoblacion, idTipoId)) {
-                JOptionPane.showMessageDialog(null, "Paciente Registrado con Éxito");
+            if (edicion) {
+                if (adPaciente.ModificarPaciente(paciente, idPoblacion, idTipoId)) {
+                    JOptionPane.showMessageDialog(null, "Paciente Modificado con Éxito");
+                } else {
+                    JOptionPane.showMessageDialog(null, "Paciente no Modificado", "ERROR", JOptionPane.ERROR_MESSAGE);
+                }
             } else {
-                JOptionPane.showMessageDialog(null, "Paciente no Registrado", "ERROR", JOptionPane.ERROR_MESSAGE);
+                if (adPaciente.InsertarPaciente(paciente, idPoblacion, idTipoId)) {
+                    JOptionPane.showMessageDialog(null, "Paciente Registrado con Éxito");
+                } else {
+                    JOptionPane.showMessageDialog(null, "Paciente no Registrado", "ERROR", JOptionPane.ERROR_MESSAGE);
+                }
             }
         } else {
             JOptionPane.showMessageDialog(null, "Los espacios marcados (*) no deben estar vacíos.", "ERROR", JOptionPane.ERROR_MESSAGE);
@@ -453,7 +536,7 @@ public class VPaciente extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                VPaciente dialog = new VPaciente(new javax.swing.JFrame(), true);
+                VPaciente dialog = new VPaciente(new javax.swing.JFrame(), true, 14);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -478,7 +561,7 @@ public class VPaciente extends javax.swing.JDialog {
     private javax.swing.JRadioButton RbFemenino;
     private javax.swing.JRadioButton RbMasculino;
     private javax.swing.JRadioButton RbNoFecha;
-    private javax.swing.JRadioButton RdPrimerIngreso;
+    private javax.swing.JRadioButton RbPrimerIngreso;
     private javax.swing.JTextField TxtCarne;
     private javax.swing.JTextField TxtEdad;
     private javax.swing.JFormattedTextField TxtFechaNacimiento;

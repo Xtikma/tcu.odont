@@ -32,7 +32,6 @@ public class Sicoseo {
         try {
             Paciente paciente = new Paciente(5, "2000-01-25", "Pedro", "Suarez", "Piedra", "B45033", "Masculino", 5, 17, "", true, true);
             ADPaciente ad = new ADPaciente();
-            System.out.println(ad.ModificarPaciente(paciente));
 //            myStmt = csql.createStatement();
 //            ResultSet myRs = myStmt.executeQuery("select * from doctor");
 //            
