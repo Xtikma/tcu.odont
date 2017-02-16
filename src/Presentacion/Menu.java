@@ -22,6 +22,7 @@ public class Menu extends javax.swing.JFrame {
     //Instancias
     private MenuPrincipal menuPrincipal;
     private ConfigCatProc configCP;
+    private PanelGenerico panGen;
     /**
      * Creates new form Menu
      */
@@ -30,7 +31,7 @@ public class Menu extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         this.setResizable(false);
         this.setIconImage(new ImageIcon(getClass().getResource("/Recursos/ico.png")).getImage());
-        intercambiarPaneles(1);
+        intercambiarPaneles(2);
     }
     
     /**
@@ -146,14 +147,22 @@ public class Menu extends javax.swing.JFrame {
                     menuPrincipal.setLocation(0, 0);
                     insertarPanel(menuPrincipal);
                     break;
-                    
                 case 1://Categoria y Procedimiento
                     configCP = new ConfigCatProc();
                     configCP.setSize(1000, 500);
                     configCP.setLocation(0, 0);
                     insertarPanel(configCP);
                     break;
-                case 2:
+                case 2://Panel Generico
+                    panGen = new PanelGenerico(1);
+                    panGen.setSize(1000, 500);
+                    panGen.setLocation(0, 0);
+                    insertarPanel(panGen);
+                    break;
+                case 3:
+                    break;
+                default:
+                    break;
             }
         } catch (Exception e) {
         }
