@@ -12,6 +12,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
@@ -66,28 +67,33 @@ public class ADCategoria {
         }
     }
     //Editarlo -.-
-    public JTable obtenerCategorias(JTable tblCategorias){
+    public ArrayList<Categoria> obtenerCategorias(){
         try {
             ResultSet rsCategorias = null;
-           
-            DefaultTableModel model = (DefaultTableModel) tblCategorias.getModel();
-            int a = model.getRowCount() - 1;
-            for (int i = a; i >= 0; i--) {
-                model.removeRow(i);
-            }
-            
+            ArrayList<Categoria> lista = new ArrayList<Categoria>();
+            ArrayList<Procedimiento> copia = new ArrayList<Procedimiento>();
+            copia = cargarProcedimientos();
+            Categoria temp;
             CallableStatement cs = conexion.prepareCall("call obtener_categorias()");
-            rsCategorias = cs.executeQuery();
+            rsCategorias = cs.executeQuery();            
+            
             while (rsCategorias.next()) {
                 try {
-                    model.addRow(new Object[]{rsCategorias.getString(1), rsCategorias.getString(2)});
+                    temp = new Categoria(rsCategorias.getInt(1), rsCategorias.getString(2));
+                    lista.add(temp);
                 } catch (SQLException ex) {
                     System.out.println(ex.getMessage()); //Poner mensaje de error real
                 }
             }
-            tblCategorias.setModel(model);
             conexion.close();
-            return tblCategorias;  
+            for(int i = 0; i < lista.size(); i++){
+                for (int j = 0; j < copia.size(); j++){
+                    if (lista.get(i).getId() == copia.get(j).getIdCategoria()) {
+                        lista.get(i).agregarProcedimiento(copia.get(j));
+                    }
+                }
+            }            
+            return lista; 
         } catch (SQLException e) {
             return null;
         }
@@ -146,6 +152,29 @@ public class ADCategoria {
             cc.setInt(2, idCategoria);
             cc.executeUpdate();
         } catch (SQLException e) {
+        }
+    }
+    
+    private ArrayList<Procedimiento> cargarProcedimientos(){
+        ArrayList<Procedimiento> lista = new ArrayList<Procedimiento>();
+        Procedimiento temp;
+        try {
+            ResultSet rs = null;
+            CallableStatement cc = conexion.prepareCall("call obtener_procedimientos()");
+            rs = cc.executeQuery();
+            
+            while (rs.next()) {
+                try {
+                    temp = new Procedimiento(rs.getInt(1), rs.getString(2), rs.getDouble(3), rs.getInt(4));
+                    lista.add(temp);
+                } catch (SQLException ex) {
+                    System.out.println(ex.getMessage()); //Poner mensaje de error real
+                }                
+            }
+            return lista;
+        } catch (Exception e) {
+            System.out.println("cayo acá"); //Poner mensaje de error real
+            return lista;
         }
     }
     
