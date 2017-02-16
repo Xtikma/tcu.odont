@@ -15,6 +15,9 @@ public class Paciente {
     private int edad;
     private boolean primerIngreso;
     private boolean eliminado;
+    
+    private String nombreTipoId;
+    private String nombrePoblacion;
 
     public Paciente(int id, String fechaNacimiento, String nombre, String primerApellido, String segundoApellido,
             String valorIdentificacion, String genero, int beca, int edad, String carne, boolean primerIngreso, boolean eliminado) {
@@ -126,5 +129,21 @@ public class Paciente {
 
     public void setEliminado(boolean eliminado) {
         this.eliminado = eliminado;
+    }
+
+    public String getNombreTipoId() {
+        return nombreTipoId;
+    }
+
+    public void setNombreTipoId(String nombreTipoId) {
+        this.nombreTipoId = nombreTipoId;
+    }
+
+    public String getNombrePoblacion() {
+        return nombrePoblacion;
+    }
+
+    public void setNombrePoblacion(String nombrePoblacion) {
+        this.nombrePoblacion = nombrePoblacion;
     }
 }

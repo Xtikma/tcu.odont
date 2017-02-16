@@ -8,6 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 
 public class ADTipoIdentificacion {
     
@@ -22,7 +23,7 @@ public class ADTipoIdentificacion {
                 return true;
             }
         } catch (SQLException ex) {
-            System.out.println(ex.toString());
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error. Detalle:\n"+ex.toString(), "ERROR", JOptionPane.ERROR_MESSAGE);
         }
         return false;
     }
@@ -37,7 +38,7 @@ public class ADTipoIdentificacion {
                 return true;
             }
         } catch (SQLException ex) {
-            System.out.println(ex.toString());
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error. Detalle:\n"+ex.toString(), "ERROR", JOptionPane.ERROR_MESSAGE);
         }
         return false;
     }
@@ -51,7 +52,7 @@ public class ADTipoIdentificacion {
                 return true;
             }
         } catch (SQLException ex) {
-            System.out.println(ex.toString());
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error. Detalle:\n"+ex.toString(), "ERROR", JOptionPane.ERROR_MESSAGE);
         }
         return false;
     }
@@ -67,13 +68,13 @@ public class ADTipoIdentificacion {
                 try {
                     listaTipoId.add(new TipoIdentificacion(rsTipoId.getInt(2), rsTipoId.getString(1)));
                 } catch (SQLException ex) {
-                    System.out.println("Mensaje de Error"); //Poner mensaje de error real
+                    JOptionPane.showMessageDialog(null, "Ha ocurrido un error. Detalle:\n"+ex.toString(), "ERROR", JOptionPane.ERROR_MESSAGE);
                 }
             }
             conexion.close();
             return listaTipoId;
         } catch (SQLException ex) {
-            System.out.println(ex.toString()); //Poner mensaje de error real
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error. Detalle:\n"+ex.toString(), "ERROR", JOptionPane.ERROR_MESSAGE);
         }
         return null;
     }
