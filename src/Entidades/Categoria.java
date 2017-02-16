@@ -58,6 +58,7 @@ public class Categoria {
      */
     public void agregarProcedimiento(Procedimiento proc){
         if (proc != null) {
+            procedimientos = new ArrayList<Procedimiento>();
             this.procedimientos.add(proc);
         }
     }
@@ -65,4 +66,11 @@ public class Categoria {
     public Categoria obtenerCategoria(){
         return new Categoria(id, nombre, procedimientos);
     }
+
+    @Override
+    public String toString() {
+        return "Categoria{" + "nombre=" + nombre + '}';
+    }
+    
+    
 }
