@@ -6,6 +6,12 @@
 package Presentacion;
 
 import AccesoDatos.ADTipoIdentificacion;
+import Entidades.TipoIdentificacion;
+import java.awt.Font;
+import javax.swing.BorderFactory;
+import javax.swing.JLabel;
+import javax.swing.border.TitledBorder;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
 
 /**
@@ -14,14 +20,22 @@ import javax.swing.table.TableColumn;
  */
 public class PanelGenerico extends javax.swing.JPanel {
 
+    private int tipoVentana = 0;
+    
     /**
      * Creates new form PanelGenerico
      */
     public PanelGenerico(int tipoVentana) {//Si la ventana es para TipoId(1), Doctor(2), Practicante(3), Población(4) o Lugar de Atención(5)
         initComponents();
+        this.tipoVentana = tipoVentana;
+        centrarColumans();
+        
         panelDatos.setVisible(false);
         switch (tipoVentana) {
-            case 1:
+            case 1: //TIpo id
+                TitledBorder border = BorderFactory.createTitledBorder("Tipo de Identificación");
+                border.setTitleFont(new Font("Dialog", Font.BOLD, 14));
+                this.setBorder(border);
                 btnCargarEliminados.setVisible(false);
                 consultarTodosTipoId();
                 break;
@@ -42,14 +56,14 @@ public class PanelGenerico extends javax.swing.JPanel {
         btnCargarEliminados = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         TblGenerica = new javax.swing.JTable();
-        jButton2 = new javax.swing.JButton();
+        btnAgregar = new javax.swing.JButton();
         panelDatos = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        lblNombre = new javax.swing.JLabel();
         txtNombre = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        lblVariable = new javax.swing.JLabel();
+        txtVariable = new javax.swing.JTextField();
+        btnGuardar = new javax.swing.JButton();
+        btnDesactivar = new javax.swing.JButton();
 
         setBorder(javax.swing.BorderFactory.createTitledBorder(null, "titulo", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 14))); // NOI18N
         setOpaque(false);
@@ -64,11 +78,11 @@ public class PanelGenerico extends javax.swing.JPanel {
                 {null, null, null}
             },
             new String [] {
-                "Nombre", "Title 2", "Title 3"
+                "Código", "Nombre", "Title 3"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.Object.class, java.lang.Object.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.Object.class
             };
             boolean[] canEdit = new boolean [] {
                 false, false, false
@@ -89,58 +103,60 @@ public class PanelGenerico extends javax.swing.JPanel {
         });
         jScrollPane1.setViewportView(TblGenerica);
 
-        jButton2.setText("Agregar");
+        btnAgregar.setText("Agregar");
 
         panelDatos.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Datos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 12))); // NOI18N
         panelDatos.setOpaque(false);
 
-        jLabel1.setText("Nombre:");
+        lblNombre.setText("Nombre:");
 
-        txtNombre.setText("jTextField1");
+        lblVariable.setText("jLabel2");
 
-        jLabel2.setText("jLabel2");
+        btnGuardar.setText("Guardar");
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarActionPerformed(evt);
+            }
+        });
 
-        jTextField2.setText("jTextField2");
-
-        jButton3.setText("Guardar");
-
-        jButton4.setText("Desactivar");
+        btnDesactivar.setText("Desactivar");
 
         javax.swing.GroupLayout panelDatosLayout = new javax.swing.GroupLayout(panelDatos);
         panelDatos.setLayout(panelDatosLayout);
         panelDatosLayout.setHorizontalGroup(
             panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelDatosLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnDesactivar)
+                .addGap(18, 18, 18)
+                .addComponent(btnGuardar)
+                .addContainerGap())
+            .addGroup(panelDatosLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton3)
-                    .addGroup(panelDatosLayout.createSequentialGroup()
-                        .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel2))
-                        .addGap(51, 51, 51)
-                        .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 320, Short.MAX_VALUE)
-                            .addComponent(jTextField2))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton4)
-                .addContainerGap(17, Short.MAX_VALUE))
+                .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblNombre)
+                    .addComponent(lblVariable))
+                .addGap(51, 51, 51)
+                .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(txtNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 386, Short.MAX_VALUE)
+                    .addComponent(txtVariable))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panelDatosLayout.setVerticalGroup(
             panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelDatosLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
+                    .addComponent(lblNombre)
                     .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblVariable)
+                    .addComponent(txtVariable, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton3)
-                    .addComponent(jButton4))
+                    .addComponent(btnGuardar)
+                    .addComponent(btnDesactivar))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -151,17 +167,14 @@ public class PanelGenerico extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
+                    .addComponent(panelDatos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 563, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnCargarEliminados, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jButton2, javax.swing.GroupLayout.Alignment.TRAILING))))
+                            .addComponent(btnAgregar, javax.swing.GroupLayout.Alignment.TRAILING))))
                 .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(26, 26, 26)
-                .addComponent(panelDatos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(13, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -171,10 +184,10 @@ public class PanelGenerico extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
+                .addComponent(btnAgregar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(panelDatos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(53, 53, 53))
+                .addContainerGap(84, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -183,34 +196,61 @@ public class PanelGenerico extends javax.swing.JPanel {
         if (evt.getClickCount() == 2 && !evt.isConsumed()) {
             evt.consume();
 
+            if (tipoVentana == 1) {//tipo Id
+                btnDesactivar.setVisible(false);
+                lblVariable.setVisible(false);
+                txtVariable.setVisible(false);
+            }
+            btnAgregar.setVisible(false);
             int indiceFila = TblGenerica.getSelectedRow();
-            String texto = (TblGenerica.getValueAt(indiceFila, 0)).toString();
+            String texto = (TblGenerica.getValueAt(indiceFila, 1)).toString();
             panelDatos.setVisible(true);
             txtNombre.setText(texto);
         }
     }//GEN-LAST:event_TblGenericaMouseClicked
 
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        // TODO add your handling code here:
+        switch (tipoVentana) {
+            case 1://Tipo Id
+                ADTipoIdentificacion bd = new ADTipoIdentificacion();
+                int indiceFila = TblGenerica.getSelectedRow();
+                int num = (int)TblGenerica.getValueAt(indiceFila, 0);
+                bd.ModificarTipoIdentificacion(new TipoIdentificacion(num, txtNombre.getText()));
+                bd.ConsultarTipoIdentificacion(TblGenerica);
+                break;
+            default:
+                break;
+        }
+    }//GEN-LAST:event_btnGuardarActionPerformed
+
     private void consultarTodosTipoId() {
-        TableColumn column = TblGenerica.getColumn("Title 2");
-        TblGenerica.removeColumn(column);
-        column = TblGenerica.getColumn("Title 3");
+        TableColumn column = TblGenerica.getColumn("Title 3");
         TblGenerica.removeColumn(column);
         ADTipoIdentificacion bd = new ADTipoIdentificacion();
         bd.ConsultarTipoIdentificacion(TblGenerica);
     }
     
+    private void centrarColumans() {
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+        TblGenerica.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
+        TblGenerica.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
+        TblGenerica.getColumnModel().getColumn(2).setCellRenderer(centerRenderer);
+    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable TblGenerica;
+    private javax.swing.JButton btnAgregar;
     private javax.swing.JButton btnCargarEliminados;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
+    private javax.swing.JButton btnDesactivar;
+    private javax.swing.JButton btnGuardar;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField2;
+    private javax.swing.JLabel lblNombre;
+    private javax.swing.JLabel lblVariable;
     private javax.swing.JPanel panelDatos;
     private javax.swing.JTextField txtNombre;
+    private javax.swing.JTextField txtVariable;
     // End of variables declaration//GEN-END:variables
 }

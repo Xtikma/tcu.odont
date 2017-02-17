@@ -96,7 +96,7 @@ public class ADTipoIdentificacion {
 
             while (rsTipoId.next()) {
                 try {
-                    model.addRow(new Object[]{rsTipoId.getString(1)});
+                    model.addRow(new Object[]{rsTipoId.getInt(2), rsTipoId.getString(1)});
                 } catch (SQLException ex) {
                     JOptionPane.showMessageDialog(null, "Ha ocurrido un error. Detalle:\n"+ex.toString(), "ERROR", JOptionPane.ERROR_MESSAGE);
                 }
