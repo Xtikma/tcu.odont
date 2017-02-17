@@ -9,6 +9,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 public class ADTipoIdentificacion {
     
@@ -77,5 +79,31 @@ public class ADTipoIdentificacion {
             JOptionPane.showMessageDialog(null, "Ha ocurrido un error. Detalle:\n"+ex.toString(), "ERROR", JOptionPane.ERROR_MESSAGE);
         }
         return null;
+    }
+    
+    public void ConsultarTipoIdentificacion(JTable tblTipoId) {
+        try {
+            ResultSet rsTipoId = null;
+            
+            DefaultTableModel model = (DefaultTableModel) tblTipoId.getModel();
+            int a = model.getRowCount() - 1;
+            for (int i = a; i >= 0; i--) {
+                model.removeRow(i);
+            }
+            
+            CallableStatement cs = conexion.prepareCall("{call consultar_tipoIdentificacion()}");
+            rsTipoId = cs.executeQuery();
+
+            while (rsTipoId.next()) {
+                try {
+                    model.addRow(new Object[]{rsTipoId.getInt(2), rsTipoId.getString(1)});
+                } catch (SQLException ex) {
+                    JOptionPane.showMessageDialog(null, "Ha ocurrido un error. Detalle:\n"+ex.toString(), "ERROR", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+            conexion.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error. Detalle:\n"+ex.toString(), "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
     }
 }

@@ -6,6 +6,7 @@
 package Presentacion;
 
 import AccesoDatos.ADPaciente;
+import javax.swing.table.TableColumn;
 
 /**
  *
@@ -51,7 +52,7 @@ public class ListaPacientes extends javax.swing.JDialog {
                 java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.Boolean.class, java.lang.Boolean.class, java.lang.String.class, java.lang.String.class, java.lang.Boolean.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false, false, false, true, false
+                false, false, false, false, false, false, false, false, false, false, false, false, true, true
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -130,6 +131,11 @@ public class ListaPacientes extends javax.swing.JDialog {
     
     public void consultarTodosPacientes() {
         ADPaciente bd = new ADPaciente();
+        TableColumn column = TblDoctor.getColumn("Title 1");
+        TblDoctor.removeColumn(column);
+        //column.setIdentifier("Nombre");
+        column.setHeaderValue("Nombre");
+        TblDoctor.addColumn(column);
         bd.ConsultarTodosPacientesActivos(TblDoctor);
     }
 
