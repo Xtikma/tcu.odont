@@ -23,6 +23,11 @@ public class Procedimiento {
         this.idCategoria = idCategoria;
     }
 
+    public Procedimiento() {
+    }
+    
+    
+
     public int getId() {
         return id;
     }

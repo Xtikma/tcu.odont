@@ -26,6 +26,7 @@ public class Categoria {
     public Categoria(int id, String nombre) {
         this.id = id;
         this.nombre = nombre;
+        procedimientos = new ArrayList<Procedimiento>();
     }
 
     public int getId() {
@@ -58,8 +59,15 @@ public class Categoria {
      */
     public void agregarProcedimiento(Procedimiento proc){
         if (proc != null) {
-            procedimientos = new ArrayList<Procedimiento>();
             this.procedimientos.add(proc);
+        }
+    }
+    
+    public void eliminarProcedimiento(int id){
+        for (int i = 0; i < procedimientos.size(); i++) {
+            if (procedimientos.get(i).getId() == id) {
+                procedimientos.remove(i);
+            }
         }
     }
     

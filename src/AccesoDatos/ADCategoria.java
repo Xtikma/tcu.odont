@@ -85,7 +85,6 @@ public class ADCategoria {
                     System.out.println(ex.getMessage()); //Poner mensaje de error real
                 }
             }
-            conexion.close();
             for(int i = 0; i < lista.size(); i++){
                 for (int j = 0; j < copia.size(); j++){
                     if (lista.get(i).getId() == copia.get(j).getIdCategoria()) {
@@ -152,6 +151,7 @@ public class ADCategoria {
             cc.setInt(2, idCategoria);
             cc.executeUpdate();
         } catch (SQLException e) {
+            System.err.println(">>" + e.getMessage());
         }
     }
     
