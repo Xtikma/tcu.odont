@@ -89,7 +89,9 @@ public class MenuPrincipal extends javax.swing.JPanel {
         btnAjustes.setBounds(11, 354, 253, 50);
 
         btnVerConsulta.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        btnVerConsulta.setText("Ver consultas");
+        btnVerConsulta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/revisarConsulta.png"))); // NOI18N
+        btnVerConsulta.setBorderPainted(false);
+        btnVerConsulta.setOpaque(false);
 
         btnAgregarConsulta.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
         btnAgregarConsulta.setText("Agregar consulta");

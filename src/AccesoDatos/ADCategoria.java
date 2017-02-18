@@ -168,12 +168,11 @@ public class ADCategoria {
                     temp = new Procedimiento(rs.getInt(1), rs.getString(2), rs.getDouble(3), rs.getInt(4));
                     lista.add(temp);
                 } catch (SQLException ex) {
-                    System.out.println(ex.getMessage()); //Poner mensaje de error real
+                    throw ex;
                 }                
             }
             return lista;
-        } catch (Exception e) {
-            System.out.println("cayo acá"); //Poner mensaje de error real
+        } catch (Exception e){
             return lista;
         }
     }
