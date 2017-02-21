@@ -154,7 +154,7 @@ public class Menu extends javax.swing.JFrame {
                     insertarPanel(configCP);
                     break;
                 case 2://Panel Generico
-                    panGen = new PanelGenerico(1);
+                    panGen = new PanelGenerico(2);
                     panGen.setSize(1000, 500);
                     panGen.setLocation(0, 0);
                     insertarPanel(panGen);
