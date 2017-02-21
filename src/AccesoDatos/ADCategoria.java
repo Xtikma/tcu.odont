@@ -85,7 +85,6 @@ public class ADCategoria {
                     System.out.println(ex.getMessage()); //Poner mensaje de error real
                 }
             }
-            conexion.close();
             for(int i = 0; i < lista.size(); i++){
                 for (int j = 0; j < copia.size(); j++){
                     if (lista.get(i).getId() == copia.get(j).getIdCategoria()) {
@@ -152,6 +151,7 @@ public class ADCategoria {
             cc.setInt(2, idCategoria);
             cc.executeUpdate();
         } catch (SQLException e) {
+            System.err.println(">>" + e.getMessage());
         }
     }
     
@@ -168,12 +168,11 @@ public class ADCategoria {
                     temp = new Procedimiento(rs.getInt(1), rs.getString(2), rs.getDouble(3), rs.getInt(4));
                     lista.add(temp);
                 } catch (SQLException ex) {
-                    System.out.println(ex.getMessage()); //Poner mensaje de error real
+                    throw ex;
                 }                
             }
             return lista;
-        } catch (Exception e) {
-            System.out.println("cayo acá"); //Poner mensaje de error real
+        } catch (Exception e){
             return lista;
         }
     }

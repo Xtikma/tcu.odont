@@ -9,6 +9,7 @@ import AccesoDatos.*;
 import Entidades.Categoria;
 import Entidades.Procedimiento;
 import java.util.ArrayList;
+import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 /**
@@ -20,7 +21,9 @@ public class ConfigCatProc extends javax.swing.JPanel {
     private ADCategoria access = new ADCategoria();
     private ArrayList<Categoria> listaCompleta;
     private Categoria seleccionado;
+    private Procedimiento editable;
     private boolean AddProcedimiento = false;
+    private boolean edit = false;
     
     /**
      * Creates new form ConfigCatProc
@@ -68,9 +71,9 @@ public class ConfigCatProc extends javax.swing.JPanel {
         lblNomProc = new javax.swing.JLabel();
         lblPrecio = new javax.swing.JLabel();
         txtNomProc = new javax.swing.JTextField();
-        txtPrecio = new javax.swing.JTextField();
         btnSaveProc = new javax.swing.JButton();
         btnMoveProc = new javax.swing.JButton();
+        txtPrecio = new javax.swing.JFormattedTextField();
         btnAddProc = new javax.swing.JButton();
         btnAplicarCambios = new javax.swing.JButton();
 
@@ -185,11 +188,6 @@ public class ConfigCatProc extends javax.swing.JPanel {
         txtNomProc.setEnabled(false);
         txtNomProc.setPreferredSize(new java.awt.Dimension(150, 30));
 
-        txtPrecio.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        txtPrecio.setToolTipText("Ingrese el precio del procedimiento");
-        txtPrecio.setEnabled(false);
-        txtPrecio.setPreferredSize(new java.awt.Dimension(150, 30));
-
         btnSaveProc.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         btnSaveProc.setText("Actualizar");
         btnSaveProc.setToolTipText("Agrega el procedimiento a la categoria activa.");
@@ -197,11 +195,26 @@ public class ConfigCatProc extends javax.swing.JPanel {
         btnSaveProc.setMaximumSize(new java.awt.Dimension(104, 35));
         btnSaveProc.setMinimumSize(new java.awt.Dimension(104, 35));
         btnSaveProc.setPreferredSize(new java.awt.Dimension(104, 35));
+        btnSaveProc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSaveProcActionPerformed(evt);
+            }
+        });
 
         btnMoveProc.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         btnMoveProc.setText("Transladar");
         btnMoveProc.setToolTipText("Agrega el procedimiento a la categoria activa.");
         btnMoveProc.setEnabled(false);
+        btnMoveProc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMoveProcActionPerformed(evt);
+            }
+        });
+
+        txtPrecio.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
+        txtPrecio.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
+        txtPrecio.setEnabled(false);
+        txtPrecio.setPreferredSize(new java.awt.Dimension(150, 30));
 
         javax.swing.GroupLayout panelEditProcLayout = new javax.swing.GroupLayout(panelEditProc);
         panelEditProc.setLayout(panelEditProcLayout);
@@ -214,7 +227,7 @@ public class ConfigCatProc extends javax.swing.JPanel {
                     .addComponent(lblNomProc, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(panelEditProcLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtNomProc, javax.swing.GroupLayout.DEFAULT_SIZE, 263, Short.MAX_VALUE)
+                    .addComponent(txtNomProc, javax.swing.GroupLayout.DEFAULT_SIZE, 275, Short.MAX_VALUE)
                     .addComponent(txtPrecio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(6, 6, 6))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelEditProcLayout.createSequentialGroup()
@@ -233,9 +246,9 @@ public class ConfigCatProc extends javax.swing.JPanel {
                     .addComponent(txtNomProc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(panelEditProcLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                    .addComponent(lblPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
                 .addGroup(panelEditProcLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(btnSaveProc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnMoveProc, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -284,6 +297,11 @@ public class ConfigCatProc extends javax.swing.JPanel {
         btnAplicarCambios.setText("Aplicar cambios");
         btnAplicarCambios.setToolTipText("Aplica los cambios que se hayan hecho a la categoria activa.");
         btnAplicarCambios.setEnabled(false);
+        btnAplicarCambios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAplicarCambiosActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout panelEdiciónCatLayout = new javax.swing.GroupLayout(panelEdiciónCat);
         panelEdiciónCat.setLayout(panelEdiciónCatLayout);
@@ -301,7 +319,7 @@ public class ConfigCatProc extends javax.swing.JPanel {
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnEditCat, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(btnAplicarCambios, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(55, Short.MAX_VALUE))
+                .addContainerGap(43, Short.MAX_VALUE))
         );
         panelEdiciónCatLayout.setVerticalGroup(
             panelEdiciónCatLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -345,7 +363,7 @@ public class ConfigCatProc extends javax.swing.JPanel {
                     .addComponent(btnAddCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(panelEdiciónCat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(43, Short.MAX_VALUE))
+                .addContainerGap(38, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -356,41 +374,107 @@ public class ConfigCatProc extends javax.swing.JPanel {
             }
         }
         btnEditCat.setEnabled(true);
-        seleccionarCategoria();
+        cargarProcedimientos();
     }//GEN-LAST:event_boxCategoriaActionPerformed
 
     private void btnEditCatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditCatActionPerformed
         //activación de interfaz
-        btnAplicarCambios.setEnabled(true);
-        btnAddProc.setEnabled(true);
-        tablaProcedimientos.setEnabled(true);
-        txtNomCat.setEnabled(true);
-        
-        
-        
+        activarPanelCategoria(true);
+        btnAddCategoria.setEnabled(false);
+        btnEditCat.setEnabled(false);
+        edit = true;
     }//GEN-LAST:event_btnEditCatActionPerformed
 
     private void btnAddProcActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddProcActionPerformed
         AddProcedimiento = true;
-        activarPanelProcedimiento();
-        boxCategoria.setEnabled(false);
+        activarPanelProcedimiento(true);
     }//GEN-LAST:event_btnAddProcActionPerformed
 
     private void tablaProcedimientosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaProcedimientosMouseClicked
         boxCategoria.setEnabled(false);
-        if (AddProcedimiento != true) {
+        if (AddProcedimiento != true && edit == true) {
             btnAddProc.setEnabled(false);
-            activarPanelProcedimiento();
+            activarPanelProcedimiento(true);
             btnMoveProc.setEnabled(true);
             int selected = tablaProcedimientos.getSelectedRow();
             if (selected >= 0) {
-                txtNomProc.setText(tablaProcedimientos.getValueAt(selected,0).toString().trim());
-                txtPrecio.setText(tablaProcedimientos.getValueAt(selected,1).toString().trim());
+                editable = new Procedimiento(0,
+                        tablaProcedimientos.getValueAt(selected,0).toString().trim(), 
+                        Double.parseDouble(tablaProcedimientos.getValueAt(selected,1).toString().trim()), 
+                        seleccionado.getId());
+                txtNomProc.setText(editable.getNombre());
+                txtPrecio.setText(editable.getPrecio() + "");
             }            
         }
     }//GEN-LAST:event_tablaProcedimientosMouseClicked
 
-    private void seleccionarCategoria(){
+    private void btnSaveProcActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveProcActionPerformed
+        if (AddProcedimiento == true) {
+            editable = new Procedimiento(0,
+                        txtNomProc.getText(), 
+                        Double.parseDouble(txtPrecio.getText().trim()), 
+                        seleccionado.getId());
+            seleccionado.agregarProcedimiento(editable);
+            editable = null;
+        }else{
+            for (int i = 0; i < seleccionado.getProcedimientos().size(); i++) {
+                if (seleccionado.getProcedimientos().get(i).getNombre()
+                        .equals(editable.getNombre())) {
+                    seleccionado.getProcedimientos().get(i).setNombre(txtNomProc.getText().trim());
+                    seleccionado.getProcedimientos().get(i).setPrecio(Double.parseDouble(txtPrecio.getText().trim()));
+                }
+            }
+        }
+        activarPanelProcedimiento(false);
+        AddProcedimiento = false;
+        txtNomProc.setText("");
+        txtPrecio.setText("");
+        cargarProcedimientos();        
+    }//GEN-LAST:event_btnSaveProcActionPerformed
+
+    private void btnMoveProcActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMoveProcActionPerformed
+        String[] categorias = new String[listaCompleta.size()];
+        Procedimiento temp = new Procedimiento();
+        for (int i = 0; i < listaCompleta.size(); i++) {
+            categorias[i] = listaCompleta.get(i).getNombre();
+        }
+        String seleccion = (String) JOptionPane.showInputDialog(this, "Seleccione la nueva categoria", 
+                "Mover procedimiento", JOptionPane.INFORMATION_MESSAGE, null,
+                categorias, categorias[0]);
+        int categoriaNueva = 0;
+        for (Categoria categoria : listaCompleta) {
+            if (seleccion.equalsIgnoreCase(categoria.getNombre())) {
+                categoriaNueva = categoria.getId();
+            }
+        }
+        for (int i = 0; i < seleccionado.getProcedimientos().size(); i++) {
+                if (seleccionado.getProcedimientos().get(i).getNombre()
+                        .equals(editable.getNombre())) {
+                    temp = seleccionado.getProcedimientos().get(i);
+                    seleccionado.eliminarProcedimiento(temp.getId());
+                }
+        }
+        access.moverProcedimiento(temp.getId(), categoriaNueva);
+        txtNomProc.setText("");
+        txtPrecio.setText("");
+        activarPanelProcedimiento(AddProcedimiento);
+        cargarProcedimientos();
+    }//GEN-LAST:event_btnMoveProcActionPerformed
+
+    private void btnAplicarCambiosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAplicarCambiosActionPerformed
+        int respuesta = JOptionPane.showConfirmDialog(this, "Recuerde que si no ha aplicado cambios en los procedimientos se perderan.\n¿Desea aplicar los cambios a la categoría?", "Almacenar Categoria", JOptionPane.INFORMATION_MESSAGE);
+        if (respuesta == 0) {
+            activarPanelCategoria(false);
+            activarPanelProcedimiento(false);
+            txtNomProc.setText("");
+            txtPrecio.setText("");
+            btnMoveProc.setEnabled(false);
+            btnAddCategoria.setEnabled(true);
+            boxCategoria.setEnabled(true);
+        }
+    }//GEN-LAST:event_btnAplicarCambiosActionPerformed
+
+    private void cargarProcedimientos(){
         tablaProcedimientos.setModel(new DefaultTableModel());
         String datos[] = new String[2];
         DefaultTableModel model = new DefaultTableModel();
@@ -404,18 +488,28 @@ public class ConfigCatProc extends javax.swing.JPanel {
                 model.addRow(datos);
             }
             tablaProcedimientos.setModel(model);
-        }
-        
+        }        
     }
     
-    private void activarPanelProcedimiento(){
-        txtNomProc.setEnabled(true);
-        txtPrecio.setEnabled(true);
-        btnSaveProc.setEnabled(true);
-        lblNomProc.setEnabled(true);
-        lblPrecio.setEnabled(true);
-        panelEditProc.setEnabled(true);
+    private void activarPanelProcedimiento(boolean valor){
+        txtNomProc.setEnabled(valor);
+        //txtPrecio.setEnabled(valor);
+        btnSaveProc.setEnabled(valor);
+        lblNomProc.setEnabled(valor);
+        lblPrecio.setEnabled(valor);
+        panelEditProc.setEnabled(valor);
     }
+    
+    private void activarPanelCategoria(boolean valor){
+        btnAplicarCambios.setEnabled(valor);
+        btnAddProc.setEnabled(valor);
+        tablaProcedimientos.setEnabled(valor);
+        txtNomCat.setEnabled(valor);
+        boxCategoria.setEnabled(valor);
+    }
+    
+    
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> boxCategoria;
@@ -436,6 +530,6 @@ public class ConfigCatProc extends javax.swing.JPanel {
     private javax.swing.JTable tablaProcedimientos;
     private javax.swing.JTextField txtNomCat;
     private javax.swing.JTextField txtNomProc;
-    private javax.swing.JTextField txtPrecio;
+    private javax.swing.JFormattedTextField txtPrecio;
     // End of variables declaration//GEN-END:variables
 }
