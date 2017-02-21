@@ -12,6 +12,7 @@ package Presentacion;
 public class MenuPrincipal extends javax.swing.JPanel {
 
     private Menu m;
+
     /**
      * Creates new form MenuPrincipal
      */
@@ -57,26 +58,51 @@ public class MenuPrincipal extends javax.swing.JPanel {
 
         btnDoctor.setText("Configuraciones de Doctor");
         btnDoctor.setPreferredSize(new java.awt.Dimension(182, 50));
+        btnDoctor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDoctorActionPerformed(evt);
+            }
+        });
         panelSecundarios.add(btnDoctor);
         btnDoctor.setBounds(11, 18, 253, 50);
 
         btnPracticantes.setText("Configuraciones de Estudiantes");
         btnPracticantes.setPreferredSize(new java.awt.Dimension(182, 50));
+        btnPracticantes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPracticantesActionPerformed(evt);
+            }
+        });
         panelSecundarios.add(btnPracticantes);
         btnPracticantes.setBounds(11, 74, 253, 50);
 
         btnTiposIden.setText("Conf. de Tipos de Identificación");
         btnTiposIden.setPreferredSize(new java.awt.Dimension(182, 50));
+        btnTiposIden.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTiposIdenActionPerformed(evt);
+            }
+        });
         panelSecundarios.add(btnTiposIden);
         btnTiposIden.setBounds(11, 130, 253, 50);
 
         btnLugar.setText("Configuraciones de Lugares");
         btnLugar.setPreferredSize(new java.awt.Dimension(182, 50));
+        btnLugar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLugarActionPerformed(evt);
+            }
+        });
         panelSecundarios.add(btnLugar);
         btnLugar.setBounds(11, 186, 253, 50);
 
         btnPoblacion.setText("Configuraciones de Poblaciones");
         btnPoblacion.setPreferredSize(new java.awt.Dimension(182, 50));
+        btnPoblacion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPoblacionActionPerformed(evt);
+            }
+        });
         panelSecundarios.add(btnPoblacion);
         btnPoblacion.setBounds(11, 242, 253, 50);
 
@@ -165,6 +191,26 @@ public class MenuPrincipal extends javax.swing.JPanel {
     private void btnCatProcActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCatProcActionPerformed
         m.intercambiarPaneles(1);
     }//GEN-LAST:event_btnCatProcActionPerformed
+
+    private void btnDoctorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDoctorActionPerformed
+        m.intercambiarPaneles(2);
+    }//GEN-LAST:event_btnDoctorActionPerformed
+
+    private void btnPracticantesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPracticantesActionPerformed
+        m.intercambiarPaneles(3);
+    }//GEN-LAST:event_btnPracticantesActionPerformed
+
+    private void btnTiposIdenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTiposIdenActionPerformed
+        m.intercambiarPaneles(1);
+    }//GEN-LAST:event_btnTiposIdenActionPerformed
+
+    private void btnLugarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLugarActionPerformed
+        m.intercambiarPaneles(5);
+    }//GEN-LAST:event_btnLugarActionPerformed
+
+    private void btnPoblacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPoblacionActionPerformed
+        m.intercambiarPaneles(4);
+    }//GEN-LAST:event_btnPoblacionActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
