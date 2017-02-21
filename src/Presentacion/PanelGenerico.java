@@ -10,6 +10,7 @@ import AccesoDatos.ADLugarAtencion;
 import AccesoDatos.ADPoblacion;
 import AccesoDatos.ADPracticante;
 import AccesoDatos.ADTipoIdentificacion;
+import Entidades.Doctor;
 import Entidades.TipoIdentificacion;
 import java.awt.Font;
 import javax.swing.BorderFactory;
@@ -27,6 +28,8 @@ public class PanelGenerico extends javax.swing.JPanel {
 
     private int tipoVentana = 0;
     private int accion = 0; //agregar(1) y modificar(2)
+    private boolean eliminado = false;
+    private boolean primeraVez = true;
     
     /**
      * Creates new form PanelGenerico
@@ -50,8 +53,9 @@ public class PanelGenerico extends javax.swing.JPanel {
                 border = BorderFactory.createTitledBorder("Doctor");
                 border.setTitleFont(new Font("Dialog", Font.BOLD, 14));
                 this.setBorder(border);
+                //btnDesactivar.setVisible(true);
                 btnCargarEliminados.setVisible(true);
-                consultarDoctores();
+                consultarDoctoresActivos();
                 break;
             case 3: //Practicante
                 border = BorderFactory.createTitledBorder("Practicante");
@@ -77,6 +81,7 @@ public class PanelGenerico extends javax.swing.JPanel {
             default:
                 break;
         }
+        primeraVez = false;
     }
 
     /**
@@ -104,6 +109,11 @@ public class PanelGenerico extends javax.swing.JPanel {
         setOpaque(false);
 
         btnCargarEliminados.setText("Cargar Eliminados");
+        btnCargarEliminados.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCargarEliminadosActionPerformed(evt);
+            }
+        });
 
         TblGenerica.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -157,6 +167,11 @@ public class PanelGenerico extends javax.swing.JPanel {
         });
 
         btnDesactivar.setText("Desactivar");
+        btnDesactivar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDesactivarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout panelDatosLayout = new javax.swing.GroupLayout(panelDatos);
         panelDatos.setLayout(panelDatosLayout);
@@ -230,48 +245,94 @@ public class PanelGenerico extends javax.swing.JPanel {
 
     private void TblGenericaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TblGenericaMouseClicked
         // TODO add your handling code here:
-        if (evt.getClickCount() == 2 && !evt.isConsumed()) {
-            evt.consume();
-
+        /*if (evt.getClickCount() == 2 && !evt.isConsumed()) {
+            evt.consume();*/
             accion = 2;
-            TitledBorder border = BorderFactory.createTitledBorder("Modificar Tipo de Identificación");
-            border.setTitleFont(new Font("Dialog", Font.BOLD, 12));
-            panelDatos.setBorder(border);
-
-            if (tipoVentana == 1) {//tipo Id
-                btnDesactivar.setVisible(false);
-                lblVariable.setVisible(false);
-                txtVariable.setVisible(false);
+            TitledBorder border = null;
+            switch (tipoVentana) {
+                case 1: //tipo id
+                    btnDesactivar.setVisible(false);
+                    lblVariable.setVisible(false);
+                    txtVariable.setVisible(false);
+                    border = BorderFactory.createTitledBorder("Modificar Tipo de Identificación");
+                    border.setTitleFont(new Font("Dialog", Font.BOLD, 12));
+                    panelDatos.setBorder(border);
+                    break;
+                case 2: //doctor
+                    lblVariable.setVisible(false);
+                    txtVariable.setVisible(false);
+                    border = BorderFactory.createTitledBorder("Modificar Doctor");
+                    border.setTitleFont(new Font("Dialog", Font.BOLD, 12));
+                    panelDatos.setBorder(border);
+                    btnDesactivar.setVisible(true);
+                    break;
+                default:
+                    break;
             }
             int indiceFila = TblGenerica.getSelectedRow();
             String texto = (TblGenerica.getValueAt(indiceFila, 1)).toString();
             panelDatos.setVisible(true);
             txtNombre.setText(texto);
-        }
+        //}
     }//GEN-LAST:event_TblGenericaMouseClicked
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         // TODO add your handling code here:
         switch (tipoVentana) {
             case 1://Tipo Id
-                ADTipoIdentificacion bd = new ADTipoIdentificacion();
+                ADTipoIdentificacion bdTipoId = new ADTipoIdentificacion();
                 if (accion == 1) {//agregar
                     String nombre = txtNombre.getText();
                     if (nombre.equals("") || nombre.equals(" ")) {
                         JOptionPane.showMessageDialog(null, "No puede dejar el nombre en blanco.", "ERROR", JOptionPane.ERROR_MESSAGE);
                     } else {
-                        bd.InsertarTipoIdentificacion(new TipoIdentificacion(0, nombre));
+                        bdTipoId.InsertarTipoIdentificacion(new TipoIdentificacion(0, nombre));
                     }
                 } else if (accion == 2) {//modificar
                     int indiceFila = TblGenerica.getSelectedRow();
-                    if (indiceFila > 0) {
+                    if (indiceFila >= 0) {
                         int num = (int) TblGenerica.getValueAt(indiceFila, 0);
-                    bd.ModificarTipoIdentificacion(new TipoIdentificacion(num, txtNombre.getText()));
+                        bdTipoId.ModificarTipoIdentificacion(new TipoIdentificacion(num, txtNombre.getText()));
                     } else {
                         JOptionPane.showMessageDialog(null, "Debe seleccionar un item.", "ERROR", JOptionPane.ERROR_MESSAGE);
                     }
                 }
-                bd.ConsultarTipoIdentificacion(TblGenerica);
+                bdTipoId.ConsultarTipoIdentificacion(TblGenerica);
+                break;
+            case 2: //Doctor
+                ADDoctor bdDoctor = new ADDoctor();
+                if (accion == 1) {//agregar
+                    String nombre = txtNombre.getText();
+                    if (nombre.equals("") || nombre.equals(" ")) {
+                        JOptionPane.showMessageDialog(null, "No puede dejar el nombre en blanco.", "ERROR", JOptionPane.ERROR_MESSAGE);
+                    } else {
+                        bdDoctor.insertarDoctor(new Doctor(0, nombre, false));
+                    }
+                } else if (accion == 2) {//modificar
+                    int indiceFila = TblGenerica.getSelectedRow();
+                    if (indiceFila >= 0) {
+                        int num = (int) TblGenerica.getValueAt(indiceFila, 0);
+                        boolean estado = false;
+                        if ((TblGenerica.getValueAt(indiceFila, 2).equals("Inactivo"))) {
+                            estado = true;
+                        }
+                        //modificar eliminado
+                        bdDoctor.ModificarDoctor(new Doctor(num, txtNombre.getText(), estado));
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Debe seleccionar un item.", "ERROR", JOptionPane.ERROR_MESSAGE);
+                    }
+                }
+                if (eliminado) {
+                    bdDoctor.consultarDoctoresEliminados(TblGenerica);
+                } else {
+                    bdDoctor.consultarDoctoresActivos(TblGenerica);
+                }
+                break;
+            case 3:
+                break;
+            case 4:
+                break;
+            case 5:
                 break;
             default:
                 break;
@@ -282,21 +343,104 @@ public class PanelGenerico extends javax.swing.JPanel {
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         // TODO add your handling code here:
         accion = 1;
+        TblGenerica.clearSelection();
+        TitledBorder border = null;
         switch (tipoVentana) {
-            case 1:
+            case 1: //tipo id
                 panelDatos.setVisible(true);
                 lblVariable.setVisible(false);
                 txtVariable.setVisible(false);
                 btnDesactivar.setVisible(false);
                 txtNombre.setText("");
-                TitledBorder border = BorderFactory.createTitledBorder("Nuevo Tipo de Identificación");
+                border = BorderFactory.createTitledBorder("Nuevo Tipo de Identificación");
                 border.setTitleFont(new Font("Dialog", Font.BOLD, 12));
                 panelDatos.setBorder(border);
+                break;
+            case 2: //doctor
+                panelDatos.setVisible(true);
+                lblVariable.setVisible(false);
+                txtVariable.setVisible(false);
+                txtNombre.setText("");
+                border = BorderFactory.createTitledBorder("Doctor Nuevo");
+                border.setTitleFont(new Font("Dialog", Font.BOLD, 12));
+                panelDatos.setBorder(border);
+                btnDesactivar.setVisible(false);
+                break;
+            case 3:
+                break;
+            case 4:
+                break;
+            case 5:
                 break;
             default:
                 break;
         }
     }//GEN-LAST:event_btnAgregarActionPerformed
+
+    private void btnDesactivarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDesactivarActionPerformed
+        // TODO add your handling code here:
+        switch(tipoVentana) {
+            case 1: //Tipo id
+                break;
+            case 2: //Doctor
+                ADDoctor bdDoctor = new ADDoctor();
+                if (eliminado) {
+                    int indiceFila = TblGenerica.getSelectedRow();
+                    if (indiceFila >= 0) {
+                        int num = (int) TblGenerica.getValueAt(indiceFila, 0);
+                        bdDoctor.ModificarDoctor(new Doctor(num, txtNombre.getText(), false));
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Debe seleccionar un item.", "ERROR", JOptionPane.ERROR_MESSAGE);
+                    }
+                    bdDoctor.consultarDoctoresEliminados(TblGenerica);
+                } else {
+                    int indiceFila = TblGenerica.getSelectedRow();
+                    if (indiceFila >= 0) {
+                        int num = (int) TblGenerica.getValueAt(indiceFila, 0);
+                        bdDoctor.ModificarDoctor(new Doctor(num, txtNombre.getText(), true));
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Debe seleccionar un item.", "ERROR", JOptionPane.ERROR_MESSAGE);
+                    }
+                    bdDoctor.consultarDoctoresActivos(TblGenerica);
+                }
+                break;
+            case 3: //
+                break;
+            case 4: //
+                break;
+            case 5: //
+                break;
+            default:
+                break;
+        }
+    }//GEN-LAST:event_btnDesactivarActionPerformed
+
+    private void btnCargarEliminadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCargarEliminadosActionPerformed
+        // TODO add your handling code here:
+        switch(tipoVentana) {
+            case 1: //Tipo id
+                break;
+            case 2: //Doctor
+                if (eliminado) {
+                    consultarDoctoresActivos();
+                    btnCargarEliminados.setText("Cargar Eliminados");
+                    txtNombre.setText("");
+                } else {
+                    consultarDoctoresEliminados();
+                    btnCargarEliminados.setText("Cargar Activos");
+                    txtNombre.setText("");
+                }
+                break;
+            case 3: //
+                break;
+            case 4: //
+                break;
+            case 5: //
+                break;
+            default:
+                break;
+        }
+    }//GEN-LAST:event_btnCargarEliminadosActionPerformed
 
     private void consultarTodosTipoId() {
         TableColumn column = TblGenerica.getColumn("Title 3");
@@ -305,13 +449,24 @@ public class PanelGenerico extends javax.swing.JPanel {
         bd.ConsultarTipoIdentificacion(TblGenerica);
     }
     
-    private void consultarDoctores() {
-        TableColumn column = TblGenerica.getColumn("Title 3");
-        TblGenerica.removeColumn(column);
-        column.setHeaderValue("Eliminado");
-        TblGenerica.addColumn(column);
+    private void consultarDoctoresActivos() {
+        if (primeraVez) {
+            TableColumn column = TblGenerica.getColumn("Title 3");
+            TblGenerica.removeColumn(column);
+            column.setHeaderValue("Estado");//Eliminado
+            TblGenerica.addColumn(column);
+        }
         ADDoctor bd = new ADDoctor();
-        bd.consultarDoctor(TblGenerica);
+        bd.consultarDoctoresActivos(TblGenerica);
+        eliminado = false;
+        btnDesactivar.setText("Eliminar");
+    }
+    
+    private void consultarDoctoresEliminados() {
+        ADDoctor bd = new ADDoctor();
+        bd.consultarDoctoresEliminados(TblGenerica);
+        eliminado = true;
+        btnDesactivar.setText("Activar");
     }
     
     private void consultarPracticantes() {

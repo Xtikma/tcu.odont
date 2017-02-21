@@ -31,7 +31,7 @@ public class Menu extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         this.setResizable(false);
         this.setIconImage(new ImageIcon(getClass().getResource("/Recursos/ico.png")).getImage());
-        intercambiarPaneles(0);
+        intercambiarPaneles(2);
     }
     
     /**
@@ -154,7 +154,7 @@ public class Menu extends javax.swing.JFrame {
                     insertarPanel(configCP);
                     break;
                 case 2://Panel Generico
-                    panGen = new PanelGenerico(4);
+                    panGen = new PanelGenerico(2);
                     panGen.setSize(1000, 500);
                     panGen.setLocation(0, 0);
                     insertarPanel(panGen);
