@@ -65,8 +65,9 @@ public class ADDoctor {
         }
         return false;
     }
-
-    public void consultarDoctor(JTable TdDoctor) {
+//borrar
+    
+    public void consultarDoctor(JTable TdDoctor, boolean estado) {
 
         try {
             ResultSet rsDoctores = null;
@@ -77,12 +78,17 @@ public class ADDoctor {
                 modelo.removeRow(i);
             }
            
-            CallableStatement cs = conexion.prepareCall("{call consultar_doctores_eliminados()}");
+            CallableStatement cs = conexion.prepareCall("{call consultar_doctores(?)}");
+            cs.setBoolean(1, estado);
             rsDoctores = cs.executeQuery();
 
+            String estado2 = "Inactivo";
             while (rsDoctores.next()) {
                 try {
-                    modelo.addRow(new Object[]{rsDoctores.getInt(1), rsDoctores.getString(2), rsDoctores.getBoolean(3)});
+                    if (estado) {
+                        estado2 = "Activo";
+                    }
+                    modelo.addRow(new Object[]{rsDoctores.getInt(1), rsDoctores.getString(2), estado2});
                 } catch (SQLException ex) {
                     System.out.println("Mensaje de Error"); 
                 }
@@ -94,7 +100,7 @@ public class ADDoctor {
     }
     
     //Hacer que cuando se consultan los doctores eliminados el valor de la tercera columna sea "Eliminado" y cuando no es eliminado diga "Activo"
-    public void consultarDoctoresActivos(JTable TdDoctor) {
+    /*public void consultarDoctoresActivos(JTable TdDoctor) {
 
         try {
             ResultSet rsDoctores = null;
@@ -146,6 +152,6 @@ public class ADDoctor {
         } catch (SQLException ex) {
             System.out.println(ex.toString());
         }
-    }
+    }*/
 
 }

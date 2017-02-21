@@ -323,9 +323,10 @@ public class PanelGenerico extends javax.swing.JPanel {
                     }
                 }
                 if (eliminado) {
-                    bdDoctor.consultarDoctoresEliminados(TblGenerica);
+                    //bdDoctor.consultarDoctoresEliminados(TblGenerica);
+                    bdDoctor.consultarDoctor(TblGenerica, true);
                 } else {
-                    bdDoctor.consultarDoctoresActivos(TblGenerica);
+                    bdDoctor.consultarDoctor(TblGenerica, false);
                 }
                 break;
             case 3:
@@ -392,7 +393,8 @@ public class PanelGenerico extends javax.swing.JPanel {
                     } else {
                         JOptionPane.showMessageDialog(null, "Debe seleccionar un item.", "ERROR", JOptionPane.ERROR_MESSAGE);
                     }
-                    bdDoctor.consultarDoctoresEliminados(TblGenerica);
+                    //bdDoctor.consultarDoctoresEliminados(TblGenerica);
+                    bdDoctor.consultarDoctor(TblGenerica, true);
                 } else {
                     int indiceFila = TblGenerica.getSelectedRow();
                     if (indiceFila >= 0) {
@@ -401,7 +403,8 @@ public class PanelGenerico extends javax.swing.JPanel {
                     } else {
                         JOptionPane.showMessageDialog(null, "Debe seleccionar un item.", "ERROR", JOptionPane.ERROR_MESSAGE);
                     }
-                    bdDoctor.consultarDoctoresActivos(TblGenerica);
+                    //bdDoctor.consultarDoctoresActivos(TblGenerica);
+                    bdDoctor.consultarDoctor(TblGenerica, false);
                 }
                 break;
             case 3: //
@@ -457,14 +460,16 @@ public class PanelGenerico extends javax.swing.JPanel {
             TblGenerica.addColumn(column);
         }
         ADDoctor bd = new ADDoctor();
-        bd.consultarDoctoresActivos(TblGenerica);
+        //bd.consultarDoctoresActivos(TblGenerica);
+        bd.consultarDoctor(TblGenerica, false);
         eliminado = false;
         btnDesactivar.setText("Eliminar");
     }
     
     private void consultarDoctoresEliminados() {
         ADDoctor bd = new ADDoctor();
-        bd.consultarDoctoresEliminados(TblGenerica);
+        //bd.consultarDoctoresEliminados(TblGenerica);
+        bd.consultarDoctor(TblGenerica, true);
         eliminado = true;
         btnDesactivar.setText("Activar");
     }
