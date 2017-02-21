@@ -658,8 +658,7 @@ public class ConfigCatProc extends javax.swing.JPanel {
             int count = boxCategoria.getItemCount();
             for (int i = 0; i < count; i++) {
                 boxCategoria.removeItemAt(0);
-            }
-            
+            }            
             listaCompleta = access.obtenerCategorias();
             if (listaCompleta.size() != 0) {
                 for (Categoria categoria : listaCompleta) {
