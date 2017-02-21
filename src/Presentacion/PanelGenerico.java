@@ -5,11 +5,16 @@
  */
 package Presentacion;
 
+import AccesoDatos.ADDoctor;
+import AccesoDatos.ADLugarAtencion;
+import AccesoDatos.ADPoblacion;
+import AccesoDatos.ADPracticante;
 import AccesoDatos.ADTipoIdentificacion;
 import Entidades.TipoIdentificacion;
 import java.awt.Font;
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
@@ -21,6 +26,7 @@ import javax.swing.table.TableColumn;
 public class PanelGenerico extends javax.swing.JPanel {
 
     private int tipoVentana = 0;
+    private int accion = 0; //agregar(1) y modificar(2)
     
     /**
      * Creates new form PanelGenerico
@@ -31,13 +37,42 @@ public class PanelGenerico extends javax.swing.JPanel {
         centrarColumans();
         
         panelDatos.setVisible(false);
+        TitledBorder border = null;
         switch (tipoVentana) {
             case 1: //TIpo id
-                TitledBorder border = BorderFactory.createTitledBorder("Tipo de Identificación");
+                border = BorderFactory.createTitledBorder("Tipo de Identificación");
                 border.setTitleFont(new Font("Dialog", Font.BOLD, 14));
                 this.setBorder(border);
                 btnCargarEliminados.setVisible(false);
                 consultarTodosTipoId();
+                break;
+            case 2: //Doctor
+                border = BorderFactory.createTitledBorder("Doctor");
+                border.setTitleFont(new Font("Dialog", Font.BOLD, 14));
+                this.setBorder(border);
+                btnCargarEliminados.setVisible(true);
+                consultarDoctores();
+                break;
+            case 3: //Practicante
+                border = BorderFactory.createTitledBorder("Practicante");
+                border.setTitleFont(new Font("Dialog", Font.BOLD, 14));
+                this.setBorder(border);
+                btnCargarEliminados.setVisible(true);
+                consultarPracticantes();
+                break;
+            case 4: //Población
+                border = BorderFactory.createTitledBorder("Población");
+                border.setTitleFont(new Font("Dialog", Font.BOLD, 14));
+                this.setBorder(border);
+                btnCargarEliminados.setVisible(false);
+                consultarPoblaciones();
+                break;
+            case 5: //Lugar Atención
+                border = BorderFactory.createTitledBorder("Lugar de Atención");
+                border.setTitleFont(new Font("Dialog", Font.BOLD, 14));
+                this.setBorder(border);
+                btnCargarEliminados.setVisible(true);
+                consultarLugaresAtencion();
                 break;
             default:
                 break;
@@ -72,10 +107,7 @@ public class PanelGenerico extends javax.swing.JPanel {
 
         TblGenerica.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+
             },
             new String [] {
                 "Código", "Nombre", "Title 3"
@@ -103,7 +135,12 @@ public class PanelGenerico extends javax.swing.JPanel {
         });
         jScrollPane1.setViewportView(TblGenerica);
 
-        btnAgregar.setText("Agregar");
+        btnAgregar.setText("Agregar Nuevo");
+        btnAgregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarActionPerformed(evt);
+            }
+        });
 
         panelDatos.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Datos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 12))); // NOI18N
         panelDatos.setOpaque(false);
@@ -196,12 +233,16 @@ public class PanelGenerico extends javax.swing.JPanel {
         if (evt.getClickCount() == 2 && !evt.isConsumed()) {
             evt.consume();
 
+            accion = 2;
+            TitledBorder border = BorderFactory.createTitledBorder("Modificar Tipo de Identificación");
+            border.setTitleFont(new Font("Dialog", Font.BOLD, 12));
+            panelDatos.setBorder(border);
+
             if (tipoVentana == 1) {//tipo Id
                 btnDesactivar.setVisible(false);
                 lblVariable.setVisible(false);
                 txtVariable.setVisible(false);
             }
-            btnAgregar.setVisible(false);
             int indiceFila = TblGenerica.getSelectedRow();
             String texto = (TblGenerica.getValueAt(indiceFila, 1)).toString();
             panelDatos.setVisible(true);
@@ -214,21 +255,106 @@ public class PanelGenerico extends javax.swing.JPanel {
         switch (tipoVentana) {
             case 1://Tipo Id
                 ADTipoIdentificacion bd = new ADTipoIdentificacion();
-                int indiceFila = TblGenerica.getSelectedRow();
-                int num = (int)TblGenerica.getValueAt(indiceFila, 0);
-                bd.ModificarTipoIdentificacion(new TipoIdentificacion(num, txtNombre.getText()));
+                if (accion == 1) {//agregar
+                    String nombre = txtNombre.getText();
+                    if (nombre.equals("") || nombre.equals(" ")) {
+                        JOptionPane.showMessageDialog(null, "No puede dejar el nombre en blanco.", "ERROR", JOptionPane.ERROR_MESSAGE);
+                    } else {
+                        bd.InsertarTipoIdentificacion(new TipoIdentificacion(0, nombre));
+                    }
+                } else if (accion == 2) {//modificar
+                    int indiceFila = TblGenerica.getSelectedRow();
+                    if (indiceFila > 0) {
+                        int num = (int) TblGenerica.getValueAt(indiceFila, 0);
+                    bd.ModificarTipoIdentificacion(new TipoIdentificacion(num, txtNombre.getText()));
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Debe seleccionar un item.", "ERROR", JOptionPane.ERROR_MESSAGE);
+                    }
+                }
                 bd.ConsultarTipoIdentificacion(TblGenerica);
                 break;
             default:
                 break;
         }
+        txtNombre.setText("");
     }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
+        // TODO add your handling code here:
+        accion = 1;
+        switch (tipoVentana) {
+            case 1:
+                panelDatos.setVisible(true);
+                lblVariable.setVisible(false);
+                txtVariable.setVisible(false);
+                btnDesactivar.setVisible(false);
+                txtNombre.setText("");
+                TitledBorder border = BorderFactory.createTitledBorder("Nuevo Tipo de Identificación");
+                border.setTitleFont(new Font("Dialog", Font.BOLD, 12));
+                panelDatos.setBorder(border);
+                break;
+            default:
+                break;
+        }
+    }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void consultarTodosTipoId() {
         TableColumn column = TblGenerica.getColumn("Title 3");
         TblGenerica.removeColumn(column);
         ADTipoIdentificacion bd = new ADTipoIdentificacion();
         bd.ConsultarTipoIdentificacion(TblGenerica);
+    }
+    
+    private void consultarDoctores() {
+        TableColumn column = TblGenerica.getColumn("Title 3");
+        TblGenerica.removeColumn(column);
+        column.setHeaderValue("Eliminado");
+        TblGenerica.addColumn(column);
+        ADDoctor bd = new ADDoctor();
+        bd.consultarDoctor(TblGenerica);
+    }
+    
+    private void consultarPracticantes() {
+        TableColumn column = TblGenerica.getColumn("Title 3");
+        TblGenerica.removeColumn(column);
+        column.setHeaderValue("Eliminado");
+        TblGenerica.addColumn(column);
+        ADPracticante bd = new ADPracticante();
+        //bd.consultarPracticante(TblGenerica);
+    }
+    
+    private void consultarPoblaciones() {
+        TableColumn column = TblGenerica.getColumn("Title 3");
+        TblGenerica.removeColumn(column);
+        column.setHeaderValue("Institución");
+        TblGenerica.addColumn(column);
+        
+        TableColumn column2 = new TableColumn();
+        column2.setHeaderValue("Becado");//Ver si es necesario incluirlo en la tabla
+        TblGenerica.addColumn(column2);
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+        TblGenerica.getColumnModel().getColumn(3).setCellRenderer(centerRenderer);
+        
+        ADPoblacion bd = new ADPoblacion();
+        //bd.consultarPoblacion(TblGenerica);
+    }
+    
+    private void consultarLugaresAtencion() {
+        TableColumn column = TblGenerica.getColumn("Title 3");
+        TblGenerica.removeColumn(column);
+        column.setHeaderValue("Descripción");//Ver si es necesario incluirlo en la tabla
+        TblGenerica.addColumn(column);
+        
+        TableColumn column2 = new TableColumn();
+        column2.setHeaderValue("Eliminado");
+        TblGenerica.addColumn(column2);
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+        TblGenerica.getColumnModel().getColumn(3).setCellRenderer(centerRenderer);
+        
+        ADLugarAtencion bd = new ADLugarAtencion();
+        //bd.consultarLugarAtencion(TblGenerica);
     }
     
     private void centrarColumans() {
