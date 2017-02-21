@@ -31,7 +31,7 @@ public class Menu extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         this.setResizable(false);
         this.setIconImage(new ImageIcon(getClass().getResource("/Recursos/ico.png")).getImage());
-        intercambiarPaneles(2);
+        intercambiarPaneles(0);
     }
     
     /**
@@ -138,28 +138,51 @@ public class Menu extends javax.swing.JFrame {
      * Metodo que cambia los paneles en el panel principal de la ventana
      * @param cod numero que indica en el swicth la ventana que se necesita
      */
-    public void intercambiarPaneles(int cod){
+    public void intercambiarPaneles(int cod) {
         try {
-            switch(cod){
+            switch (cod) {
                 case 0: //Menu Principal;
                     menuPrincipal = new MenuPrincipal(this);
                     menuPrincipal.setSize(1000, 500);
                     menuPrincipal.setLocation(0, 0);
                     insertarPanel(menuPrincipal);
                     break;
-                case 1://Categoria y Procedimiento
-                    configCP = new ConfigCatProc();
-                    configCP.setSize(1000, 500);
-                    configCP.setLocation(0, 0);
-                    insertarPanel(configCP);
+                case 1://Panel Tipo ID
+                    panGen = new PanelGenerico(1);
+                    panGen.setSize(1000, 500);
+                    panGen.setLocation(0, 0);
+                    insertarPanel(panGen);
                     break;
-                case 2://Panel Generico
+                case 2://Panel Doctor
                     panGen = new PanelGenerico(2);
                     panGen.setSize(1000, 500);
                     panGen.setLocation(0, 0);
                     insertarPanel(panGen);
                     break;
-                case 3:
+                case 3://Panel Practicante
+                    panGen = new PanelGenerico(3);
+                    panGen.setSize(1000, 500);
+                    panGen.setLocation(0, 0);
+                    insertarPanel(panGen);
+                    break;
+
+                case 4://Panel Población
+                    panGen = new PanelGenerico(4);
+                    panGen.setSize(1000, 500);
+                    panGen.setLocation(0, 0);
+                    insertarPanel(panGen);
+                    break;
+                case 5://Panel Lugar Atención
+                    panGen = new PanelGenerico(5);
+                    panGen.setSize(1000, 500);
+                    panGen.setLocation(0, 0);
+                    insertarPanel(panGen);
+                    break;
+                case 6://Categoria y Procedimiento
+                    configCP = new ConfigCatProc();
+                    configCP.setSize(1000, 500);
+                    configCP.setLocation(0, 0);
+                    insertarPanel(configCP);
                     break;
                 default:
                     break;
