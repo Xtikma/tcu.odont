@@ -29,6 +29,11 @@ public class Categoria {
         procedimientos = new ArrayList<Procedimiento>();
     }
 
+    public Categoria() {
+        procedimientos = new ArrayList<>();
+    }
+    
+
     public int getId() {
         return id;
     }

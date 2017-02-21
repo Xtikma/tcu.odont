@@ -12,9 +12,6 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import javax.swing.JOptionPane;
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -48,7 +45,7 @@ public class ADCategoria {
             }
             
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            System.out.println("Ubicación: insertarCategoria " + e.getMessage());
         }
     }
     
@@ -64,9 +61,11 @@ public class ADCategoria {
                 actualizarProcedimientos(cat.getProcedimientos(), cat.getId());
             }
         } catch (SQLException e) {
+            System.out.println("Ubicación: actualizarCategoria " + e.getMessage());
         }
     }
-    //Editarlo -.-
+    
+    
     public ArrayList<Categoria> obtenerCategorias(){
         try {
             ResultSet rsCategorias = null;
@@ -82,7 +81,7 @@ public class ADCategoria {
                     temp = new Categoria(rsCategorias.getInt(1), rsCategorias.getString(2));
                     lista.add(temp);
                 } catch (SQLException ex) {
-                    System.out.println(ex.getMessage()); //Poner mensaje de error real
+                    System.out.println("Ubicación: obtenerCategorias.while " + ex.getMessage());
                 }
             }
             for(int i = 0; i < lista.size(); i++){
@@ -94,6 +93,7 @@ public class ADCategoria {
             }            
             return lista; 
         } catch (SQLException e) {
+            System.out.println("Ubicación: obtenerCategorias " + e.getMessage());
             return null;
         }
     }
@@ -111,6 +111,7 @@ public class ADCategoria {
                 cc.executeUpdate();
             }
         } catch (SQLException e) {
+            System.out.println("Ubicación: insertarProcedimientos " + e.getMessage());
         }   
     }
     
@@ -124,19 +125,19 @@ public class ADCategoria {
                 if (procedimiento.getId() != 0) {
                     cs = conexion.prepareCall(sqlUpdate);
                     cs.setString(1, procedimiento.getNombre());
-                    cs.setDouble(3, procedimiento.getPrecio());
+                    cs.setDouble(2, procedimiento.getPrecio());
                     cs.setInt(3, procedimiento.getId());
                     cs.executeUpdate();
                 }else{
                     cs = conexion.prepareCall(sqlInsert);
                     cs.setString(1, procedimiento.getNombre());
-                    cs.setDouble(3, procedimiento.getPrecio());
+                    cs.setDouble(2, procedimiento.getPrecio());
                     cs.setInt(3, index);
                     cs.executeUpdate();
                 }
             }            
         } catch (SQLException e) {
-            
+            System.out.println("Ubicación: actualizarProcedimientos " + e.getMessage());
         }
     }
     
@@ -151,7 +152,7 @@ public class ADCategoria {
             cc.setInt(2, idCategoria);
             cc.executeUpdate();
         } catch (SQLException e) {
-            System.err.println(">>" + e.getMessage());
+            System.out.println("Ubicación: moverProcedimientos " + e.getMessage());
         }
     }
     
@@ -168,11 +169,13 @@ public class ADCategoria {
                     temp = new Procedimiento(rs.getInt(1), rs.getString(2), rs.getDouble(3), rs.getInt(4));
                     lista.add(temp);
                 } catch (SQLException ex) {
+                    System.out.println("Ubicación: cargarProcedimientos.while " + ex.getMessage());
                     throw ex;
                 }                
             }
             return lista;
-        } catch (Exception e){
+        } catch (Exception e){            
+            System.out.println("Ubicación: cargarProcedimientos " + e.getMessage());
             return lista;
         }
     }

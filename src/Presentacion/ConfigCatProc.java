@@ -8,7 +8,12 @@ package Presentacion;
 import AccesoDatos.*;
 import Entidades.Categoria;
 import Entidades.Procedimiento;
+import java.awt.event.KeyEvent;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
+import javafx.scene.input.KeyCode;
+import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -16,13 +21,16 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Keylor
  */
+
 public class ConfigCatProc extends javax.swing.JPanel {
 
     private ADCategoria access = new ADCategoria();
     private ArrayList<Categoria> listaCompleta;
     private Categoria seleccionado;
     private Procedimiento editable;
+    //Variable que determina si se esta agregando un procedimiento
     private boolean AddProcedimiento = false;
+    //Variable que determina si estoy editando una categoria o la estoy creando
     private boolean edit = false;
     
     /**
@@ -33,21 +41,6 @@ public class ConfigCatProc extends javax.swing.JPanel {
         cargarCategorias();
     }
     
-    private void cargarCategorias(){
-        try {
-            listaCompleta = access.obtenerCategorias();
-            if(listaCompleta.size() != 0){
-            for (Categoria categoria : listaCompleta) {
-                boxCategoria.addItem(categoria.getNombre());
-            }            
-            }else{
-                JOptionPane.showMessageDialog(this, "Existe un problema con la lista");
-            }
-        } catch (Exception e) {
-            System.out.println(">> " + e.getMessage());
-        }
-    }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -96,6 +89,11 @@ public class ConfigCatProc extends javax.swing.JPanel {
         btnAddCategoria.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         btnAddCategoria.setText("Agregar nueva categoria");
         btnAddCategoria.setPreferredSize(new java.awt.Dimension(180, 30));
+        btnAddCategoria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddCategoriaActionPerformed(evt);
+            }
+        });
 
         panelEdiciónCat.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Edición de categoria", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 14))); // NOI18N
         panelEdiciónCat.setEnabled(false);
@@ -211,10 +209,17 @@ public class ConfigCatProc extends javax.swing.JPanel {
             }
         });
 
-        txtPrecio.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
-        txtPrecio.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
+        txtPrecio.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.00"))));
         txtPrecio.setEnabled(false);
         txtPrecio.setPreferredSize(new java.awt.Dimension(150, 30));
+        txtPrecio.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtPrecioKeyPressed(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtPrecioKeyTyped(evt);
+            }
+        });
 
         javax.swing.GroupLayout panelEditProcLayout = new javax.swing.GroupLayout(panelEditProc);
         panelEditProc.setLayout(panelEditProcLayout);
@@ -367,120 +372,235 @@ public class ConfigCatProc extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    /***
+     * Evento que selecciona la categoria a editar dependiendo la selección del
+     * ComboBox
+     * @param evt cambio de selección del ComboBox
+     */
     private void boxCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boxCategoriaActionPerformed
         for (Categoria categoria : listaCompleta) {
             if (categoria.getNombre() == boxCategoria.getSelectedItem().toString()) {
                 seleccionado = categoria;
             }
         }
+        txtNomCat.setText(seleccionado.getNombre());
         btnEditCat.setEnabled(true);
         cargarProcedimientos();
     }//GEN-LAST:event_boxCategoriaActionPerformed
 
+    /**
+     * Habilita la edición de una categoria habilitando la interfaz necesaria
+     * y establece por medio de "edit" que se editara una categoria existente
+     * @param evt clic en el boton de Editar Categoria
+     */
     private void btnEditCatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditCatActionPerformed
         //activación de interfaz
         activarPanelCategoria(true);
         btnAddCategoria.setEnabled(false);
         btnEditCat.setEnabled(false);
+        boxCategoria.setEnabled(false);
         edit = true;
     }//GEN-LAST:event_btnEditCatActionPerformed
 
+    /**
+     * Habilita la interfaz de usuario para agregar un procedimiento a la categoria
+     * que se esta editando. Tambien establece que se esta agregando un nuevo procedimiento
+     * con la variable "AddProcedimiento"
+     * @param evt clic en el boton Agregar procedimiento
+     */
     private void btnAddProcActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddProcActionPerformed
         AddProcedimiento = true;
         activarPanelProcedimiento(true);
+        btnAddProc.setEnabled(false);
     }//GEN-LAST:event_btnAddProcActionPerformed
 
+    /**
+     * Agrega un procedimiento para editarse que se seleccione en la tabla 
+     * @param evt presionar una fila en la tabla.
+     */
     private void tablaProcedimientosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaProcedimientosMouseClicked
-        boxCategoria.setEnabled(false);
-        if (AddProcedimiento != true && edit == true) {
-            btnAddProc.setEnabled(false);
-            activarPanelProcedimiento(true);
-            btnMoveProc.setEnabled(true);
+        if (AddProcedimiento != true) {
             int selected = tablaProcedimientos.getSelectedRow();
             if (selected >= 0) {
+                btnAddProc.setEnabled(false);
+                activarPanelProcedimiento(true);
+                btnMoveProc.setEnabled(true);
                 editable = new Procedimiento(0,
-                        tablaProcedimientos.getValueAt(selected,0).toString().trim(), 
-                        Double.parseDouble(tablaProcedimientos.getValueAt(selected,1).toString().trim()), 
+                        tablaProcedimientos.getValueAt(selected, 0).toString().trim(),
+                        Double.parseDouble(tablaProcedimientos.getValueAt(selected, 1).toString().trim()),
                         seleccionado.getId());
                 txtNomProc.setText(editable.getNombre());
                 txtPrecio.setText(editable.getPrecio() + "");
-            }            
+            }
         }
     }//GEN-LAST:event_tablaProcedimientosMouseClicked
 
+    /**
+     * llama a la función para almacenar el procedimiento en la lista de la categoria
+     * que se esta editando/creando y en la tabla al mostrar
+     * @param evt clic en el boton Actualizar
+     */
     private void btnSaveProcActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveProcActionPerformed
-        if (AddProcedimiento == true) {
-            editable = new Procedimiento(0,
-                        txtNomProc.getText(), 
-                        Double.parseDouble(txtPrecio.getText().trim()), 
-                        seleccionado.getId());
-            seleccionado.agregarProcedimiento(editable);
-            editable = null;
-        }else{
-            for (int i = 0; i < seleccionado.getProcedimientos().size(); i++) {
-                if (seleccionado.getProcedimientos().get(i).getNombre()
-                        .equals(editable.getNombre())) {
-                    seleccionado.getProcedimientos().get(i).setNombre(txtNomProc.getText().trim());
-                    seleccionado.getProcedimientos().get(i).setPrecio(Double.parseDouble(txtPrecio.getText().trim()));
-                }
-            }
-        }
-        activarPanelProcedimiento(false);
-        AddProcedimiento = false;
-        txtNomProc.setText("");
-        txtPrecio.setText("");
-        cargarProcedimientos();        
+        saveProcedimiento();
     }//GEN-LAST:event_btnSaveProcActionPerformed
 
+    /**
+     * Proceso de transladar un procedimiento de una categoria a otra, además de
+     * eliminarla de la lista interna de la categoria que se esta editando.
+     * @param evt clic en el boton Transladar, solo se activa si se presiona un 
+     * item en la lista de procedimientos
+     */
     private void btnMoveProcActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMoveProcActionPerformed
         String[] categorias = new String[listaCompleta.size()];
         Procedimiento temp = new Procedimiento();
-        for (int i = 0; i < listaCompleta.size(); i++) {
-            categorias[i] = listaCompleta.get(i).getNombre();
-        }
-        String seleccion = (String) JOptionPane.showInputDialog(this, "Seleccione la nueva categoria", 
-                "Mover procedimiento", JOptionPane.INFORMATION_MESSAGE, null,
-                categorias, categorias[0]);
         int categoriaNueva = 0;
-        for (Categoria categoria : listaCompleta) {
-            if (seleccion.equalsIgnoreCase(categoria.getNombre())) {
-                categoriaNueva = categoria.getId();
+
+        for (int i = 0; i < seleccionado.getProcedimientos().size(); i++) {
+            if (seleccionado.getProcedimientos().get(i).getNombre()
+                    .equals(editable.getNombre())) {
+                temp = seleccionado.getProcedimientos().get(i);
             }
         }
-        for (int i = 0; i < seleccionado.getProcedimientos().size(); i++) {
-                if (seleccionado.getProcedimientos().get(i).getNombre()
-                        .equals(editable.getNombre())) {
-                    temp = seleccionado.getProcedimientos().get(i);
-                    seleccionado.eliminarProcedimiento(temp.getId());
+        if (temp.getId() != 0) {
+            for (int i = 0; i < listaCompleta.size(); i++) {
+                categorias[i] = listaCompleta.get(i).getNombre();
+            }
+            String seleccion = (String) JOptionPane.showInputDialog(this, "Seleccione la nueva categoria",
+                    "Mover procedimiento", JOptionPane.INFORMATION_MESSAGE, null,
+                    categorias, categorias[0]);
+            for (Categoria categoria : listaCompleta) {
+                if (seleccion.equalsIgnoreCase(categoria.getNombre())) {
+                    categoriaNueva = categoria.getId();
                 }
-        }
-        access.moverProcedimiento(temp.getId(), categoriaNueva);
-        txtNomProc.setText("");
-        txtPrecio.setText("");
-        activarPanelProcedimiento(AddProcedimiento);
-        cargarProcedimientos();
-    }//GEN-LAST:event_btnMoveProcActionPerformed
-
-    private void btnAplicarCambiosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAplicarCambiosActionPerformed
-        int respuesta = JOptionPane.showConfirmDialog(this, "Recuerde que si no ha aplicado cambios en los procedimientos se perderan.\n¿Desea aplicar los cambios a la categoría?", "Almacenar Categoria", JOptionPane.INFORMATION_MESSAGE);
-        if (respuesta == 0) {
-            activarPanelCategoria(false);
-            activarPanelProcedimiento(false);
+            }
+            seleccionado.eliminarProcedimiento(temp.getId());
+            access.moverProcedimiento(temp.getId(), categoriaNueva);
             txtNomProc.setText("");
             txtPrecio.setText("");
-            btnMoveProc.setEnabled(false);
-            btnAddCategoria.setEnabled(true);
-            boxCategoria.setEnabled(true);
+            activarPanelProcedimiento(AddProcedimiento);
+            cargarProcedimientos();
+        } else {
+            JOptionPane.showMessageDialog(this, "No puede transladar un "
+                    + "procedimiento que no se haya agregado al sistema aún.",
+                    "Operación invalida", 1);
         }
+    }//GEN-LAST:event_btnMoveProcActionPerformed
+
+    /**
+     * Almacena la información que haya editado o agregado en los controles-
+     * @param evt clic en el boton de Aplicar cambios.
+     */
+    private void btnAplicarCambiosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAplicarCambiosActionPerformed
+        int respuesta = JOptionPane.showConfirmDialog(this, "Recuerde que si no "
+                + "ha aplicado cambios en los procedimientos se perderan.\n"
+                + "¿Desea aplicar los cambios a la categoría?", "Almacenar Categoria",
+                JOptionPane.INFORMATION_MESSAGE);
+        if (respuesta == 0) {
+            if (txtNomCat.getText().length() > 0) {
+                if (edit == true) {
+                    seleccionado.setNombre(txtNomCat.getText().trim());
+                    access.actualizarCategoria(seleccionado);
+                }else{
+                    seleccionado.setNombre(txtNomCat.getText().trim());
+                    access.insertarCategoria(seleccionado);  
+                }
+                reiniciar();
+            }else {
+                JOptionPane.showMessageDialog(this, "Se detecto vacio el nombre "
+                        + "de la Categoria, por favor completelo antes de continuar.",
+                        "Se ha detectado campos en blanco", 1);
+                
+            }
+        }      
     }//GEN-LAST:event_btnAplicarCambiosActionPerformed
 
+    /**
+     * Inicia el proceso para agregar una categoria nueva
+     * @param evt clic en el boton Agregar categoria
+     */
+    private void btnAddCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddCategoriaActionPerformed
+        seleccionado = new Categoria();
+        edit = false;
+        activarPanelCategoria(true);
+        txtNomCat.setText("");
+        cargarProcedimientos();
+        boxCategoria.setEnabled(false);
+        btnEditCat.setEnabled(false);
+        btnAddCategoria.setEnabled(false);
+    }//GEN-LAST:event_btnAddCategoriaActionPerformed
+
+    /**
+     * Invalida el ingreso de letras en el campo de Precio para el procedimiento.
+     * @param evt evento que reconoce la tecla tipeada.
+     */
+    private void txtPrecioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPrecioKeyTyped
+        char c = evt.getKeyChar();        
+        if (Character.isLetter(c)) {
+            getToolkit().beep();
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtPrecioKeyTyped
+
+    /**
+     * Acción que detecta el ingreso de coma o punto, tambien valida que al 
+     * presionar enter active la funcion de almacenar un procedimiento.
+     * @param evt Evento que se activa al presionar una tecla
+     */
+    private void txtPrecioKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPrecioKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            saveProcedimiento();
+        }
+        if (evt.getKeyCode() == KeyEvent.VK_COMMA || 
+                evt.getKeyCode() == KeyEvent.VK_DECIMAL ||
+                evt.getKeyCode() == KeyEvent.VK_PERIOD) {
+            if (txtPrecio.getText().contains(".") == true ||
+                    txtPrecio.getText().contains(",") == true) {
+                getToolkit().beep();                
+                txtPrecio.setText(txtPrecio.getText().substring(0, 
+                        txtPrecio.getText().length()-1)); 
+            }
+        }
+    }//GEN-LAST:event_txtPrecioKeyPressed
+
+    private void saveProcedimiento() {
+        int txtPrecioLenght = txtPrecio.getText().length();
+        int txtNomProcLenght = txtNomProc.getText().length();
+
+        if (txtNomProcLenght > 0 && txtPrecioLenght > 0) {
+            if (AddProcedimiento == true) {
+                editable = new Procedimiento(0,
+                        txtNomProc.getText(),
+                        Double.parseDouble(txtPrecio.getText().trim()),
+                        seleccionado.getId());
+                seleccionado.agregarProcedimiento(editable);
+                editable = null;
+            } else {
+                for (int i = 0; i < seleccionado.getProcedimientos().size(); i++) {
+                    if (seleccionado.getProcedimientos().get(i).getNombre()
+                            .equals(editable.getNombre())) {
+                        seleccionado.getProcedimientos().get(i).setNombre(txtNomProc.getText().trim());
+                        seleccionado.getProcedimientos().get(i).setPrecio(Double.parseDouble(txtPrecio.getText().trim()));
+                    }
+                }
+            }
+            activarPanelProcedimiento(false);
+            AddProcedimiento = false;
+            txtNomProc.setText("");
+            txtPrecio.setText("");
+            btnAddProc.setEnabled(true);
+            cargarProcedimientos();
+        }else{
+            JOptionPane.showMessageDialog(this, "Se ha detectado que hay espacios en blanco, por favor completelos para continuar.", "Espacios vacios", 1);
+        }        
+    }
+    
     private void cargarProcedimientos(){
         tablaProcedimientos.setModel(new DefaultTableModel());
         String datos[] = new String[2];
         DefaultTableModel model = new DefaultTableModel();
         model.addColumn("Nombre");
         model.addColumn("Precio");
-        txtNomCat.setText(seleccionado.getNombre());
+        
         if (seleccionado.getProcedimientos() != null) {
             for (Procedimiento procedimiento : seleccionado.getProcedimientos()) {
                 datos[0] = procedimiento.getNombre();
@@ -493,11 +613,15 @@ public class ConfigCatProc extends javax.swing.JPanel {
     
     private void activarPanelProcedimiento(boolean valor){
         txtNomProc.setEnabled(valor);
-        //txtPrecio.setEnabled(valor);
+        txtPrecio.setEnabled(valor);
+        prepararFormato(txtPrecio);
         btnSaveProc.setEnabled(valor);
         lblNomProc.setEnabled(valor);
         lblPrecio.setEnabled(valor);
         panelEditProc.setEnabled(valor);
+        if (AddProcedimiento == false && edit == true) {
+            btnMoveProc.setEnabled(valor);
+        }
     }
     
     private void activarPanelCategoria(boolean valor){
@@ -505,11 +629,51 @@ public class ConfigCatProc extends javax.swing.JPanel {
         btnAddProc.setEnabled(valor);
         tablaProcedimientos.setEnabled(valor);
         txtNomCat.setEnabled(valor);
-        boxCategoria.setEnabled(valor);
+        lblNombre.setEnabled(valor);
+        panelEdiciónCat.setEnabled(valor);
+        panelProcedimientos.setEnabled(valor);       
     }
     
+    private void reiniciar() {
+        activarPanelCategoria(false);
+        activarPanelProcedimiento(false);
+        boxCategoria.setEnabled(true);
+        txtNomProc.setText("");
+        txtPrecio.setText("");
+        btnMoveProc.setEnabled(false);
+        btnAddCategoria.setEnabled(true);
+        cargarCategorias();
+    }
     
-    
+    private void prepararFormato(JFormattedTextField txt){
+        NumberFormat formato = DecimalFormat.getInstance();
+        formato.setMaximumFractionDigits(2);
+        formato.setMinimumFractionDigits(0);
+        txt = new JFormattedTextField(formato);
+        txt.setValue(0.00);
+    }
+
+    private void cargarCategorias(){
+        try {            
+            int count = boxCategoria.getItemCount();
+            for (int i = 0; i < count; i++) {
+                boxCategoria.removeItemAt(0);
+            }
+            
+            listaCompleta = access.obtenerCategorias();
+            if (listaCompleta.size() != 0) {
+                for (Categoria categoria : listaCompleta) {
+                    boxCategoria.addItem(categoria.getNombre());
+                }                
+            } else {
+                JOptionPane.showMessageDialog(this, "Existe un problema con la lista");
+            }
+            boxCategoria.setSelectedIndex(0);
+        } catch (Exception e) {
+            System.out.println(">> " + e.getMessage());
+        }
+    }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> boxCategoria;
