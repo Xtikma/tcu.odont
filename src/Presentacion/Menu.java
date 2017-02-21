@@ -142,7 +142,7 @@ public class Menu extends javax.swing.JFrame {
         try {
             switch(cod){
                 case 0: //Menu Principal;
-                    menuPrincipal = new MenuPrincipal();
+                    menuPrincipal = new MenuPrincipal(this);
                     menuPrincipal.setSize(1000, 500);
                     menuPrincipal.setLocation(0, 0);
                     insertarPanel(menuPrincipal);

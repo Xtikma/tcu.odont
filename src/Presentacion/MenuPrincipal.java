@@ -11,11 +11,13 @@ package Presentacion;
  */
 public class MenuPrincipal extends javax.swing.JPanel {
 
+    private Menu m;
     /**
      * Creates new form MenuPrincipal
      */
-    public MenuPrincipal() {
+    public MenuPrincipal(Menu me) {
         initComponents();
+        m = me;
     }
 
     /**
@@ -80,6 +82,11 @@ public class MenuPrincipal extends javax.swing.JPanel {
 
         btnCatProc.setText("Conf. de Categorias y Procedimientos");
         btnCatProc.setPreferredSize(new java.awt.Dimension(182, 50));
+        btnCatProc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCatProcActionPerformed(evt);
+            }
+        });
         panelSecundarios.add(btnCatProc);
         btnCatProc.setBounds(11, 298, 253, 50);
 
@@ -154,6 +161,10 @@ public class MenuPrincipal extends javax.swing.JPanel {
                 .addContainerGap(242, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnCatProcActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCatProcActionPerformed
+        m.intercambiarPaneles(1);
+    }//GEN-LAST:event_btnCatProcActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
