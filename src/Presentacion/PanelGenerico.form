@@ -30,7 +30,7 @@
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="panelDatos" max="32767" attributes="0"/>
-                  <Component id="jScrollPane1" alignment="0" pref="563" max="32767" attributes="0"/>
+                  <Component id="jScrollPane1" alignment="0" max="32767" attributes="0"/>
                   <Group type="102" alignment="1" attributes="0">
                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
@@ -78,10 +78,11 @@
         <Component class="javax.swing.JTable" name="TblGenerica">
           <Properties>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-              <Table columnCount="3" rowCount="0">
+              <Table columnCount="4" rowCount="0">
                 <Column editable="false" title="C&#xf3;digo" type="java.lang.Integer"/>
                 <Column editable="false" title="Nombre" type="java.lang.String"/>
                 <Column editable="false" title="Title 3" type="java.lang.Object"/>
+                <Column editable="false" title="Title4" type="java.lang.Object"/>
               </Table>
             </Property>
             <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
@@ -101,10 +102,15 @@
                   <Editor/>
                   <Renderer/>
                 </Column>
+                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                  <Title/>
+                  <Editor/>
+                  <Renderer/>
+                </Column>
               </TableColumnModel>
             </Property>
             <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
-              <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
+              <TableHeader reorderingAllowed="false" resizingAllowed="true"/>
             </Property>
           </Properties>
           <Events>
@@ -137,31 +143,36 @@
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace max="32767" attributes="0"/>
-                  <Component id="btnDesactivar" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="btnGuardar" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
-              </Group>
-              <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="lblNombre" alignment="0" min="-2" max="-2" attributes="0"/>
                       <Component id="lblVariable" alignment="0" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="51" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="txtNombre" pref="386" max="32767" attributes="0"/>
-                      <Component id="txtVariable" max="32767" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" attributes="0">
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Component id="txtNombre" pref="386" max="32767" attributes="0"/>
+                              <Component id="txtVariable" max="32767" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="0" pref="40" max="32767" attributes="0"/>
+                      </Group>
+                      <Group type="102" attributes="0">
+                          <Component id="rbBecado" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
+                          <Component id="btnDesactivar" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="btnGuardar" min="-2" max="-2" attributes="0"/>
+                      </Group>
                   </Group>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace max="-2" attributes="0"/>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="lblNombre" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="txtNombre" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -171,10 +182,18 @@
                       <Component id="lblVariable" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="txtVariable" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="btnGuardar" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="btnDesactivar" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" attributes="0">
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="btnDesactivar" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="btnGuardar" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
+                          <Component id="rbBecado" min="-2" max="-2" attributes="0"/>
+                      </Group>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
@@ -191,7 +210,7 @@
         </Component>
         <Component class="javax.swing.JLabel" name="lblVariable">
           <Properties>
-            <Property name="text" type="java.lang.String" value="jLabel2"/>
+            <Property name="text" type="java.lang.String" value="Instituci&#xf3;n:"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="txtVariable">
@@ -211,6 +230,11 @@
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnDesactivarActionPerformed"/>
           </Events>
+        </Component>
+        <Component class="javax.swing.JRadioButton" name="rbBecado">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Becado"/>
+          </Properties>
         </Component>
       </SubComponents>
     </Container>
