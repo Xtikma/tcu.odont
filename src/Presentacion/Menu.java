@@ -23,6 +23,7 @@ public class Menu extends javax.swing.JFrame {
     private MenuPrincipal menuPrincipal;
     private ConfigCatProc configCP;
     private PanelGenerico panGen;
+    private CrearConsulta consulta;
     /**
      * Creates new form Menu
      */
@@ -46,6 +47,8 @@ public class Menu extends javax.swing.JFrame {
         panelBase = new javax.swing.JPanel();
         lbl_icon = new javax.swing.JLabel();
         panelMenu = new javax.swing.JPanel();
+        btnRegresarMenu = new javax.swing.JButton();
+        btnBloquear = new javax.swing.JButton();
         panelPrincipal = new javax.swing.JPanel();
         lblFondo = new javax.swing.JLabel();
 
@@ -76,15 +79,37 @@ public class Menu extends javax.swing.JFrame {
         panelMenu.setMinimumSize(new java.awt.Dimension(1100, 150));
         panelMenu.setPreferredSize(new java.awt.Dimension(1100, 150));
 
+        btnRegresarMenu.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        btnRegresarMenu.setText("Menu principal");
+        btnRegresarMenu.setPreferredSize(new java.awt.Dimension(150, 30));
+        btnRegresarMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegresarMenuActionPerformed(evt);
+            }
+        });
+
+        btnBloquear.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        btnBloquear.setText("Bloquear ");
+        btnBloquear.setPreferredSize(new java.awt.Dimension(150, 30));
+
         javax.swing.GroupLayout panelMenuLayout = new javax.swing.GroupLayout(panelMenu);
         panelMenu.setLayout(panelMenuLayout);
         panelMenuLayout.setHorizontalGroup(
             panelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1090, Short.MAX_VALUE)
+            .addGroup(panelMenuLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnRegresarMenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnBloquear, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(934, Short.MAX_VALUE))
         );
         panelMenuLayout.setVerticalGroup(
             panelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 124, Short.MAX_VALUE)
+            .addGroup(panelMenuLayout.createSequentialGroup()
+                .addComponent(btnRegresarMenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnBloquear, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 46, Short.MAX_VALUE))
         );
 
         panelBase.add(panelMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -150, -1, -1));
@@ -133,6 +158,10 @@ public class Menu extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_lbl_iconMouseReleased
+
+    private void btnRegresarMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarMenuActionPerformed
+        intercambiarPaneles(0);
+    }//GEN-LAST:event_btnRegresarMenuActionPerformed
 
     /**
      * Metodo que cambia los paneles en el panel principal de la ventana
@@ -184,6 +213,12 @@ public class Menu extends javax.swing.JFrame {
                     configCP.setLocation(0, 0);
                     insertarPanel(configCP);
                     break;
+                case 7://Crear consulta
+                    consulta = new CrearConsulta();
+                    consulta.setSize(1000, 500);
+                    consulta.setLocation(0, 0);
+                    insertarPanel(consulta);
+                    break;
                 default:
                     break;
             }
@@ -221,6 +256,8 @@ public class Menu extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBloquear;
+    private javax.swing.JButton btnRegresarMenu;
     private javax.swing.JLabel lblFondo;
     private javax.swing.JLabel lbl_icon;
     private javax.swing.JPanel panelBase;

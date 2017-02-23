@@ -5,19 +5,40 @@
  */
 package Presentacion;
 
+import AccesoDatos.ADCategoria;
+import AccesoDatos.ADDoctor;
+import AccesoDatos.ADPaciente;
+import AccesoDatos.ADPracticante;
+import javax.swing.JFrame;
+import org.jvnet.substance.SubstanceLookAndFeel;
+
 /**
  *
  * @author Keylor
  */
 public class VentanaBusqueda extends javax.swing.JFrame {
+    private ADPaciente accessPaciente;
+    private ADDoctor accessDoctor;
+    private ADPracticante accessPracticante;
+    private ADCategoria accessCategoria;
+    private int idCategoria;
+    
 
     /**
      * Creates new form VentanaBusqueda
      */
-    public VentanaBusqueda() {
+    public VentanaBusqueda(int modo, int idCat) {
         initComponents();
+        generarTabla(modo);
+        idCategoria = idCat;
     }
 
+    private void cargarPacientes(){
+        accessPaciente = new ADPaciente();
+        
+        
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -30,7 +51,7 @@ public class VentanaBusqueda extends javax.swing.JFrame {
         lblTexto = new javax.swing.JLabel();
         txtBuscar = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblGenerica = new javax.swing.JTable();
+        jTable1 = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Busqueda");
@@ -39,7 +60,7 @@ public class VentanaBusqueda extends javax.swing.JFrame {
         setPreferredSize(new java.awt.Dimension(550, 550));
 
         lblTexto.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        lblTexto.setText("Termino de busqueda:");
+        lblTexto.setText("Buscar:");
 
         txtBuscar.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         txtBuscar.setToolTipText("Ingrese texto que coincida con algun elemento de la lista.");
@@ -49,7 +70,7 @@ public class VentanaBusqueda extends javax.swing.JFrame {
             }
         });
 
-        tblGenerica.setModel(new javax.swing.table.DefaultTableModel(
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -60,7 +81,7 @@ public class VentanaBusqueda extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(tblGenerica);
+        jScrollPane1.setViewportView(jTable1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -69,11 +90,11 @@ public class VentanaBusqueda extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 388, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(lblTexto)
                         .addGap(18, 18, 18)
-                        .addComponent(txtBuscar)))
+                        .addComponent(txtBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, 317, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -84,8 +105,8 @@ public class VentanaBusqueda extends javax.swing.JFrame {
                     .addComponent(lblTexto)
                     .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 275, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 295, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -99,45 +120,31 @@ public class VentanaBusqueda extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(VentanaBusqueda.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(VentanaBusqueda.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(VentanaBusqueda.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(VentanaBusqueda.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
+        //<editor-fold defaultstate="collapsed" desc=" TEMA ">
+         JFrame.setDefaultLookAndFeelDecorated(true);
+        SubstanceLookAndFeel.setSkin("org.jvnet.substance.skin.OfficeBlue2007Skin");
         //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new VentanaBusqueda().setVisible(true);
-            }
-        });
     }
     
-    private void generarTabla(){
-        
+    private void generarTabla(int modo){
+        switch(modo){
+            case 0://Paciente
+                break;
+            case 1://Doctor
+                break;
+            case 2://practicante
+                break;
+            case 3://Procedimientos
+                break;
+                
+            
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTable1;
     private javax.swing.JLabel lblTexto;
-    private javax.swing.JTable tblGenerica;
     private javax.swing.JTextField txtBuscar;
     // End of variables declaration//GEN-END:variables
 }

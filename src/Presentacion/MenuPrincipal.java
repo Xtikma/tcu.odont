@@ -98,11 +98,6 @@ public class MenuPrincipal extends javax.swing.JPanel {
 
         btnPoblacion.setText("Configuraciones de Poblaciones");
         btnPoblacion.setPreferredSize(new java.awt.Dimension(182, 50));
-        btnPoblacion.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnPoblacionActionPerformed(evt);
-            }
-        });
         panelSecundarios.add(btnPoblacion);
         btnPoblacion.setBounds(11, 242, 253, 50);
 
@@ -127,19 +122,34 @@ public class MenuPrincipal extends javax.swing.JPanel {
         btnVerConsulta.setOpaque(false);
 
         btnAgregarConsulta.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        btnAgregarConsulta.setText("Agregar consulta");
+        btnAgregarConsulta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/agregarConsulta.png"))); // NOI18N
+        btnAgregarConsulta.setBorderPainted(false);
+        btnAgregarConsulta.setOpaque(false);
+        btnAgregarConsulta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarConsultaActionPerformed(evt);
+            }
+        });
 
         btnPacientes.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        btnPacientes.setText("Conf. Pacientes");
+        btnPacientes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/confPacientes.png"))); // NOI18N
+        btnPacientes.setBorderPainted(false);
+        btnPacientes.setOpaque(false);
 
         btnFiltros.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        btnFiltros.setText("Área de filtros");
+        btnFiltros.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/AreaFiltros.png"))); // NOI18N
+        btnFiltros.setBorderPainted(false);
+        btnFiltros.setOpaque(false);
 
         btnInformes.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        btnInformes.setText("Generar informes");
+        btnInformes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/generarInformes.png"))); // NOI18N
+        btnInformes.setBorderPainted(false);
+        btnInformes.setOpaque(false);
 
         btnBloqueo.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        btnBloqueo.setText("Bloquear sistema");
+        btnBloqueo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/bloquearSistema.png"))); // NOI18N
+        btnBloqueo.setBorderPainted(false);
+        btnBloqueo.setOpaque(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -189,7 +199,7 @@ public class MenuPrincipal extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCatProcActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCatProcActionPerformed
-        m.intercambiarPaneles(1);
+        m.intercambiarPaneles(6);
     }//GEN-LAST:event_btnCatProcActionPerformed
 
     private void btnDoctorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDoctorActionPerformed
@@ -208,9 +218,9 @@ public class MenuPrincipal extends javax.swing.JPanel {
         m.intercambiarPaneles(5);
     }//GEN-LAST:event_btnLugarActionPerformed
 
-    private void btnPoblacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPoblacionActionPerformed
-        m.intercambiarPaneles(4);
-    }//GEN-LAST:event_btnPoblacionActionPerformed
+    private void btnAgregarConsultaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarConsultaActionPerformed
+        m.intercambiarPaneles(7);
+    }//GEN-LAST:event_btnAgregarConsultaActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
