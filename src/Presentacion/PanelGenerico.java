@@ -11,6 +11,7 @@ import AccesoDatos.ADPoblacion;
 import AccesoDatos.ADPracticante;
 import AccesoDatos.ADTipoIdentificacion;
 import Entidades.Doctor;
+import Entidades.LugarAtencion;
 import Entidades.Poblacion;
 import Entidades.Practicante;
 import Entidades.TipoIdentificacion;
@@ -77,7 +78,7 @@ public class PanelGenerico extends javax.swing.JPanel {
                 border.setTitleFont(new Font("Dialog", Font.BOLD, 14));
                 this.setBorder(border);
                 btnCargarEliminados.setVisible(true);
-                consultarLugaresAtencion();
+                consultarLugaresActivos();
                 break;
             default:
                 break;
@@ -307,6 +308,12 @@ public class PanelGenerico extends javax.swing.JPanel {
                 break;
             case 5: //lugar atención
                 rbBecado.setVisible(false);
+                lblVariable.setVisible(false);
+                txtVariable.setVisible(false);
+                border = BorderFactory.createTitledBorder("Modificar Lugar de Atención");
+                border.setTitleFont(new Font("Dialog", Font.BOLD, 12));
+                panelDatos.setBorder(border);
+                btnDesactivar.setVisible(true);
                 break;
             default:
                 break;
@@ -433,6 +440,32 @@ public class PanelGenerico extends javax.swing.JPanel {
                 //</editor-fold>
             case 5:
                 //<editor-fold defaultstate="collapsed" desc="Lugar Atención">
+                ADLugarAtencion bdLugar = new ADLugarAtencion();
+                if (accion == 1) {//agregar
+                    String nombre = txtNombre.getText();
+                    if (nombre.equals("") || nombre.equals(" ")) {
+                        JOptionPane.showMessageDialog(null, "No puede dejar el nombre en blanco.", "ERROR", JOptionPane.ERROR_MESSAGE);
+                    } else {
+                        bdLugar.insertarLugarAtencion(new LugarAtencion(0, nombre, false));
+                    }
+                } else if (accion == 2) {//modificar
+                    int indiceFila = TblGenerica.getSelectedRow();
+                    if (indiceFila >= 0) {
+                        int num = (int) TblGenerica.getValueAt(indiceFila, 0);
+                        boolean estado = false;
+                        if ((TblGenerica.getValueAt(indiceFila, 2).equals("Inactivo"))) {
+                            estado = true;
+                        }
+                        bdLugar.ModificarLugarAtencion(new LugarAtencion(num, txtNombre.getText(), estado));
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Debe seleccionar un item.", "ERROR", JOptionPane.ERROR_MESSAGE);
+                    }
+                }
+                if (eliminado) {
+                    bdLugar.ConsultarLugaresAtención(TblGenerica, true);
+                } else {
+                    bdLugar.ConsultarLugaresAtención(TblGenerica, false);
+                }
                 break;
                 //</editor-fold>
             default:
@@ -490,7 +523,15 @@ public class PanelGenerico extends javax.swing.JPanel {
                 btnDesactivar.setVisible(false);
                 rbBecado.setSelected(false);
                 break;
-            case 5:
+            case 5: //lugar atención
+                panelDatos.setVisible(true);
+                lblVariable.setVisible(false);
+                txtVariable.setVisible(false);
+                txtNombre.setText("");
+                border = BorderFactory.createTitledBorder("Lugar de Atención Nuevo");
+                border.setTitleFont(new Font("Dialog", Font.BOLD, 12));
+                panelDatos.setBorder(border);
+                btnDesactivar.setVisible(false);
                 break;
             default:
                 break;
@@ -552,7 +593,29 @@ public class PanelGenerico extends javax.swing.JPanel {
             case 4: //población
                 //nada
                 break;
-            case 5: //
+            case 5: //lugar atención
+                ADLugarAtencion bdLugar = new ADLugarAtencion();
+                if (eliminado) {
+                    int indiceFila = TblGenerica.getSelectedRow();
+                    if (indiceFila >= 0) {
+                        int num = (int) TblGenerica.getValueAt(indiceFila, 0);
+                        bdLugar.ModificarLugarAtencion(new LugarAtencion(num, txtNombre.getText(), false));
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Debe seleccionar un item.", "ERROR", JOptionPane.ERROR_MESSAGE);
+                    }
+                    //bdDoctor.consultarDoctoresEliminados(TblGenerica);
+                    bdLugar.ConsultarLugaresAtención(TblGenerica, true);
+                } else {
+                    int indiceFila = TblGenerica.getSelectedRow();
+                    if (indiceFila >= 0) {
+                        int num = (int) TblGenerica.getValueAt(indiceFila, 0);
+                        bdLugar.ModificarLugarAtencion(new LugarAtencion(num, txtNombre.getText(), true));
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Debe seleccionar un item.", "ERROR", JOptionPane.ERROR_MESSAGE);
+                    }
+                    //bdDoctor.consultarDoctoresActivos(TblGenerica);
+                    bdLugar.ConsultarLugaresAtención(TblGenerica, false);
+                }
                 break;
             default:
                 break;
@@ -591,7 +654,16 @@ public class PanelGenerico extends javax.swing.JPanel {
             case 4: // Población
                 //nada
                 break;
-            case 5: //
+            case 5: // Lugar de Atención
+                if (eliminado) {
+                    consultarLugaresActivos();
+                    btnCargarEliminados.setText("Cargar Eliminados");
+                    txtNombre.setText("");
+                } else {
+                    consultarLugaresEliminados();
+                    btnCargarEliminados.setText("Cargar Activos");
+                    txtNombre.setText("");
+                }
                 break;
             default:
                 break;
@@ -670,22 +742,46 @@ public class PanelGenerico extends javax.swing.JPanel {
         bd.consultarPoblacion(TblGenerica);
     }
     
-    private void consultarLugaresAtencion() {
-        TableColumn column = TblGenerica.getColumn("Title 3");
-        TblGenerica.removeColumn(column);
-        column.setHeaderValue("Descripción");//Ver si es necesario incluirlo en la tabla
-        TblGenerica.addColumn(column);
-        
-        TableColumn column2 = new TableColumn();
-        column2.setHeaderValue("Eliminado");
-        TblGenerica.addColumn(column2);
-        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
-        centerRenderer.setHorizontalAlignment(JLabel.CENTER);
-        TblGenerica.getColumnModel().getColumn(3).setCellRenderer(centerRenderer);
-        
+    private void consultarLugaresActivos() {
+        if (primeraVez) {
+            TableColumn column = TblGenerica.getColumn("Title 3");
+            TblGenerica.removeColumn(column);
+            column.setHeaderValue("Estado");//Eliminado
+            TblGenerica.addColumn(column);
+            TableColumn column2 = TblGenerica.getColumn("Title4");
+            TblGenerica.removeColumn(column2);
+        }
         ADLugarAtencion bd = new ADLugarAtencion();
-        //bd.consultarLugarAtencion(TblGenerica);
+        //bd.consultarDoctoresActivos(TblGenerica);
+        bd.ConsultarLugaresAtención(TblGenerica, false);
+        eliminado = false;
+        btnDesactivar.setText("Eliminar");
     }
+    
+    private void consultarLugaresEliminados() {
+        ADLugarAtencion bd = new ADLugarAtencion();
+        //bd.consultarDoctoresEliminados(TblGenerica);
+        bd.ConsultarLugaresAtención(TblGenerica, true);
+        eliminado = true;
+        btnDesactivar.setText("Activar");
+    }
+    
+//    private void consultarLugaresAtencion() {
+//        TableColumn column = TblGenerica.getColumn("Title 3");
+//        TblGenerica.removeColumn(column);
+//        column.setHeaderValue("Descripción");//Ver si es necesario incluirlo en la tabla
+//        TblGenerica.addColumn(column);
+//        
+//        TableColumn column2 = new TableColumn();
+//        column2.setHeaderValue("Eliminado");
+//        TblGenerica.addColumn(column2);
+//        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+//        centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+//        TblGenerica.getColumnModel().getColumn(3).setCellRenderer(centerRenderer);
+//        
+//        ADLugarAtencion bd = new ADLugarAtencion();
+//        //bd.consultarLugarAtencion(TblGenerica);
+//    }
     
     private void centrarColumans() {
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
