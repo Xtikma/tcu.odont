@@ -12,7 +12,10 @@ package AccesoDatos;
 import Entidades.Practicante;
 import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 public class ADPracticante {
 
@@ -61,5 +64,38 @@ public class ADPracticante {
             System.out.println(ex.toString());
         }
         return false;
+    }
+    
+    public void consultarPracticante(JTable tblPracticante, boolean estado) {
+        try {
+            ResultSet rsPracticantes = null;
+            DefaultTableModel modelo = (DefaultTableModel) tblPracticante.getModel();
+            
+            int a = modelo.getRowCount() - 1;
+            for (int i = a; i >= 0; i--) {
+                modelo.removeRow(i);
+            }
+           
+            CallableStatement cs = conexion.prepareCall("{call consultar_practicante(?)}");
+            cs.setBoolean(1, estado);
+            rsPracticantes = cs.executeQuery();
+
+            String estado2 = "Activo";
+            while (rsPracticantes.next()) {
+                try {
+                    if ((rsPracticantes.getBoolean(3))) {
+                        estado2 = "Inactivo";
+                    } else {
+                        estado2 = "Activo";
+                    }
+                    modelo.addRow(new Object[]{rsPracticantes.getInt(1), rsPracticantes.getString(2), estado2});
+                } catch (SQLException ex) {
+                    System.out.println("Mensaje de Error"); 
+                }
+            }
+            tblPracticante.setModel(modelo);
+        } catch (SQLException ex) {
+            System.out.println(ex.toString());
+        }
     }
 }

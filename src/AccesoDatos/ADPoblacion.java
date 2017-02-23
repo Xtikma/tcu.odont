@@ -9,6 +9,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 public class ADPoblacion {
     
@@ -81,5 +83,37 @@ public class ADPoblacion {
             JOptionPane.showMessageDialog(null, "Ha ocurrido un error. Detalle:\n"+ex.toString(), "ERROR", JOptionPane.ERROR_MESSAGE);
         }
         return null;
+    }
+    
+    public void consultarPoblacion(JTable tblPoblacion) {
+        try {
+            ResultSet rsPoblacion = null;
+            DefaultTableModel modelo = (DefaultTableModel) tblPoblacion.getModel();
+            
+            int a = modelo.getRowCount() - 1;
+            for (int i = a; i >= 0; i--) {
+                modelo.removeRow(i);
+            }
+           
+            CallableStatement cs = conexion.prepareCall("{call consultar_poblacion()}");
+            rsPoblacion = cs.executeQuery();
+
+            String estado2 = "No";
+            while (rsPoblacion.next()) {
+                try {
+                    if ((rsPoblacion.getBoolean(4) == true)) {
+                        estado2 = "Si";
+                    } else {
+                        estado2 = "No";
+                    }
+                    modelo.addRow(new Object[]{rsPoblacion.getInt(1), rsPoblacion.getString(2), rsPoblacion.getString(3), estado2});
+                } catch (SQLException ex) {
+                    System.out.println("Mensaje de Error asd"); 
+                }
+            }
+            tblPoblacion.setModel(modelo);
+        } catch (SQLException ex) {
+            System.out.println(ex.toString());
+        }
     }
 }

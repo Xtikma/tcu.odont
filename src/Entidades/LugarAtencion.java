@@ -13,16 +13,14 @@ public class LugarAtencion {
     
     private int idLugarAtencion;
     private String lugar;
-    private String descripcion;
     private boolean eliminado;
 
     public LugarAtencion() {
     }
 
-    public LugarAtencion(int idLugarAtencion, String lugar, String descripcion, boolean eliminado) {
+    public LugarAtencion(int idLugarAtencion, String lugar, boolean eliminado) {
         this.idLugarAtencion = idLugarAtencion;
         this.lugar = lugar;
-        this.descripcion = descripcion;
         this.eliminado = eliminado;
     }
 
@@ -52,20 +50,6 @@ public class LugarAtencion {
      */
     public void setLugar(String lugar) {
         this.lugar = lugar;
-    }
-
-    /**
-     * @return the descripcion
-     */
-    public String getDescripcion() {
-        return descripcion;
-    }
-
-    /**
-     * @param descripcion the descripcion to set
-     */
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
     }
 
     /**

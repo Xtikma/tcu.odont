@@ -65,10 +65,8 @@ public class ADDoctor {
         }
         return false;
     }
-//borrar
-    
-    public void consultarDoctor(JTable TdDoctor, boolean estado) {
 
+    public void consultarDoctor(JTable TdDoctor, boolean estado) {
         try {
             ResultSet rsDoctores = null;
             DefaultTableModel modelo = (DefaultTableModel) TdDoctor.getModel();
@@ -82,10 +80,12 @@ public class ADDoctor {
             cs.setBoolean(1, estado);
             rsDoctores = cs.executeQuery();
 
-            String estado2 = "Inactivo";
+            String estado2 = "Activo";
             while (rsDoctores.next()) {
                 try {
-                    if (estado) {
+                    if ((rsDoctores.getBoolean(3))) {
+                        estado2 = "Inactivo";
+                    } else {
                         estado2 = "Activo";
                     }
                     modelo.addRow(new Object[]{rsDoctores.getInt(1), rsDoctores.getString(2), estado2});
@@ -98,60 +98,4 @@ public class ADDoctor {
             System.out.println(ex.toString());
         }
     }
-    
-    //Hacer que cuando se consultan los doctores eliminados el valor de la tercera columna sea "Eliminado" y cuando no es eliminado diga "Activo"
-    /*public void consultarDoctoresActivos(JTable TdDoctor) {
-
-        try {
-            ResultSet rsDoctores = null;
-            DefaultTableModel modelo = (DefaultTableModel) TdDoctor.getModel();
-            
-            int a = modelo.getRowCount() - 1;
-            for (int i = a; i >= 0; i--) {
-                modelo.removeRow(i);
-            }
-           
-            CallableStatement cs = conexion.prepareCall("{call consultar_doctores_activos()}");
-            rsDoctores = cs.executeQuery();
-
-            while (rsDoctores.next()) {
-                try {
-                    modelo.addRow(new Object[]{rsDoctores.getInt(1), rsDoctores.getString(2), "Activo"});
-                } catch (SQLException ex) {
-                    System.out.println("Mensaje de Error"); 
-                }
-            }
-            TdDoctor.setModel(modelo);
-        } catch (SQLException ex) {
-            System.out.println(ex.toString());
-        }
-    }
-    
-    public void consultarDoctoresEliminados(JTable TdDoctor) {
-
-        try {
-            ResultSet rsDoctores = null;
-            DefaultTableModel modelo = (DefaultTableModel) TdDoctor.getModel();
-            
-            int a = modelo.getRowCount() - 1;
-            for (int i = a; i >= 0; i--) {
-                modelo.removeRow(i);
-            }
-           
-            CallableStatement cs = conexion.prepareCall("{call consultar_doctores_eliminados()}");
-            rsDoctores = cs.executeQuery();
-
-            while (rsDoctores.next()) {
-                try {
-                    modelo.addRow(new Object[]{rsDoctores.getInt(1), rsDoctores.getString(2), "Inactivo"});
-                } catch (SQLException ex) {
-                    System.out.println("Mensaje de Error"); 
-                }
-            }
-            TdDoctor.setModel(modelo);
-        } catch (SQLException ex) {
-            System.out.println(ex.toString());
-        }
-    }*/
-
 }
