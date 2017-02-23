@@ -22,20 +22,21 @@ public class VentanaBusqueda extends javax.swing.JFrame {
     private ADPracticante accessPracticante;
     private ADCategoria accessCategoria;
     private int idCategoria;
-    
+    private CrearConsulta origen;
 
     /**
      * Creates new form VentanaBusqueda
      */
-    public VentanaBusqueda(int modo, int idCat) {
+    public VentanaBusqueda(int modo, int idCat, CrearConsulta ori) {
         initComponents();
+        DefinirTema();
         generarTabla(modo);
         idCategoria = idCat;
+        origen = ori;
     }
 
     private void cargarPacientes(){
-        accessPaciente = new ADPaciente();
-        
+        accessPaciente = new ADPaciente();       
         
     }
     
@@ -115,15 +116,14 @@ public class VentanaBusqueda extends javax.swing.JFrame {
     private void txtBuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyReleased
         //realiza la busqueda
     }//GEN-LAST:event_txtBuscarKeyReleased
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        //<editor-fold defaultstate="collapsed" desc=" TEMA ">
-         JFrame.setDefaultLookAndFeelDecorated(true);
-        SubstanceLookAndFeel.setSkin("org.jvnet.substance.skin.OfficeBlue2007Skin");
-        //</editor-fold>
+    
+    private void DefinirTema(){
+        try {
+            JFrame.setDefaultLookAndFeelDecorated(true);
+            SubstanceLookAndFeel.setSkin("org.jvnet.substance.skin.OfficeBlue2007Skin");
+        } catch (Exception e) {
+            System.out.println("->" + e.getMessage());
+        }
     }
     
     private void generarTabla(int modo){
