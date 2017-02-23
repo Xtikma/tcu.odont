@@ -2,10 +2,13 @@
 package AccesoDatos;
 
 import Entidades.Paciente;
+import Entidades.Poblacion;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -130,5 +133,32 @@ public class ADPaciente {
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Ha ocurrido un error. Detalle:\n"+ex.toString(), "ERROR", JOptionPane.ERROR_MESSAGE);
         }
+    }
+    
+    public List<Paciente> ConsultarPacientesActivos() {
+        try {
+            ResultSet rsPaciente = null;
+
+            CallableStatement cs = conexion.prepareCall("{call consultar_pacientes_activos()}");
+            rsPaciente = cs.executeQuery();
+            List<Paciente> listaPaciente = new ArrayList();
+            while (rsPaciente.next()) {
+                try {
+                    Paciente paciente = new Paciente(rsPaciente.getInt(1), rsPaciente.getString(2), rsPaciente.getString(3), rsPaciente.getString(4), rsPaciente.getString(5),
+                            rsPaciente.getString(6), rsPaciente.getString(7), rsPaciente.getInt(8), rsPaciente.getInt(9), rsPaciente.getString(10),
+                            rsPaciente.getBoolean(11), rsPaciente.getBoolean(12));
+                    paciente.setNombreTipoId(rsPaciente.getString(13));
+                    paciente.setNombrePoblacion(rsPaciente.getString(14));
+                    listaPaciente.add(paciente);
+                } catch (SQLException ex) {
+                    JOptionPane.showMessageDialog(null, "Ha ocurrido un error. Detalle:\n" + ex.toString(), "ERROR", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+            conexion.close();
+            return listaPaciente;
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error. Detalle:\n" + ex.toString(), "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+        return null;
     }
 }
