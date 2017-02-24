@@ -654,10 +654,11 @@ public class ConfigCatProc extends javax.swing.JPanel {
     }
 
     private void cargarCategorias(){
-        try {            
+        try {
+            boxCategoria.setEnabled(true);
             int count = boxCategoria.getItemCount();
-            for (int i = 0; i < count; i++) {
-                boxCategoria.removeItemAt(0);
+            for (int i = 0; i > count; i++) {
+                boxCategoria.removeItemAt(i);
             }            
             listaCompleta = access.obtenerCategorias();
             if (listaCompleta.size() != 0) {
