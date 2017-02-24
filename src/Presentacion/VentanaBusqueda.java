@@ -5,11 +5,11 @@
  */
 package Presentacion;
 
-import AccesoDatos.ADCategoria;
-import AccesoDatos.ADDoctor;
-import AccesoDatos.ADPaciente;
-import AccesoDatos.ADPracticante;
+import AccesoDatos.*;
+import Entidades.*;
+import java.util.List;
 import javax.swing.JFrame;
+import javax.swing.table.DefaultTableModel;
 import org.jvnet.substance.SubstanceLookAndFeel;
 
 /**
@@ -21,8 +21,13 @@ public class VentanaBusqueda extends javax.swing.JFrame {
     private ADDoctor accessDoctor;
     private ADPracticante accessPracticante;
     private ADCategoria accessCategoria;
+    private ADPoblacion accessPoblacion;
     private int idCategoria;
     private CrearConsulta origen;
+    private List<Paciente> pacientes;
+    private List<Poblacion> poblaciones;
+    
+    private int mostrando;
 
     /**
      * Creates new form VentanaBusqueda
@@ -35,10 +40,39 @@ public class VentanaBusqueda extends javax.swing.JFrame {
         origen = ori;
     }
 
+    // <editor-fold desc=" Metodos con pacientes ">
     private void cargarPacientes(){
-        accessPaciente = new ADPaciente();       
+        accessPaciente = new ADPaciente();
+        accessPoblacion = new ADPoblacion();
+        pacientes = accessPaciente.ConsultarPacientesActivos();
+        poblaciones = accessPoblacion.ConsultarPoblacion();
         
+        for (Poblacion poblacion : poblaciones) {
+            boxClasificacion.addItem(poblacion.getNombre());
+        }
+        cargarTblPacientes(boxClasificacion.getSelectedItem().toString().trim());
     }
+    
+    private void cargarTblPacientes(String idPob){
+        tblGenerica.setModel(new DefaultTableModel());
+        DefaultTableModel model = new DefaultTableModel();
+        model.addColumn("Identificación");
+        model.addColumn("Nombre paciente");
+        model.addColumn("Edad");
+        model.addColumn("Carné");
+        
+        String[] fila = new String[4];
+        for (Paciente paciente : pacientes) {
+            if (paciente.getNombrePoblacion().equals(idPob) == true) {
+                fila[0] = paciente.getValorIdentificacion();
+                fila[1] = paciente.getNombre() + " " + paciente.getPrimerApellido();
+                fila[3] = paciente.getEdad() + "";
+                fila[4] = paciente.getCarne() + "";
+            }
+        }
+        tblGenerica.setModel(model);       
+    }    
+    // </editor-fold>
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -52,7 +86,8 @@ public class VentanaBusqueda extends javax.swing.JFrame {
         lblTexto = new javax.swing.JLabel();
         txtBuscar = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblGenerica = new javax.swing.JTable();
+        boxClasificacion = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Busqueda");
@@ -71,7 +106,7 @@ public class VentanaBusqueda extends javax.swing.JFrame {
             }
         });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblGenerica.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -82,7 +117,7 @@ public class VentanaBusqueda extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tblGenerica);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -91,11 +126,13 @@ public class VentanaBusqueda extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 388, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(lblTexto)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, 317, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(boxClasificacion, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -104,7 +141,8 @@ public class VentanaBusqueda extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblTexto)
-                    .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(boxClasificacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 295, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -126,25 +164,35 @@ public class VentanaBusqueda extends javax.swing.JFrame {
         }
     }
     
+    
+    // <editor-fold desc=" Metodos genericos ">
     private void generarTabla(int modo){
+        mostrando = modo;
+        
         switch(modo){
             case 0://Paciente
+                cargarPacientes();
                 break;
             case 1://Doctor
                 break;
             case 2://practicante
                 break;
             case 3://Procedimientos
-                break;
-                
+                break;              
             
         }
     }
+    
+    
+    // </editor-fold>
+    
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> boxClasificacion;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JLabel lblTexto;
+    private javax.swing.JTable tblGenerica;
     private javax.swing.JTextField txtBuscar;
     // End of variables declaration//GEN-END:variables
 }
