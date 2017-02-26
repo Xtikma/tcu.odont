@@ -45,17 +45,23 @@ public class VentanaBusqueda extends javax.swing.JFrame {
     private void cargarPacientes(){
         try {
             accessPaciente = new ADPaciente();
-        accessPoblacion = new ADPoblacion();
-        pacientes = accessPaciente.ConsultarPacientesActivos();
-        poblaciones = accessPoblacion.ConsultarPoblacion();
-        
-        for (Poblacion poblacion : poblaciones) {
-            boxClasificacion.addItem(poblacion.getNombre());
-        }
-        cargarTblPacientes(boxClasificacion.getSelectedItem().toString().trim());
+            accessPoblacion = new ADPoblacion();
+            pacientes = accessPaciente.ConsultarPacientesActivos();
+            poblaciones = accessPoblacion.ConsultarPoblacion();
+
+            if (pacientes.size() > 0) {
+                for (Poblacion poblacion : poblaciones) {
+                    boxClasificacion.addItem(poblacion.getNombre());
+                }
+                cargarTblPacientes(boxClasificacion.getSelectedItem().toString().trim());
+            }else{
+                JOptionPane.showMessageDialog(this, "No hay pacientes agregados", "Lista vacia", 1);
+                this.dispose();
+            }
+            
         } catch (Exception e) {
             JOptionPane.showMessageDialog(origen, "Existe un problema con los elementos a consultar.\n"
-            + "Revise que se hayan cargado con anterioridad.", "Problema al cargar elementos", 1);
+                    + "Revise que se hayan cargado con anterioridad.", "Problema al cargar elementos", 1);
             this.dispose();
         }
         
@@ -116,13 +122,13 @@ public class VentanaBusqueda extends javax.swing.JFrame {
 
         tblGenerica.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {},
+                {},
+                {},
+                {}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+
             }
         ));
         jScrollPane1.setViewportView(tblGenerica);

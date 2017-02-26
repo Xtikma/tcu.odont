@@ -307,14 +307,7 @@ public class VPaciente extends javax.swing.JDialog {
                                 .addComponent(RbMasculino)
                                 .addGap(18, 18, 18)
                                 .addComponent(RbFemenino))
-                            .addComponent(LblSApellido)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel4)
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(TxtIdentificacion, javax.swing.GroupLayout.DEFAULT_SIZE, 86, Short.MAX_VALUE)
-                                    .addComponent(CbTipoId, 0, 86, Short.MAX_VALUE)
-                                    .addComponent(TxtEdad))))
+                            .addComponent(LblSApellido))
                         .addGap(116, 116, 116))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(LblNombre)
@@ -358,7 +351,16 @@ public class VPaciente extends javax.swing.JDialog {
                                     .addComponent(jLabel11)
                                     .addGap(132, 132, 132)))
                             .addComponent(jLabel13))
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel4)
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(TxtIdentificacion, javax.swing.GroupLayout.DEFAULT_SIZE, 168, Short.MAX_VALUE)
+                            .addComponent(TxtEdad)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(CbTipoId, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addContainerGap())))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -546,7 +548,7 @@ public class VPaciente extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                VPaciente dialog = new VPaciente(new javax.swing.JFrame(), true, 1);
+                VPaciente dialog = new VPaciente(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {

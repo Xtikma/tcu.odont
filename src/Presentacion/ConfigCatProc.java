@@ -666,7 +666,7 @@ public class ConfigCatProc extends javax.swing.JPanel {
                     boxCategoria.addItem(categoria.getNombre());
                 }                
             } else {
-                JOptionPane.showMessageDialog(this, "Existe un problema con la lista");
+                JOptionPane.showMessageDialog(this, "No se ha cargado anteriormente categorias", "Lista vacia", 1);
             }
             boxCategoria.setSelectedIndex(0);
         } catch (Exception e) {
