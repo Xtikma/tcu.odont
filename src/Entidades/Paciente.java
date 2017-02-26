@@ -16,8 +16,15 @@ public class Paciente {
     private boolean primerIngreso;
     private boolean eliminado;
     
+    private Poblacion poblacion;
     private String nombreTipoId;
     private String nombrePoblacion;
+
+    public Paciente() {
+        poblacion = new Poblacion();
+    }
+    
+    
 
     public Paciente(int id, String fechaNacimiento, String nombre, String primerApellido, String segundoApellido,
             String valorIdentificacion, String genero, int beca, int edad, String carne, boolean primerIngreso, boolean eliminado) {
@@ -146,4 +153,16 @@ public class Paciente {
     public void setNombrePoblacion(String nombrePoblacion) {
         this.nombrePoblacion = nombrePoblacion;
     }
+
+    public void setPoblacion(int id, String nombre, String institucion, boolean becado) {
+        poblacion = new Poblacion(id, nombre, institucion, becado);
+    }
+
+    public Poblacion getPoblacion() {
+        return poblacion;
+    }
+    
+    
+    
+    
 }

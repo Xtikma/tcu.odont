@@ -144,11 +144,20 @@ public class ADPaciente {
             List<Paciente> listaPaciente = new ArrayList();
             while (rsPaciente.next()) {
                 try {
-                    Paciente paciente = new Paciente(rsPaciente.getInt(1), rsPaciente.getString(2), rsPaciente.getString(3), rsPaciente.getString(4), rsPaciente.getString(5),
-                            rsPaciente.getString(6), rsPaciente.getString(7), rsPaciente.getInt(8), rsPaciente.getInt(9), rsPaciente.getString(10),
-                            rsPaciente.getBoolean(11), rsPaciente.getBoolean(12));
-                    paciente.setNombreTipoId(rsPaciente.getString(13));
-                    paciente.setNombrePoblacion(rsPaciente.getString(14));
+                    Paciente paciente = new Paciente();
+                    paciente.setId(rsPaciente.getInt(1));
+                    paciente.setNombre(rsPaciente.getString(2));
+                    paciente.setPrimerApellido(rsPaciente.getString(3));
+                    paciente.setSegundoApellido(rsPaciente.getString(4));
+                    paciente.setFechaNacimiento(rsPaciente.getDate(5).toString());
+                    paciente.setEdad(rsPaciente.getInt(6));
+                    paciente.setValorIdentificacion(rsPaciente.getString(7));
+                    paciente.setGenero(rsPaciente.getString(8));
+                    paciente.setBeca(rsPaciente.getInt(9));
+                    paciente.setPrimerIngreso(rsPaciente.getBoolean(10));
+                    paciente.setEliminado(rsPaciente.getBoolean(11));
+                    paciente.setPoblacion(rsPaciente.getInt(12), rsPaciente.getString(13)
+                            , rsPaciente.getString(14), rsPaciente.getBoolean(15));
                     listaPaciente.add(paciente);
                 } catch (SQLException ex) {
                     JOptionPane.showMessageDialog(null, "Ha ocurrido un error. Detalle:\n" + ex.toString(), "ERROR", JOptionPane.ERROR_MESSAGE);
