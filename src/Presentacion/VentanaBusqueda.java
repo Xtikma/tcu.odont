@@ -27,6 +27,7 @@ public class VentanaBusqueda extends javax.swing.JFrame {
     private CrearConsulta origen;
     private List<Paciente> pacientes;
     private List<Poblacion> poblaciones;
+    private boolean desactivado = true;
     
     private int mostrando;
 
@@ -53,16 +54,16 @@ public class VentanaBusqueda extends javax.swing.JFrame {
                     boxClasificacion.addItem(poblacion.getNombre());
                 }
                 cargarTblPacientes(boxClasificacion.getSelectedItem().toString().trim());
+                desactivado = false;
             }else{
                 JOptionPane.showMessageDialog(this, "No hay pacientes agregados", "Lista vacia", 1);
-                this.dispose();
             }
             
         } catch (Exception e) {
             JOptionPane.showMessageDialog(origen, "Existe un problema con los elementos a consultar.\n"
                     + "Revise que se hayan cargado con anterioridad.", "Problema al cargar elementos", 1);
-            this.dispose();
         }
+        
         
     }
     
@@ -104,7 +105,7 @@ public class VentanaBusqueda extends javax.swing.JFrame {
     // </editor-fold>
     
     
-    // <editor-fold desc=" Metodos con Doctor ">
+    // <editor-fold desc=" Metodos con Practicantes ">
     
     private void cargarPracticantes(){
         boxClasificacion.setEnabled(false);
@@ -210,15 +211,18 @@ public class VentanaBusqueda extends javax.swing.JFrame {
     }//GEN-LAST:event_txtBuscarKeyReleased
 
     private void boxClasificacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boxClasificacionActionPerformed
-        switch(mostrando){
-            case 0:
-                cargarTblPacientes(boxClasificacion.getSelectedItem().toString().trim());
-                break;
-            case 3://Procedimientos
-                break;
-            default:
-                break;                
+        if (desactivado == false) {
+            switch (mostrando) {
+                case 0:
+                    cargarTblPacientes(boxClasificacion.getSelectedItem().toString().trim());
+                    break;
+                case 3://Procedimientos
+                    break;
+                default:
+                    break;
+            }
         }
+        
     }//GEN-LAST:event_boxClasificacionActionPerformed
     
     private void DefinirTema(){
@@ -249,8 +253,7 @@ public class VentanaBusqueda extends javax.swing.JFrame {
                 break;              
             
         }
-    }
-    
+    }   
     
     
     // </editor-fold>

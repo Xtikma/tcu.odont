@@ -32,7 +32,7 @@ public class Menu extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         this.setResizable(false);
         this.setIconImage(new ImageIcon(getClass().getResource("/Recursos/ico.png")).getImage());
-        intercambiarPaneles(1);
+        intercambiarPaneles(0);
     }
     
     /**
@@ -49,6 +49,7 @@ public class Menu extends javax.swing.JFrame {
         panelMenu = new javax.swing.JPanel();
         btnRegresarMenu = new javax.swing.JButton();
         btnBloquear = new javax.swing.JButton();
+        btnAgregarPaciente = new javax.swing.JButton();
         panelPrincipal = new javax.swing.JPanel();
         lblFondo = new javax.swing.JLabel();
 
@@ -75,9 +76,9 @@ public class Menu extends javax.swing.JFrame {
 
         panelMenu.setBackground(new java.awt.Color(102, 204, 255));
         panelMenu.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Menu", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 14), new java.awt.Color(255, 255, 255))); // NOI18N
-        panelMenu.setMaximumSize(new java.awt.Dimension(1100, 150));
-        panelMenu.setMinimumSize(new java.awt.Dimension(1100, 150));
-        panelMenu.setPreferredSize(new java.awt.Dimension(1100, 150));
+        panelMenu.setMaximumSize(new java.awt.Dimension(1090, 100));
+        panelMenu.setMinimumSize(new java.awt.Dimension(1090, 100));
+        panelMenu.setPreferredSize(new java.awt.Dimension(1090, 100));
 
         btnRegresarMenu.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         btnRegresarMenu.setText("Menu principal");
@@ -92,6 +93,15 @@ public class Menu extends javax.swing.JFrame {
         btnBloquear.setText("Bloquear ");
         btnBloquear.setPreferredSize(new java.awt.Dimension(150, 30));
 
+        btnAgregarPaciente.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        btnAgregarPaciente.setText("Nuevo Paciente");
+        btnAgregarPaciente.setPreferredSize(new java.awt.Dimension(150, 30));
+        btnAgregarPaciente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarPacienteActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout panelMenuLayout = new javax.swing.GroupLayout(panelMenu);
         panelMenu.setLayout(panelMenuLayout);
         panelMenuLayout.setHorizontalGroup(
@@ -99,20 +109,25 @@ public class Menu extends javax.swing.JFrame {
             .addGroup(panelMenuLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(panelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnRegresarMenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(panelMenuLayout.createSequentialGroup()
+                        .addComponent(btnRegresarMenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnAgregarPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(btnBloquear, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(934, Short.MAX_VALUE))
+                .addContainerGap(756, Short.MAX_VALUE))
         );
         panelMenuLayout.setVerticalGroup(
             panelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelMenuLayout.createSequentialGroup()
-                .addComponent(btnRegresarMenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGroup(panelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnRegresarMenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnAgregarPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnBloquear, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 46, Short.MAX_VALUE))
+                .addGap(36, 36, 36))
         );
 
-        panelBase.add(panelMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -150, -1, -1));
+        panelBase.add(panelMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -100, -1, -1));
 
         panelPrincipal.setOpaque(false);
         panelPrincipal.setPreferredSize(new java.awt.Dimension(1000, 500));
@@ -148,12 +163,12 @@ public class Menu extends javax.swing.JFrame {
     private void lbl_iconMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_iconMouseReleased
         int posicion = lbl_icon.getY();
         if (posicion > 0) {//Subir
-            Animacion.subir(0, -150, 2, panelMenu);
-            Animacion.subir(155, 0, 2, lbl_icon);
+            Animacion.subir(0, -100, 1, panelMenu);
+            Animacion.subir(105, 0, 1, lbl_icon);
             lbl_icon.setIcon(new ImageIcon(getClass().getResource("/Recursos/bajar_drk.png")));
         }else{//Bajar
-            Animacion.bajar(-150, 0, 2, panelMenu);
-            Animacion.bajar(0, 155, 2, lbl_icon);
+            Animacion.bajar(-100, 0, 1, panelMenu);
+            Animacion.bajar(0, 105, 1, lbl_icon);
             lbl_icon.setIcon(new ImageIcon(getClass().getResource("/Recursos/subir_drk.png")));
         }
 
@@ -162,6 +177,12 @@ public class Menu extends javax.swing.JFrame {
     private void btnRegresarMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarMenuActionPerformed
         intercambiarPaneles(0);
     }//GEN-LAST:event_btnRegresarMenuActionPerformed
+
+    private void btnAgregarPacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarPacienteActionPerformed
+        VPaciente vista = new VPaciente(this, true);
+        vista.setLocationRelativeTo(this);
+        vista.setVisible(true);
+    }//GEN-LAST:event_btnAgregarPacienteActionPerformed
 
     /**
      * Metodo que cambia los paneles en el panel principal de la ventana
@@ -256,6 +277,7 @@ public class Menu extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAgregarPaciente;
     private javax.swing.JButton btnBloquear;
     private javax.swing.JButton btnRegresarMenu;
     private javax.swing.JLabel lblFondo;

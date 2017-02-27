@@ -15,8 +15,8 @@ public class Poblacion {
         this.becado = becado;
     }
 
-    Poblacion() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Poblacion() {
+        
     }
 
     public int getId() {
