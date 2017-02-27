@@ -490,6 +490,7 @@ public class PanelGenerico extends javax.swing.JPanel {
                 border = BorderFactory.createTitledBorder("Nuevo Tipo de Identificación");
                 border.setTitleFont(new Font("Dialog", Font.BOLD, 12));
                 panelDatos.setBorder(border);
+                rbBecado.setSelected(false);
                 break;
             case 2: //doctor
                 panelDatos.setVisible(true);
@@ -500,6 +501,7 @@ public class PanelGenerico extends javax.swing.JPanel {
                 border.setTitleFont(new Font("Dialog", Font.BOLD, 12));
                 panelDatos.setBorder(border);
                 btnDesactivar.setVisible(false);
+                rbBecado.setSelected(false);
                 break;
             case 3: //practicante
                 panelDatos.setVisible(true);
@@ -510,6 +512,7 @@ public class PanelGenerico extends javax.swing.JPanel {
                 border.setTitleFont(new Font("Dialog", Font.BOLD, 12));
                 panelDatos.setBorder(border);
                 btnDesactivar.setVisible(false);
+                rbBecado.setSelected(false);
                 break;
             case 4: //poblacion
                 panelDatos.setVisible(true);
@@ -532,6 +535,7 @@ public class PanelGenerico extends javax.swing.JPanel {
                 border.setTitleFont(new Font("Dialog", Font.BOLD, 12));
                 panelDatos.setBorder(border);
                 btnDesactivar.setVisible(false);
+                rbBecado.setSelected(false);
                 break;
             default:
                 break;

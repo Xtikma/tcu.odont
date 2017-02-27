@@ -9,6 +9,7 @@ import AccesoDatos.*;
 import Entidades.*;
 import java.util.List;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import org.jvnet.substance.SubstanceLookAndFeel;
 
@@ -42,15 +43,28 @@ public class VentanaBusqueda extends javax.swing.JFrame {
 
     // <editor-fold desc=" Metodos con pacientes ">
     private void cargarPacientes(){
-        accessPaciente = new ADPaciente();
-        accessPoblacion = new ADPoblacion();
-        pacientes = accessPaciente.ConsultarPacientesActivos();
-        poblaciones = accessPoblacion.ConsultarPoblacion();
-        
-        for (Poblacion poblacion : poblaciones) {
-            boxClasificacion.addItem(poblacion.getNombre());
+        try {
+            accessPaciente = new ADPaciente();
+            accessPoblacion = new ADPoblacion();
+            pacientes = accessPaciente.ConsultarPacientesActivos();
+            poblaciones = accessPoblacion.ConsultarPoblacion();
+
+            if (pacientes.size() > 0) {
+                for (Poblacion poblacion : poblaciones) {
+                    boxClasificacion.addItem(poblacion.getNombre());
+                }
+                cargarTblPacientes(boxClasificacion.getSelectedItem().toString().trim());
+            }else{
+                JOptionPane.showMessageDialog(this, "No hay pacientes agregados", "Lista vacia", 1);
+                this.dispose();
+            }
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(origen, "Existe un problema con los elementos a consultar.\n"
+                    + "Revise que se hayan cargado con anterioridad.", "Problema al cargar elementos", 1);
+            this.dispose();
         }
-        cargarTblPacientes(boxClasificacion.getSelectedItem().toString().trim());
+        
     }
     
     private void cargarTblPacientes(String idPob){
@@ -108,16 +122,22 @@ public class VentanaBusqueda extends javax.swing.JFrame {
 
         tblGenerica.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {},
+                {},
+                {},
+                {}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+
             }
         ));
         jScrollPane1.setViewportView(tblGenerica);
+
+        boxClasificacion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                boxClasificacionActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -154,6 +174,21 @@ public class VentanaBusqueda extends javax.swing.JFrame {
     private void txtBuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyReleased
         //realiza la busqueda
     }//GEN-LAST:event_txtBuscarKeyReleased
+
+    private void boxClasificacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boxClasificacionActionPerformed
+        switch(mostrando){
+            case 0:
+                cargarTblPacientes(boxClasificacion.getSelectedItem().toString().trim());
+                break;
+            case 1://Doctor
+                break;
+            case 2://practicante
+                break;
+            case 3://Procedimientos
+                break; 
+                
+        }
+    }//GEN-LAST:event_boxClasificacionActionPerformed
     
     private void DefinirTema(){
         try {
@@ -182,6 +217,7 @@ public class VentanaBusqueda extends javax.swing.JFrame {
             
         }
     }
+    
     
     
     // </editor-fold>

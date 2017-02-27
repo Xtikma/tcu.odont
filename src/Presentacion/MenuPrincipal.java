@@ -98,6 +98,11 @@ public class MenuPrincipal extends javax.swing.JPanel {
 
         btnPoblacion.setText("Configuraciones de Poblaciones");
         btnPoblacion.setPreferredSize(new java.awt.Dimension(182, 50));
+        btnPoblacion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPoblacionActionPerformed(evt);
+            }
+        });
         panelSecundarios.add(btnPoblacion);
         btnPoblacion.setBounds(11, 242, 253, 50);
 
@@ -221,6 +226,10 @@ public class MenuPrincipal extends javax.swing.JPanel {
     private void btnAgregarConsultaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarConsultaActionPerformed
         m.intercambiarPaneles(7);
     }//GEN-LAST:event_btnAgregarConsultaActionPerformed
+
+    private void btnPoblacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPoblacionActionPerformed
+        m.intercambiarPaneles(4);
+    }//GEN-LAST:event_btnPoblacionActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
