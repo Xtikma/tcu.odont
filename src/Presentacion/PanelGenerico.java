@@ -480,6 +480,7 @@ public class PanelGenerico extends javax.swing.JPanel {
         accion = 1;
         TblGenerica.clearSelection();
         TitledBorder border = null;
+        rbBecado.setVisible(false);
         switch (tipoVentana) {
             case 1: //tipo id
                 panelDatos.setVisible(true);
@@ -490,25 +491,23 @@ public class PanelGenerico extends javax.swing.JPanel {
                 border = BorderFactory.createTitledBorder("Nuevo Tipo de Identificación");
                 border.setTitleFont(new Font("Dialog", Font.BOLD, 12));
                 panelDatos.setBorder(border);
-                rbBecado.setSelected(false);
                 break;
             case 2: //doctor
                 panelDatos.setVisible(true);
                 lblVariable.setVisible(false);
                 txtVariable.setVisible(false);
                 txtNombre.setText("");
-                border = BorderFactory.createTitledBorder("Doctor Nuevo");
+                border = BorderFactory.createTitledBorder("Nuevo Doctor");
                 border.setTitleFont(new Font("Dialog", Font.BOLD, 12));
                 panelDatos.setBorder(border);
                 btnDesactivar.setVisible(false);
-                rbBecado.setSelected(false);
                 break;
             case 3: //practicante
                 panelDatos.setVisible(true);
                 lblVariable.setVisible(false);
                 txtVariable.setVisible(false);
                 txtNombre.setText("");
-                border = BorderFactory.createTitledBorder("Practicante Nuevo");
+                border = BorderFactory.createTitledBorder("Nuevo Practicante");
                 border.setTitleFont(new Font("Dialog", Font.BOLD, 12));
                 panelDatos.setBorder(border);
                 btnDesactivar.setVisible(false);
@@ -520,9 +519,10 @@ public class PanelGenerico extends javax.swing.JPanel {
                 txtVariable.setVisible(true);
                 txtNombre.setText("");
                 txtVariable.setText("");
-                border = BorderFactory.createTitledBorder("Población Nueva");
+                border = BorderFactory.createTitledBorder("Nueva Población");
                 border.setTitleFont(new Font("Dialog", Font.BOLD, 12));
                 panelDatos.setBorder(border);
+                rbBecado.setVisible(true);
                 btnDesactivar.setVisible(false);
                 rbBecado.setSelected(false);
                 break;
@@ -531,11 +531,10 @@ public class PanelGenerico extends javax.swing.JPanel {
                 lblVariable.setVisible(false);
                 txtVariable.setVisible(false);
                 txtNombre.setText("");
-                border = BorderFactory.createTitledBorder("Lugar de Atención Nuevo");
+                border = BorderFactory.createTitledBorder("Nuevo Lugar de Atención");
                 border.setTitleFont(new Font("Dialog", Font.BOLD, 12));
                 panelDatos.setBorder(border);
                 btnDesactivar.setVisible(false);
-                rbBecado.setSelected(false);
                 break;
             default:
                 break;
