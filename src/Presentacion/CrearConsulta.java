@@ -5,6 +5,8 @@
  */
 package Presentacion;
 
+import Entidades.*;
+
 /**
  *
  * @author Keylor
@@ -14,6 +16,9 @@ public class CrearConsulta extends javax.swing.JPanel{
 
     //Variables para proteger modificación de Chooser
     private boolean consume = false;
+    private Practicante practicante;
+    private Doctor doctor;
+    private Paciente paciente;
     
     /**
      * Creates new form CrearConsulta
@@ -84,6 +89,11 @@ public class CrearConsulta extends javax.swing.JPanel{
         btnDoctor.setMaximumSize(new java.awt.Dimension(200, 30));
         btnDoctor.setMinimumSize(new java.awt.Dimension(200, 30));
         btnDoctor.setPreferredSize(new java.awt.Dimension(200, 30));
+        btnDoctor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDoctorActionPerformed(evt);
+            }
+        });
 
         lblPracticante.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         lblPracticante.setText("Practicante");
@@ -94,6 +104,11 @@ public class CrearConsulta extends javax.swing.JPanel{
         btnPracticante.setMaximumSize(new java.awt.Dimension(200, 30));
         btnPracticante.setMinimumSize(new java.awt.Dimension(200, 30));
         btnPracticante.setPreferredSize(new java.awt.Dimension(200, 30));
+        btnPracticante.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPracticanteActionPerformed(evt);
+            }
+        });
 
         lblPaciente1.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         lblPaciente1.setText("Lugar");
@@ -331,7 +346,7 @@ public class CrearConsulta extends javax.swing.JPanel{
     }//GEN-LAST:event_fechaConsultaKeyTyped
 
     private void btnPacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPacienteActionPerformed
-        VentanaBusqueda searchPaciente = new VentanaBusqueda(0, 0, this);
+        VentanaBusqueda searchPaciente = new VentanaBusqueda(0, this);
         searchPaciente.setLocationRelativeTo(this);
         searchPaciente.setVisible(true);        
     }//GEN-LAST:event_btnPacienteActionPerformed
@@ -339,6 +354,30 @@ public class CrearConsulta extends javax.swing.JPanel{
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void btnDoctorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDoctorActionPerformed
+        VentanaBusqueda searchPaciente = new VentanaBusqueda(1, this);
+        searchPaciente.setLocationRelativeTo(this);
+        searchPaciente.setVisible(true);  
+    }//GEN-LAST:event_btnDoctorActionPerformed
+
+    private void btnPracticanteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPracticanteActionPerformed
+        VentanaBusqueda searchPaciente = new VentanaBusqueda(2, this);
+        searchPaciente.setLocationRelativeTo(this);
+        searchPaciente.setVisible(true);
+    }//GEN-LAST:event_btnPracticanteActionPerformed
+
+    public void setPracticante(Practicante practicante) {
+        this.practicante = practicante;
+    }
+
+    public void setDoctor(Doctor doctor) {
+        this.doctor = doctor;
+    }
+
+    public void setPaciente(Paciente paciente) {
+        this.paciente = paciente;
+    }
 
     
 

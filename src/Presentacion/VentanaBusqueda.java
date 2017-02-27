@@ -33,11 +33,10 @@ public class VentanaBusqueda extends javax.swing.JFrame {
     /**
      * Creates new form VentanaBusqueda
      */
-    public VentanaBusqueda(int modo, int idCat, CrearConsulta ori) {
+    public VentanaBusqueda(int modo, CrearConsulta ori) {
         initComponents();
         DefinirTema();
         generarTabla(modo);
-        idCategoria = idCat;
         origen = ori;
     }
 
@@ -87,6 +86,41 @@ public class VentanaBusqueda extends javax.swing.JFrame {
         tblGenerica.setModel(model);       
     }    
     // </editor-fold>
+    
+    
+    // <editor-fold desc=" Metodos con Doctor ">
+    
+    private void cargarDoctores(){
+        boxClasificacion.setEnabled(false);
+        boxClasificacion.setVisible(false);
+        accessDoctor = new ADDoctor();
+        DefaultTableModel model = new DefaultTableModel();
+        model.addColumn("Id.");
+        model.addColumn("Nombre");
+        model.addColumn("Estado");
+        tblGenerica.setModel(model);
+        accessDoctor.consultarDoctor(tblGenerica, false);        
+    }    
+    // </editor-fold>
+    
+    
+    // <editor-fold desc=" Metodos con Doctor ">
+    
+    private void cargarPracticantes(){
+        boxClasificacion.setEnabled(false);
+        boxClasificacion.setVisible(false);
+        accessPracticante = new ADPracticante();
+        DefaultTableModel model = new DefaultTableModel();
+        model.addColumn("Id.");
+        model.addColumn("Nombre");
+        model.addColumn("Estado");
+        tblGenerica.setModel(model);
+        accessPracticante.consultarPracticante(tblGenerica, false);        
+    }
+    
+    // </editor-fold>
+    
+    
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -180,13 +214,10 @@ public class VentanaBusqueda extends javax.swing.JFrame {
             case 0:
                 cargarTblPacientes(boxClasificacion.getSelectedItem().toString().trim());
                 break;
-            case 1://Doctor
-                break;
-            case 2://practicante
-                break;
             case 3://Procedimientos
-                break; 
-                
+                break;
+            default:
+                break;                
         }
     }//GEN-LAST:event_boxClasificacionActionPerformed
     
@@ -209,8 +240,10 @@ public class VentanaBusqueda extends javax.swing.JFrame {
                 cargarPacientes();
                 break;
             case 1://Doctor
+                cargarDoctores();
                 break;
             case 2://practicante
+                cargarPracticantes();
                 break;
             case 3://Procedimientos
                 break;              
