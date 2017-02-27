@@ -77,6 +77,12 @@ public class VPaciente extends javax.swing.JDialog {
         CbPoblacion.setModel(new DefaultComboBoxModel(listaPoblacion.toArray()));
 
         Paciente paciente = adPaciente.ConsultarPacientePorId(idPaciente);
+        if (paciente == null) {
+            JOptionPane.showMessageDialog(null, "No hay ningún paciente registrado.", "ERROR", JOptionPane.ERROR_MESSAGE);
+            edicion = false;
+            this.setTitle("Ingresar Nuevo Paciente");
+            lblTitulo.setText("Nuevo Paciente");
+        } else {
         //llenar campos de texto
         TxtNombre.setText(paciente.getNombre());
         TxtPApellido.setText(paciente.getPrimerApellido());
@@ -125,6 +131,7 @@ public class VPaciente extends javax.swing.JDialog {
         }
         //seleccionar la beca
         CbBeca.setSelectedIndex(paciente.getBeca());
+        }
     }
     //</editor-fold>
     
@@ -498,8 +505,9 @@ public class VPaciente extends javax.swing.JDialog {
 
     private void CbPoblacionItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_CbPoblacionItemStateChanged
         // TODO add your handling code here:
-        String poblacion = ((Poblacion) CbPoblacion.getSelectedItem()).getNombre();
-        if (poblacion.equals("Estudiante")) {
+        //String poblacion = ((Poblacion) CbPoblacion.getSelectedItem()).getNombre();
+        boolean becado = ((Poblacion) CbPoblacion.getSelectedItem()).getBecado();
+        if (/*poblacion.equals("Estudiante")*/becado) {
             PanelEstudiante.setVisible(true);
             this.setSize(375, 595);
         } else {
@@ -548,7 +556,7 @@ public class VPaciente extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                VPaciente dialog = new VPaciente(new javax.swing.JFrame(), true);
+                VPaciente dialog = new VPaciente(new javax.swing.JFrame(), true, 2);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
