@@ -211,7 +211,13 @@ public class CrearConsulta extends javax.swing.JPanel{
                 return canEdit [columnIndex];
             }
         });
+        tblProcedimientos.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(tblProcedimientos);
+        if (tblProcedimientos.getColumnModel().getColumnCount() > 0) {
+            tblProcedimientos.getColumnModel().getColumn(0).setResizable(false);
+            tblProcedimientos.getColumnModel().getColumn(1).setResizable(false);
+            tblProcedimientos.getColumnModel().getColumn(2).setResizable(false);
+        }
 
         javax.swing.GroupLayout panelProcedimientosLayout = new javax.swing.GroupLayout(panelProcedimientos);
         panelProcedimientos.setLayout(panelProcedimientosLayout);

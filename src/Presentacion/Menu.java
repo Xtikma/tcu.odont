@@ -7,6 +7,7 @@ package Presentacion;
 
 import Animacion.Animacion;
 import java.awt.BorderLayout;
+import java.util.Locale;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -24,6 +25,7 @@ public class Menu extends javax.swing.JFrame {
     private ConfigCatProc configCP;
     private PanelGenerico panGen;
     private CrearConsulta consulta;
+    private VerConsultas verCons;
     /**
      * Creates new form Menu
      */
@@ -239,6 +241,12 @@ public class Menu extends javax.swing.JFrame {
                     consulta.setSize(1000, 500);
                     consulta.setLocation(0, 0);
                     insertarPanel(consulta);
+                    break;
+                case 8:
+                    verCons = new VerConsultas();
+                    verCons.setSize(1000,500);
+                    verCons.setLocation(0,0);
+                    insertarPanel(verCons);
                     break;
                 default:
                     break;

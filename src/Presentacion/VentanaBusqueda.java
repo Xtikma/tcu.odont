@@ -68,23 +68,28 @@ public class VentanaBusqueda extends javax.swing.JFrame {
     }
     
     private void cargarTblPacientes(String idPob){
-        tblGenerica.setModel(new DefaultTableModel());
-        DefaultTableModel model = new DefaultTableModel();
-        model.addColumn("Identificación");
-        model.addColumn("Nombre paciente");
-        model.addColumn("Edad");
-        model.addColumn("Carné");
-        
-        String[] fila = new String[4];
-        for (Paciente paciente : pacientes) {
-            if (paciente.getNombrePoblacion().equals(idPob) == true) {
-                fila[0] = paciente.getValorIdentificacion();
-                fila[1] = paciente.getNombre() + " " + paciente.getPrimerApellido();
-                fila[3] = paciente.getEdad() + "";
-                fila[4] = paciente.getCarne() + "";
+        try {
+            tblGenerica.setModel(new DefaultTableModel());
+            DefaultTableModel model = new DefaultTableModel();
+            model.addColumn("Identificación");
+            model.addColumn("Nombre paciente");
+            model.addColumn("Edad");
+            model.addColumn("Carné");
+
+            String[] fila = new String[4];
+            for (Paciente paciente : pacientes) {
+                if (paciente.getPoblacion().getNombre().equals(idPob) == true) {
+                    fila[0] = paciente.getValorIdentificacion();
+                    fila[1] = paciente.getNombre() + " " + paciente.getPrimerApellido();
+                    fila[3] = paciente.getEdad() + "";
+                    fila[4] = paciente.getCarne() + "";
+                }
             }
+            tblGenerica.setModel(model);
+        } catch (Exception e) {
+            System.out.println(">.< " + e.getMessage());
         }
-        tblGenerica.setModel(model);       
+               
     }    
     // </editor-fold>
     
@@ -138,7 +143,7 @@ public class VentanaBusqueda extends javax.swing.JFrame {
         tblGenerica = new javax.swing.JTable();
         boxClasificacion = new javax.swing.JComboBox<>();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Busqueda");
         setMaximumSize(new java.awt.Dimension(550, 550));
         setMinimumSize(new java.awt.Dimension(550, 550));
@@ -166,6 +171,7 @@ public class VentanaBusqueda extends javax.swing.JFrame {
 
             }
         ));
+        tblGenerica.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(tblGenerica);
 
         boxClasificacion.addActionListener(new java.awt.event.ActionListener() {

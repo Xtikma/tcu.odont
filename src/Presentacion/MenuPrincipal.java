@@ -125,6 +125,11 @@ public class MenuPrincipal extends javax.swing.JPanel {
         btnVerConsulta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/revisarConsulta.png"))); // NOI18N
         btnVerConsulta.setBorderPainted(false);
         btnVerConsulta.setOpaque(false);
+        btnVerConsulta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVerConsultaActionPerformed(evt);
+            }
+        });
 
         btnAgregarConsulta.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
         btnAgregarConsulta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/agregarConsulta.png"))); // NOI18N
@@ -230,6 +235,10 @@ public class MenuPrincipal extends javax.swing.JPanel {
     private void btnPoblacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPoblacionActionPerformed
         m.intercambiarPaneles(4);
     }//GEN-LAST:event_btnPoblacionActionPerformed
+
+    private void btnVerConsultaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerConsultaActionPerformed
+        m.intercambiarPaneles(8);
+    }//GEN-LAST:event_btnVerConsultaActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

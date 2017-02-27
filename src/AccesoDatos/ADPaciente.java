@@ -154,10 +154,11 @@ public class ADPaciente {
                     paciente.setValorIdentificacion(rsPaciente.getString(7));
                     paciente.setGenero(rsPaciente.getString(8));
                     paciente.setBeca(rsPaciente.getInt(9));
-                    paciente.setPrimerIngreso(rsPaciente.getBoolean(10));
-                    paciente.setEliminado(rsPaciente.getBoolean(11));
-                    paciente.setPoblacion(rsPaciente.getInt(12), rsPaciente.getString(13)
-                            , rsPaciente.getString(14), rsPaciente.getBoolean(15));
+                    paciente.setCarne(rsPaciente.getString(10));
+                    paciente.setPrimerIngreso(rsPaciente.getBoolean(11));
+                    paciente.setEliminado(rsPaciente.getBoolean(12));
+                    paciente.setPoblacion(rsPaciente.getInt(13), rsPaciente.getString(14)
+                            , rsPaciente.getString(15), rsPaciente.getBoolean(16));
                     listaPaciente.add(paciente);
                 } catch (SQLException ex) {
                     JOptionPane.showMessageDialog(null, "Ha ocurrido un error. Detalle:\n" + ex.toString(), "ERROR", JOptionPane.ERROR_MESSAGE);
