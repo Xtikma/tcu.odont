@@ -78,8 +78,10 @@ public class VPaciente extends javax.swing.JDialog {
 
         Paciente paciente = adPaciente.ConsultarPacientePorId(idPaciente);
         if (paciente == null) {
-            JOptionPane.showMessageDialog(null , "No hay ningún paciente registrado.", "ERROR", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "No hay ningún paciente registrado.", "ERROR", JOptionPane.ERROR_MESSAGE);
             edicion = false;
+            this.setTitle("Ingresar Nuevo Paciente");
+            lblTitulo.setText("Nuevo Paciente");
         } else {
         //llenar campos de texto
         TxtNombre.setText(paciente.getNombre());
