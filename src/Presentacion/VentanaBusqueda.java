@@ -304,8 +304,7 @@ public class VentanaBusqueda extends javax.swing.JFrame {
                     Categoria temp  = categorias.get(boxClasificacion.getSelectedIndex());
                     Procedimiento selecto = temp.getProcedimientos().get(tblGenerica.getSelectedRow());
                     origen.setProcedimiento(selecto);
-                    this.dispose();
-                    
+                    this.dispose();                    
 
             }
         }

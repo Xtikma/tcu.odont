@@ -125,7 +125,7 @@
                       <Group type="102" attributes="0">
                           <Component id="lblFecha1" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="jTextField1" max="32767" attributes="0"/>
+                          <Component id="txtTotal" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
@@ -163,7 +163,7 @@
                           <Component id="boxLugar" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="lblPaciente1" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="lblFecha1" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jTextField1" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtTotal" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace pref="28" max="32767" attributes="0"/>
@@ -316,7 +316,7 @@
             <Property name="text" type="java.lang.String" value="Total:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="jTextField1">
+        <Component class="javax.swing.JTextField" name="txtTotal">
           <Properties>
             <Property name="horizontalAlignment" type="int" value="4"/>
             <Property name="toolTipText" type="java.lang.String" value="Total de la consulta."/>
@@ -528,6 +528,9 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Agregar"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAgregarActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnEliminar">
           <Properties>

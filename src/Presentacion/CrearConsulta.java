@@ -8,6 +8,7 @@ package Presentacion;
 import AccesoDatos.ADLugarAtencion;
 import Entidades.*;
 import java.util.ArrayList;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -25,6 +26,7 @@ public class CrearConsulta extends javax.swing.JPanel{
     private ArrayList<LugarAtencion> lugares;
     private Consulta consulta;
     private ProcedimientoConsulta detalle;
+    private double total;
     
     
     
@@ -56,7 +58,7 @@ public class CrearConsulta extends javax.swing.JPanel{
         lblFecha = new javax.swing.JLabel();
         fechaConsulta = new com.toedter.calendar.JDateChooser();
         lblFecha1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        txtTotal = new javax.swing.JTextField();
         panelProcedimientos = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblProcedimientos = new javax.swing.JTable();
@@ -146,12 +148,12 @@ public class CrearConsulta extends javax.swing.JPanel{
         lblFecha1.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         lblFecha1.setText("Total:");
 
-        jTextField1.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        jTextField1.setToolTipText("Total de la consulta.");
-        jTextField1.setEnabled(false);
-        jTextField1.setMaximumSize(new java.awt.Dimension(200, 30));
-        jTextField1.setMinimumSize(new java.awt.Dimension(200, 30));
-        jTextField1.setPreferredSize(new java.awt.Dimension(200, 30));
+        txtTotal.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        txtTotal.setToolTipText("Total de la consulta.");
+        txtTotal.setEnabled(false);
+        txtTotal.setMaximumSize(new java.awt.Dimension(200, 30));
+        txtTotal.setMinimumSize(new java.awt.Dimension(200, 30));
+        txtTotal.setPreferredSize(new java.awt.Dimension(200, 30));
 
         javax.swing.GroupLayout panelEncabezadoLayout = new javax.swing.GroupLayout(panelEncabezado);
         panelEncabezado.setLayout(panelEncabezadoLayout);
@@ -185,7 +187,7 @@ public class CrearConsulta extends javax.swing.JPanel{
                     .addGroup(panelEncabezadoLayout.createSequentialGroup()
                         .addComponent(lblFecha1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(txtTotal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         panelEncabezadoLayout.setVerticalGroup(
@@ -213,7 +215,7 @@ public class CrearConsulta extends javax.swing.JPanel{
                         .addComponent(boxLugar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(lblPaciente1)
                         .addComponent(lblFecha1)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(28, Short.MAX_VALUE))
         );
 
@@ -297,6 +299,11 @@ public class CrearConsulta extends javax.swing.JPanel{
 
         btnAgregar.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         btnAgregar.setText("Agregar");
+        btnAgregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarActionPerformed(evt);
+            }
+        });
 
         btnEliminar.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         btnEliminar.setText("Eliminar");
@@ -425,6 +432,21 @@ public class CrearConsulta extends javax.swing.JPanel{
         search.setVisible(true); 
     }//GEN-LAST:event_btnProcedimientoActionPerformed
 
+    private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
+        try {
+            String cantidad = txtCantidad.getText().trim();
+            if (cantidad.length() != 0) {
+                detalle.setPrecioHistorico(detalle.getProcedimiento().getPrecio());
+                detalle.setCantidad(Integer.parseInt(cantidad));
+                consulta.agregarProcedimiento(detalle);
+                cargarDetalles();
+                sumarTotal();
+            }
+        } catch (Exception e) {
+        }
+        
+    }//GEN-LAST:event_btnAgregarActionPerformed
+
     public void setPracticante(Practicante prac) {
         this.practicante = prac;
         consulta.setPracticante(practicante);
@@ -455,7 +477,32 @@ public class CrearConsulta extends javax.swing.JPanel{
         detalle = new ProcedimientoConsulta();
         detalle.setProcedimiento(p);
         btnProcedimiento.setText(detalle.getProcedimiento().getNombre());
-    } 
+    }
+    
+    private void sumarTotal(){
+        total = 0;
+        for (ProcedimientoConsulta p : consulta.getListaProcedimientos()) {
+            total+= (p.getPrecioHistorico() * p.getCantidad());
+        }
+        txtTotal.setText("₡ " + total);
+    }
+    
+    private void cargarDetalles(){
+        DefaultTableModel model = new DefaultTableModel();
+        model.addColumn("Procedimiento");
+        model.addColumn("Precio Unit.");
+        model.addColumn("Cantidad");
+        model.addColumn("SubTotal");
+        String[] fila = new String[4];
+        for (ProcedimientoConsulta detalle : consulta.getListaProcedimientos()) {
+            fila[0] = detalle.getProcedimiento().getNombre();
+            fila[1] = "₡ " + detalle.getPrecioHistorico();
+            fila[2] = "" + detalle.getCantidad();
+            fila[3] = "₡ " + detalle.getPrecioHistorico() * detalle.getCantidad();
+            model.addRow(fila);
+        }
+        tblProcedimientos.setModel(model);
+    }
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -470,7 +517,6 @@ public class CrearConsulta extends javax.swing.JPanel{
     private com.toedter.calendar.JDateChooser fechaConsulta;
     private org.jdatepicker.util.JDatePickerUtil jDatePickerUtil1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JLabel lblCantidad;
     private javax.swing.JLabel lblDoctor;
     private javax.swing.JLabel lblFecha;
@@ -484,5 +530,6 @@ public class CrearConsulta extends javax.swing.JPanel{
     private javax.swing.JPanel panelProcedimientos;
     private javax.swing.JTable tblProcedimientos;
     private javax.swing.JTextField txtCantidad;
+    private javax.swing.JTextField txtTotal;
     // End of variables declaration//GEN-END:variables
 }
