@@ -470,7 +470,7 @@ public class VPaciente extends javax.swing.JDialog {
             }
 
             String fecha = "";
-            String texto = TxtFechaNacimiento.getText();
+            String texto = TxtFechaNacimiento.getText().trim();
             if (RbNoFecha.isSelected()) {
                 fecha = null;
             } else if (texto.matches("\\d\\d-\\d\\d-\\d\\d\\d\\d")) {
@@ -481,8 +481,8 @@ public class VPaciente extends javax.swing.JDialog {
                 return;
             }
 
-            Paciente paciente = new Paciente(idPacienteModificar, fecha, TxtNombre.getText(), TxtPApellido.getText(), TxtsApellido.getText(), TxtIdentificacion.getText(),
-                    genero, beca, edad, TxtCarne.getText(), primerIngreso, false);
+            Paciente paciente = new Paciente(idPacienteModificar, fecha, TxtNombre.getText().trim(), TxtPApellido.getText().trim(), TxtsApellido.getText().trim(), TxtIdentificacion.getText().trim(),
+                    genero, beca, edad, TxtCarne.getText().trim(), primerIngreso, false);
 
             int idPoblacion = ((Poblacion) CbPoblacion.getSelectedItem()).getId();
             int idTipoId = ((TipoIdentificacion) CbTipoId.getSelectedItem()).getId();
