@@ -6,8 +6,10 @@
 package Presentacion;
 
 import AccesoDatos.ADConsulta;
+import com.toedter.calendar.JDateChooser;
 import java.sql.Date;
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import javax.swing.JLabel;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
@@ -24,13 +26,18 @@ public class VerConsultas extends javax.swing.JPanel {
     Date fechaActual;
     String fechaDesde ;
     String fechaHasta;
-    DateFormat dt = DateFormat.getDateInstance();
-      
-    public VerConsultas() {   
+    Date dateprueba;
+//    DateFormat dt = DateFormat.getDateInstance();
+    SimpleDateFormat Formato = new SimpleDateFormat("yyyy-MM-dd");
+
+    public VerConsultas() {
         initComponents();
-//        fechaDesde =  jDate_Desde.getDateFormatString();
-//        fechaHasta = jDate_Hasta.getDateFormatString();
+//      fechaDesde = dt.format(jDate_Hasta.getDate());
        
+        System.out.println("valor fechaHasta " + fechaDesde);
+//  fechaDesde =  jDate_Desde.getDateFormatString();
+        //fechaHasta = jDate_Hasta.getDateFormatString();
+
     }
 
     @SuppressWarnings("unchecked")
@@ -53,6 +60,8 @@ public class VerConsultas extends javax.swing.JPanel {
         setMaximumSize(new java.awt.Dimension(1000, 500));
         setMinimumSize(new java.awt.Dimension(1000, 500));
         setOpaque(false);
+
+        PanelBuscar.setOpaque(false);
 
         fechaInicio.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         fechaInicio.setText("Desde:");
@@ -100,7 +109,7 @@ public class VerConsultas extends javax.swing.JPanel {
         PanelBuscarLayout.setVerticalGroup(
             PanelBuscarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PanelBuscarLayout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(37, 37, 37)
                 .addGroup(PanelBuscarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jText_Buscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jB_Buscar))
@@ -123,6 +132,7 @@ public class VerConsultas extends javax.swing.JPanel {
         );
 
         JPanel_ListaConsulta.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Lista Consulta", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 14))); // NOI18N
+        JPanel_ListaConsulta.setOpaque(false);
 
         jT_ListarConsultas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -143,6 +153,8 @@ public class VerConsultas extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
+        jT_ListarConsultas.setOpaque(false);
+        jT_ListarConsultas.getTableHeader().setReorderingAllowed(false);
         jScroll_ListaConsultas.setViewportView(jT_ListarConsultas);
 
         javax.swing.GroupLayout JPanel_ListaConsultaLayout = new javax.swing.GroupLayout(JPanel_ListaConsulta);
@@ -158,7 +170,7 @@ public class VerConsultas extends javax.swing.JPanel {
             JPanel_ListaConsultaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(JPanel_ListaConsultaLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScroll_ListaConsultas, javax.swing.GroupLayout.DEFAULT_SIZE, 262, Short.MAX_VALUE)
+                .addComponent(jScroll_ListaConsultas, javax.swing.GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -186,17 +198,26 @@ public class VerConsultas extends javax.swing.JPanel {
 
     private void jBuscarPeriodoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBuscarPeriodoActionPerformed
         // TODO add your handling code here:
-        
+         fechaDesde = getFecha(jDate_Desde);
+        fechaHasta = getFecha( jDate_Hasta);
          listarConsultas();
         
     }//GEN-LAST:event_jBuscarPeriodoActionPerformed
    private void listarConsultas() {
-     fechaDesde = "2001-02-10";
-     fechaHasta = "2001-03-10";
-    
+//     fechaDesde = "2001-02-10";
+//     fechaHasta = "2001-03-10";
+     System.out.println("valor2 fechaHasta"+ fechaDesde);
        ADConsulta bd = new ADConsulta();
         bd.listarConsultas(jT_ListarConsultas, fechaDesde,fechaHasta);
 
+    }
+   
+    public String getFecha(JDateChooser jd) {
+        if (jd.getDate() != null) {
+            return Formato.format(jd.getDate());
+        } else {
+            return null;
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
