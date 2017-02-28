@@ -15,6 +15,7 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
@@ -35,8 +36,6 @@ public class ADConsulta {
             }
            
               CallableStatement cs = conexion.prepareCall("{call obtener_consultas_por_periodo(?,?)}");
-//              cs.setDate(1, desde);
-//                cs.setDate(2, hasta);
               cs.setString(1, desde);
               cs.setString(2, hasta);
               rsConsultas = cs.executeQuery();
@@ -57,6 +56,35 @@ public class ADConsulta {
         }
         
     }
+    
+    
+    
+//        private ArrayList<Consulta> cargarConsultas(String desde,String hasta ){
+//        ArrayList<Consulta> lista = new ArrayList<Consulta>();
+//        Consulta temp;
+//        try {
+//            ResultSet rsConsultas = null;
+//            CallableStatement cs = conexion.prepareCall("call obtener_consultas_por_periodo(?,?)");
+//              cs.setString(1, desde);
+//              cs.setString(2, hasta);
+//            rsConsultas = cs.executeQuery();
+//            
+//            while (rsConsultas.next()) {
+//                try {
+//                    temp = new Consulta(rsConsultas.getDate(1),rsConsultas.getString(3),rsConsultas.getString(6) ,rsConsultas.getString(8),
+//                        rsConsultas.getString(10),rsConsultas.getString(12),rsConsultas.getDouble(2));
+//                    lista.add(temp);
+//                } catch (SQLException ex) {
+//                    System.out.println("Ubicación: cargarConsultas.while " + ex.getMessage());
+//                    throw ex;
+//                }                
+//            }
+//            return lista;
+//        } catch (Exception e){            
+//            System.out.println("Ubicación: cargarProcedimientos " + e.getMessage());
+//            return lista;
+//        }
+    
     
     
 }
