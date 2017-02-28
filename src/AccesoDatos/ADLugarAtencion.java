@@ -15,6 +15,7 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
@@ -96,6 +97,29 @@ public class ADLugarAtencion {
             tblLugar.setModel(modelo);
         } catch (SQLException ex) {
             System.out.println(ex.toString());
+        }
+     }
+     
+     public ArrayList<LugarAtencion> ConsultarLugares(boolean estado) {
+         try {
+            ResultSet rsLugar = null;
+            ArrayList<LugarAtencion> lugares = new ArrayList<LugarAtencion>();
+           
+            CallableStatement cs = conexion.prepareCall("{call consultar_lugar(?)}");
+            cs.setBoolean(1, estado);
+            rsLugar = cs.executeQuery();
+
+            while (rsLugar.next()) {
+                try {
+                    lugares.add(new LugarAtencion(rsLugar.getInt(1), rsLugar.getString(2), rsLugar.getBoolean(3)));
+                } catch (SQLException ex) {
+                    System.out.println("Mensaje de Error"); 
+                }                
+            }
+            return lugares;
+        } catch (SQLException ex) {
+            System.out.println(ex.toString());
+            return null;
         }
      }
 }

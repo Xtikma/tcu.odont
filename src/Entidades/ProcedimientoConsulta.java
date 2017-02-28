@@ -33,6 +33,10 @@ public class ProcedimientoConsulta {
         this.precioHistorico = precioHistorico;
         this.cantidad = cantidad;
     }
+    
+    public ProcedimientoConsulta(){
+        procedimiento = new Procedimiento();
+    }
 
     public Consulta getConsulta() {
         return consulta;

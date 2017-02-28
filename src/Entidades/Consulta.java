@@ -53,6 +53,9 @@ public class Consulta {
         this.listaProcedimientos = listaProcedimientos;
     }
 
+    public Consulta(){
+        this.listaProcedimientos = new ArrayList<ProcedimientoConsulta>();
+    }
     
 
     public int getIdConsulta() {
@@ -106,8 +109,7 @@ public class Consulta {
     public void agregarProcedimiento(ProcedimientoConsulta procedimiento){
         if (procedimiento != null) {
             this.listaProcedimientos.add(procedimiento);
-        }
-        
+        }        
     }
 
     public Doctor getDoctor() {
@@ -116,6 +118,7 @@ public class Consulta {
 
     public void setDoctor(Doctor doctor) {
         this.doctor = doctor;
+        this.idDoctor = doctor.getIdDoctor();
     }
 
     public int getIdDoctor() {
@@ -132,6 +135,7 @@ public class Consulta {
 
     public void setPracticante(Practicante practicante) {
         this.practicante = practicante;
+        this.idPracticante = practicante.getIdPracticante();
     }
 
     public int getIdPracticante() {
@@ -148,6 +152,7 @@ public class Consulta {
 
     public void setLugar(LugarAtencion lugar) {
         this.lugar = lugar;
+        this.idLugar = lugar.getIdLugarAtencion();
     }
 
     public int getIdLugar() {
@@ -157,6 +162,4 @@ public class Consulta {
     public void setIdLugar(int idLugar) {
         this.idLugar = idLugar;
     }
-    
-    //me estoy hartando
 }
