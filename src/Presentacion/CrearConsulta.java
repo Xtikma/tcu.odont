@@ -5,7 +5,9 @@
  */
 package Presentacion;
 
+import AccesoDatos.ADLugarAtencion;
 import Entidades.*;
+import java.util.ArrayList;
 
 /**
  *
@@ -19,12 +21,20 @@ public class CrearConsulta extends javax.swing.JPanel{
     private Practicante practicante;
     private Doctor doctor;
     private Paciente paciente;
+    private LugarAtencion lugar;
+    private ArrayList<LugarAtencion> lugares;
+    private Consulta consulta;
+    private ProcedimientoConsulta detalle;
+    
+    
     
     /**
      * Creates new form CrearConsulta
      */
     public CrearConsulta() {
         initComponents();
+        consulta = new Consulta();
+        cargarLugares();
     }
     
     
@@ -42,9 +52,11 @@ public class CrearConsulta extends javax.swing.JPanel{
         lblPracticante = new javax.swing.JLabel();
         btnPracticante = new javax.swing.JButton();
         lblPaciente1 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        boxLugar = new javax.swing.JComboBox<>();
         lblFecha = new javax.swing.JLabel();
         fechaConsulta = new com.toedter.calendar.JDateChooser();
+        lblFecha1 = new javax.swing.JLabel();
+        jTextField1 = new javax.swing.JTextField();
         panelProcedimientos = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblProcedimientos = new javax.swing.JTable();
@@ -113,9 +125,14 @@ public class CrearConsulta extends javax.swing.JPanel{
         lblPaciente1.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         lblPaciente1.setText("Lugar");
 
-        jComboBox1.setMaximumSize(new java.awt.Dimension(200, 30));
-        jComboBox1.setMinimumSize(new java.awt.Dimension(200, 30));
-        jComboBox1.setPreferredSize(new java.awt.Dimension(200, 30));
+        boxLugar.setMaximumSize(new java.awt.Dimension(200, 30));
+        boxLugar.setMinimumSize(new java.awt.Dimension(200, 30));
+        boxLugar.setPreferredSize(new java.awt.Dimension(200, 30));
+        boxLugar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                boxLugarActionPerformed(evt);
+            }
+        });
 
         lblFecha.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         lblFecha.setText("Fecha");
@@ -125,6 +142,16 @@ public class CrearConsulta extends javax.swing.JPanel{
                 fechaConsultaKeyTyped(evt);
             }
         });
+
+        lblFecha1.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        lblFecha1.setText("Total:");
+
+        jTextField1.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        jTextField1.setToolTipText("Total de la consulta.");
+        jTextField1.setEnabled(false);
+        jTextField1.setMaximumSize(new java.awt.Dimension(200, 30));
+        jTextField1.setMinimumSize(new java.awt.Dimension(200, 30));
+        jTextField1.setPreferredSize(new java.awt.Dimension(200, 30));
 
         javax.swing.GroupLayout panelEncabezadoLayout = new javax.swing.GroupLayout(panelEncabezado);
         panelEncabezado.setLayout(panelEncabezadoLayout);
@@ -148,11 +175,17 @@ public class CrearConsulta extends javax.swing.JPanel{
                         .addGap(87, 87, 87)
                         .addComponent(lblPaciente1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 89, Short.MAX_VALUE)
-                .addComponent(lblFecha)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(fechaConsulta, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
+                        .addComponent(boxLugar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(89, 89, 89)
+                .addGroup(panelEncabezadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelEncabezadoLayout.createSequentialGroup()
+                        .addComponent(lblFecha)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(fechaConsulta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(panelEncabezadoLayout.createSequentialGroup()
+                        .addComponent(lblFecha1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         panelEncabezadoLayout.setVerticalGroup(
@@ -177,8 +210,10 @@ public class CrearConsulta extends javax.swing.JPanel{
                         .addComponent(lblDoctor))
                     .addGroup(panelEncabezadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(btnDoctor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(lblPaciente1)))
+                        .addComponent(boxLugar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblPaciente1)
+                        .addComponent(lblFecha1)
+                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(28, Short.MAX_VALUE))
         );
 
@@ -187,20 +222,20 @@ public class CrearConsulta extends javax.swing.JPanel{
 
         tblProcedimientos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "Procedimiento", "Cantidad", "SubTotal"
+                "Procedimiento", "Precio Unit.", "Cantidad", "SubTotal"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false
+                false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -211,6 +246,7 @@ public class CrearConsulta extends javax.swing.JPanel{
                 return canEdit [columnIndex];
             }
         });
+        tblProcedimientos.setToolTipText("");
         tblProcedimientos.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(tblProcedimientos);
         if (tblProcedimientos.getColumnModel().getColumnCount() > 0) {
@@ -248,6 +284,11 @@ public class CrearConsulta extends javax.swing.JPanel{
         btnProcedimiento.setMaximumSize(new java.awt.Dimension(200, 30));
         btnProcedimiento.setMinimumSize(new java.awt.Dimension(200, 30));
         btnProcedimiento.setPreferredSize(new java.awt.Dimension(200, 30));
+        btnProcedimiento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnProcedimientoActionPerformed(evt);
+            }
+        });
 
         lblCantidad.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         lblCantidad.setText("Cantidad:");
@@ -315,7 +356,7 @@ public class CrearConsulta extends javax.swing.JPanel{
             .addGroup(layout.createSequentialGroup()
                 .addGap(6, 6, 6)
                 .addComponent(panelEncabezado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 6, Short.MAX_VALUE))
+                .addGap(0, 5, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(panelProcedimientos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -352,9 +393,9 @@ public class CrearConsulta extends javax.swing.JPanel{
     }//GEN-LAST:event_fechaConsultaKeyTyped
 
     private void btnPacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPacienteActionPerformed
-        VentanaBusqueda searchPaciente = new VentanaBusqueda(0, this);
-        searchPaciente.setLocationRelativeTo(this);
-        searchPaciente.setVisible(true);        
+        VentanaBusqueda search = new VentanaBusqueda(0, this);
+        search.setLocationRelativeTo(this);
+        search.setVisible(true);        
     }//GEN-LAST:event_btnPacienteActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
@@ -368,26 +409,57 @@ public class CrearConsulta extends javax.swing.JPanel{
     }//GEN-LAST:event_btnDoctorActionPerformed
 
     private void btnPracticanteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPracticanteActionPerformed
-        VentanaBusqueda searchPaciente = new VentanaBusqueda(2, this);
-        searchPaciente.setLocationRelativeTo(this);
-        searchPaciente.setVisible(true);
+        VentanaBusqueda search = new VentanaBusqueda(2, this);
+        search.setLocationRelativeTo(this);
+        search.setVisible(true);
     }//GEN-LAST:event_btnPracticanteActionPerformed
 
-    public void setPracticante(Practicante practicante) {
-        this.practicante = practicante;
+    private void boxLugarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boxLugarActionPerformed
+        int selected = boxLugar.getSelectedIndex();
+        this.lugar = lugares.get(selected);
+    }//GEN-LAST:event_boxLugarActionPerformed
+
+    private void btnProcedimientoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProcedimientoActionPerformed
+        VentanaBusqueda search = new VentanaBusqueda(3, this);
+        search.setLocationRelativeTo(this);
+        search.setVisible(true); 
+    }//GEN-LAST:event_btnProcedimientoActionPerformed
+
+    public void setPracticante(Practicante prac) {
+        this.practicante = prac;
+        consulta.setPracticante(practicante);
+        btnPracticante.setText(prac.getNombre());
     }
 
-    public void setDoctor(Doctor doctor) {
-        this.doctor = doctor;
+    public void setDoctor(Doctor doc) {
+        this.doctor = doc;
+        consulta.setDoctor(doctor);
+        btnDoctor.setText(doc.getNombre());
     }
 
-    public void setPaciente(Paciente paciente) {
-        this.paciente = paciente;
+    public void setPaciente(Paciente pac) {
+        this.paciente = pac;
+        consulta.setPaciente(paciente);
+        btnPaciente.setText(pac.getNombre() + " " + pac.getPrimerApellido());
     }
 
+    private void cargarLugares(){
+        ADLugarAtencion access = new ADLugarAtencion();
+        lugares = access.ConsultarLugares(false);
+        for (LugarAtencion lu : lugares) {
+            boxLugar.addItem(lu.getLugar());
+        }
+    }
+    
+    public void setProcedimiento(Procedimiento p){
+        detalle = new ProcedimientoConsulta();
+        detalle.setProcedimiento(p);
+        btnProcedimiento.setText(detalle.getProcedimiento().getNombre());
+    } 
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> boxLugar;
     private javax.swing.JButton btnAgregar;
     private javax.swing.JButton btnDoctor;
     private javax.swing.JButton btnEliminar;
@@ -396,12 +468,13 @@ public class CrearConsulta extends javax.swing.JPanel{
     private javax.swing.JButton btnPracticante;
     private javax.swing.JButton btnProcedimiento;
     private com.toedter.calendar.JDateChooser fechaConsulta;
-    private javax.swing.JComboBox<String> jComboBox1;
     private org.jdatepicker.util.JDatePickerUtil jDatePickerUtil1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextField jTextField1;
     private javax.swing.JLabel lblCantidad;
     private javax.swing.JLabel lblDoctor;
     private javax.swing.JLabel lblFecha;
+    private javax.swing.JLabel lblFecha1;
     private javax.swing.JLabel lblPaciente;
     private javax.swing.JLabel lblPaciente1;
     private javax.swing.JLabel lblPracticante;

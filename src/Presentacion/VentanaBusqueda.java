@@ -10,6 +10,7 @@ import Entidades.*;
 import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import org.jvnet.substance.SubstanceLookAndFeel;
 
@@ -23,11 +24,13 @@ public class VentanaBusqueda extends javax.swing.JFrame {
     private ADPracticante accessPracticante;
     private ADCategoria accessCategoria;
     private ADPoblacion accessPoblacion;
-    private int idCategoria;
     private CrearConsulta origen;
     private List<Paciente> pacientes;
     private List<Poblacion> poblaciones;
+    private List<Categoria> categorias;
+    private Categoria categoria;
     private boolean desactivado = true;
+    
     
     private int mostrando;
 
@@ -81,15 +84,15 @@ public class VentanaBusqueda extends javax.swing.JFrame {
                 if (paciente.getPoblacion().getNombre().equals(idPob) == true) {
                     fila[0] = paciente.getValorIdentificacion();
                     fila[1] = paciente.getNombre() + " " + paciente.getPrimerApellido();
-                    fila[3] = paciente.getEdad() + "";
-                    fila[4] = paciente.getCarne() + "";
+                    fila[2] = paciente.getEdad() + "";
+                    fila[3] = paciente.getCarne() + "";
+                    model.addRow(fila);
                 }
             }
             tblGenerica.setModel(model);
         } catch (Exception e) {
-            System.out.println(">.< " + e.getMessage());
-        }
-               
+            System.out.println("" + e.getMessage());
+        }               
     }    
     // </editor-fold>
     
@@ -126,7 +129,39 @@ public class VentanaBusqueda extends javax.swing.JFrame {
     
     // </editor-fold>
     
+    // <editor-fold desc=" Metodos con Practicantes ">
+        private void cargarProcedimientos(){
+            accessCategoria = new ADCategoria();
+            categorias = accessCategoria.obtenerCategorias();
+            categoria = new Categoria();
+            for (Categoria cat : categorias) {
+                boxClasificacion.addItem(cat.getNombre());
+            }
+            cargarTblProcedimientos();
+            desactivado = false;
+        }
+        
+        private void cargarTblProcedimientos() {
+            categoria = categorias.get(boxClasificacion.getSelectedIndex());
+            tblGenerica.setModel(new DefaultTableModel());
+            String datos[] = new String[2];
+            DefaultTableModel model = new DefaultTableModel();
+            model.addColumn("Nombre");
+            model.addColumn("Precio");
+            
+            if (categoria.getProcedimientos() != null) {
+                for (Procedimiento procedimiento : categoria.getProcedimientos()) {
+                    datos[0] = procedimiento.getNombre();
+                    datos[1] = "" + procedimiento.getPrecio();
+                    model.addRow(datos);
+                }
+                tblGenerica.setModel(model);
+            }
+        }
+        
+        
     
+    // </editor-fold>
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -140,13 +175,17 @@ public class VentanaBusqueda extends javax.swing.JFrame {
         lblTexto = new javax.swing.JLabel();
         txtBuscar = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblGenerica = new javax.swing.JTable();
+        tblGenerica = new javax.swing.JTable(){
+            public boolean isCellEditable(int rowIndex, int colIndex) {
+                return false;
+            }
+        };
         boxClasificacion = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Busqueda");
         setMaximumSize(new java.awt.Dimension(550, 550));
-        setMinimumSize(new java.awt.Dimension(550, 550));
+        setMinimumSize(null);
         setPreferredSize(new java.awt.Dimension(550, 550));
 
         lblTexto.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
@@ -160,6 +199,8 @@ public class VentanaBusqueda extends javax.swing.JFrame {
             }
         });
 
+        jScrollPane1.setPreferredSize(new java.awt.Dimension(450, 400));
+
         tblGenerica.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {},
@@ -172,6 +213,11 @@ public class VentanaBusqueda extends javax.swing.JFrame {
             }
         ));
         tblGenerica.getTableHeader().setReorderingAllowed(false);
+        tblGenerica.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblGenericaMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblGenerica);
 
         boxClasificacion.addActionListener(new java.awt.event.ActionListener() {
@@ -222,7 +268,8 @@ public class VentanaBusqueda extends javax.swing.JFrame {
                 case 0:
                     cargarTblPacientes(boxClasificacion.getSelectedItem().toString().trim());
                     break;
-                case 3://Procedimientos
+                case 3://Procedimientos                    
+                    cargarTblProcedimientos();
                     break;
                 default:
                     break;
@@ -230,6 +277,39 @@ public class VentanaBusqueda extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_boxClasificacionActionPerformed
+
+    private void tblGenericaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblGenericaMouseClicked
+        int selected = tblGenerica.getSelectedRow();
+        if (evt.getClickCount() == 2 && selected >= 0) {
+            switch (mostrando) {
+                case 0: //Paciente
+                    origen.setPaciente(pacientes.get(selected));
+                    this.dispose();
+                    break;
+                case 1:
+                    origen.setDoctor(new Doctor(Integer.parseInt(
+                            tblGenerica.getValueAt(selected, 0).toString().trim()),
+                            tblGenerica.getValueAt(selected, 1).toString(),
+                            true));
+                    this.dispose();
+                    break;
+                case 2:
+                    origen.setPracticante(new Practicante(Integer.parseInt(
+                            tblGenerica.getValueAt(selected, 0).toString().trim()),
+                            tblGenerica.getValueAt(selected, 1).toString(),
+                            true));
+                    this.dispose();
+                    break;
+                case 3:
+                    Categoria temp  = categorias.get(boxClasificacion.getSelectedIndex());
+                    Procedimiento selecto = temp.getProcedimientos().get(tblGenerica.getSelectedRow());
+                    origen.setProcedimiento(selecto);
+                    this.dispose();
+                    
+
+            }
+        }
+    }//GEN-LAST:event_tblGenericaMouseClicked
     
     private void DefinirTema(){
         try {
@@ -256,6 +336,7 @@ public class VentanaBusqueda extends javax.swing.JFrame {
                 cargarPracticantes();
                 break;
             case 3://Procedimientos
+                cargarProcedimientos();
                 break;              
             
         }

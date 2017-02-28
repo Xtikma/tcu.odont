@@ -59,7 +59,11 @@ public class ConfigCatProc extends javax.swing.JPanel {
         btnEditCat = new javax.swing.JButton();
         panelProcedimientos = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tablaProcedimientos = new javax.swing.JTable();
+        tablaProcedimientos = new javax.swing.JTable(){
+            public boolean isCellEditable(int rowIndex, int colIndex) {
+                return false; //Disallow the editing of any cell
+            }
+        };
         panelEditProc = new javax.swing.JPanel();
         lblNomProc = new javax.swing.JLabel();
         lblPrecio = new javax.swing.JLabel();
@@ -69,6 +73,7 @@ public class ConfigCatProc extends javax.swing.JPanel {
         txtPrecio = new javax.swing.JFormattedTextField();
         btnAddProc = new javax.swing.JButton();
         btnAplicarCambios = new javax.swing.JButton();
+        btnCancel = new javax.swing.JButton();
 
         setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Configuración de categorias y procedimientos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 14))); // NOI18N
         setMaximumSize(new java.awt.Dimension(1000, 500));
@@ -308,6 +313,16 @@ public class ConfigCatProc extends javax.swing.JPanel {
             }
         });
 
+        btnCancel.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        btnCancel.setText("Cancelar edición");
+        btnCancel.setToolTipText("Aplica los cambios que se hayan hecho a la categoria activa.");
+        btnCancel.setEnabled(false);
+        btnCancel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout panelEdiciónCatLayout = new javax.swing.GroupLayout(panelEdiciónCat);
         panelEdiciónCat.setLayout(panelEdiciónCatLayout);
         panelEdiciónCatLayout.setHorizontalGroup(
@@ -323,7 +338,10 @@ public class ConfigCatProc extends javax.swing.JPanel {
                             .addComponent(txtNomCat, javax.swing.GroupLayout.PREFERRED_SIZE, 315, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnEditCat, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(btnAplicarCambios, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(panelEdiciónCatLayout.createSequentialGroup()
+                        .addComponent(btnCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnAplicarCambios, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(43, Short.MAX_VALUE))
         );
         panelEdiciónCatLayout.setVerticalGroup(
@@ -338,8 +356,10 @@ public class ConfigCatProc extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(panelProcedimientos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnAplicarCambios)
-                .addContainerGap(14, Short.MAX_VALUE))
+                .addGroup(panelEdiciónCatLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAplicarCambios)
+                    .addComponent(btnCancel))
+                .addContainerGap(55, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -368,7 +388,7 @@ public class ConfigCatProc extends javax.swing.JPanel {
                     .addComponent(btnAddCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(panelEdiciónCat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(38, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -562,6 +582,10 @@ public class ConfigCatProc extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_txtPrecioKeyPressed
 
+    private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
+        reiniciar();
+    }//GEN-LAST:event_btnCancelActionPerformed
+
     private void saveProcedimiento() {
         int txtPrecioLenght = txtPrecio.getText().length();
         int txtNomProcLenght = txtNomProc.getText().length();
@@ -626,6 +650,7 @@ public class ConfigCatProc extends javax.swing.JPanel {
     
     private void activarPanelCategoria(boolean valor){
         btnAplicarCambios.setEnabled(valor);
+        btnCancel.setEnabled(valor);
         btnAddProc.setEnabled(valor);
         tablaProcedimientos.setEnabled(valor);
         txtNomCat.setEnabled(valor);
@@ -657,8 +682,8 @@ public class ConfigCatProc extends javax.swing.JPanel {
         try {
             boxCategoria.setEnabled(true);
             int count = boxCategoria.getItemCount();
-            for (int i = 0; i > count; i++) {
-                boxCategoria.removeItemAt(i);
+            for (int i = 0; i < count; i++) {
+                boxCategoria.removeItemAt(0);
             }            
             listaCompleta = access.obtenerCategorias();
             if (listaCompleta.size() != 0) {
@@ -680,6 +705,7 @@ public class ConfigCatProc extends javax.swing.JPanel {
     private javax.swing.JButton btnAddCategoria;
     private javax.swing.JButton btnAddProc;
     private javax.swing.JButton btnAplicarCambios;
+    private javax.swing.JButton btnCancel;
     private javax.swing.JButton btnEditCat;
     private javax.swing.JButton btnMoveProc;
     private javax.swing.JButton btnSaveProc;
