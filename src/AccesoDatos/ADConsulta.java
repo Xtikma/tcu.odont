@@ -35,8 +35,6 @@ public class ADConsulta {
             }
            
               CallableStatement cs = conexion.prepareCall("{call obtener_consultas_por_periodo(?,?)}");
-//              cs.setDate(1, desde);
-//                cs.setDate(2, hasta);
               cs.setString(1, desde);
               cs.setString(2, hasta);
               rsConsultas = cs.executeQuery();

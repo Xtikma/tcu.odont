@@ -27,17 +27,10 @@ public class VerConsultas extends javax.swing.JPanel {
     String fechaDesde ;
     String fechaHasta;
     Date dateprueba;
-//    DateFormat dt = DateFormat.getDateInstance();
     SimpleDateFormat Formato = new SimpleDateFormat("yyyy-MM-dd");
 
     public VerConsultas() {
         initComponents();
-//      fechaDesde = dt.format(jDate_Hasta.getDate());
-       
-        System.out.println("valor fechaHasta " + fechaDesde);
-//  fechaDesde =  jDate_Desde.getDateFormatString();
-        //fechaHasta = jDate_Hasta.getDateFormatString();
-
     }
 
     @SuppressWarnings("unchecked")
@@ -200,13 +193,11 @@ public class VerConsultas extends javax.swing.JPanel {
         // TODO add your handling code here:
          fechaDesde = getFecha(jDate_Desde);
         fechaHasta = getFecha( jDate_Hasta);
+        
          listarConsultas();
         
     }//GEN-LAST:event_jBuscarPeriodoActionPerformed
    private void listarConsultas() {
-//     fechaDesde = "2001-02-10";
-//     fechaHasta = "2001-03-10";
-     System.out.println("valor2 fechaHasta"+ fechaDesde);
        ADConsulta bd = new ADConsulta();
         bd.listarConsultas(jT_ListarConsultas, fechaDesde,fechaHasta);
 
