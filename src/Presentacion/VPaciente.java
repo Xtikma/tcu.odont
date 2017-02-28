@@ -52,6 +52,7 @@ public class VPaciente extends javax.swing.JDialog {
 
         List<Poblacion> listaPoblacion = adPoblacion.ConsultarPoblacion();
         CbPoblacion.setModel(new DefaultComboBoxModel(listaPoblacion.toArray()));
+        definirTamanoVentana();
     }
     //</editor-fold>
 
@@ -132,6 +133,7 @@ public class VPaciente extends javax.swing.JDialog {
         //seleccionar la beca
         CbBeca.setSelectedIndex(paciente.getBeca());
         }
+        definirTamanoVentana();
     }
     //</editor-fold>
     
@@ -488,12 +490,14 @@ public class VPaciente extends javax.swing.JDialog {
             if (edicion) {
                 if (adPaciente.ModificarPaciente(paciente, idPoblacion, idTipoId)) {
                     JOptionPane.showMessageDialog(null, "Paciente Modificado con Éxito");
+                    this.dispose();
                 } else {
                     JOptionPane.showMessageDialog(null, "Paciente no Modificado", "ERROR", JOptionPane.ERROR_MESSAGE);
                 }
             } else {
                 if (adPaciente.InsertarPaciente(paciente, idPoblacion, idTipoId)) {
                     JOptionPane.showMessageDialog(null, "Paciente Registrado con Éxito");
+                    this.dispose();
                 } else {
                     JOptionPane.showMessageDialog(null, "Paciente no Registrado", "ERROR", JOptionPane.ERROR_MESSAGE);
                 }
@@ -506,14 +510,15 @@ public class VPaciente extends javax.swing.JDialog {
     private void CbPoblacionItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_CbPoblacionItemStateChanged
         // TODO add your handling code here:
         //String poblacion = ((Poblacion) CbPoblacion.getSelectedItem()).getNombre();
-        boolean becado = ((Poblacion) CbPoblacion.getSelectedItem()).getBecado();
-        if (/*poblacion.equals("Estudiante")*/becado) {
+        /*boolean becado = ((Poblacion) CbPoblacion.getSelectedItem()).getBecado();
+        if (becado) {
             PanelEstudiante.setVisible(true);
             this.setSize(375, 595);
         } else {
             PanelEstudiante.setVisible(false);
             this.setSize(375, 485);
-        }
+        }*/
+        definirTamanoVentana();
     }//GEN-LAST:event_CbPoblacionItemStateChanged
 
     private void BtnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnCancelarActionPerformed
@@ -541,6 +546,17 @@ public class VPaciente extends javax.swing.JDialog {
             return false;
         }
         return true;
+    }
+    
+    private void definirTamanoVentana() {
+        boolean becado = ((Poblacion) CbPoblacion.getSelectedItem()).getBecado();
+        if (/*poblacion.equals("Estudiante")*/becado) {
+            PanelEstudiante.setVisible(true);
+            this.setSize(375, 595);
+        } else {
+            PanelEstudiante.setVisible(false);
+            this.setSize(375, 485);
+        }
     }
 
     //</editor-fold>
