@@ -5,6 +5,10 @@
  */
 package Presentacion;
 
+import AccesoDatos.ADPaciente;
+import Entidades.Paciente;
+import java.util.List;
+
 /**
  *
  * @author doliv
@@ -28,7 +32,7 @@ public class ListarPacientes extends javax.swing.JPanel {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblPacientes = new javax.swing.JTable();
         btnCargarEliminados = new javax.swing.JButton();
         btnAgregarConsulta = new javax.swing.JButton();
         btnAgregarPaciente = new javax.swing.JButton();
@@ -41,22 +45,36 @@ public class ListarPacientes extends javax.swing.JPanel {
         jRadioButton1 = new javax.swing.JRadioButton();
         jLabel1 = new javax.swing.JLabel();
         txtBuscar = new javax.swing.JTextField();
+        btnRegresar = new javax.swing.JButton();
 
         setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Lista de Pacientes", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 14))); // NOI18N
         setOpaque(false);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblPacientes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Nombre", "P. Apellido", "S. Apellido", "Fecha Nacimiento", "Edad", "Identificación", "Genero", "Beca", "Carné", "Primer Ingreso", "Población", "Institución", "Becado", "Activo"
             }
-        ));
-        jScrollPane1.setViewportView(jTable1);
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.Boolean.class, java.lang.String.class, java.lang.String.class, java.lang.Boolean.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false, false, false, false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tblPacientes.getTableHeader().setReorderingAllowed(false);
+        jScrollPane1.setViewportView(tblPacientes);
 
         btnCargarEliminados.setText("Cargar Eliminados");
 
@@ -80,6 +98,8 @@ public class ListarPacientes extends javax.swing.JPanel {
 
         jLabel1.setText("Buscar:");
 
+        btnRegresar.setText("<< Regresar");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -100,7 +120,12 @@ public class ListarPacientes extends javax.swing.JPanel {
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnCargarEliminados))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(btnRegresar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 373, Short.MAX_VALUE)
                         .addComponent(btnAgregarConsulta)
                         .addGap(18, 18, 18)
                         .addComponent(btnAgregarPaciente)
@@ -109,11 +134,7 @@ public class ListarPacientes extends javax.swing.JPanel {
                         .addGap(18, 18, 18)
                         .addComponent(btnDesactivar)
                         .addGap(18, 18, 18)
-                        .addComponent(btnVerExpediente)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btnCargarEliminados)))
+                        .addComponent(btnVerExpediente)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -136,18 +157,24 @@ public class ListarPacientes extends javax.swing.JPanel {
                     .addComponent(btnAgregarPaciente)
                     .addComponent(btnModificarPaciente)
                     .addComponent(btnDesactivar)
-                    .addComponent(btnVerExpediente))
+                    .addComponent(btnVerExpediente)
+                    .addComponent(btnRegresar))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-
+    private void consultarPacientes(boolean eliminados) {
+        ADPaciente bd = new ADPaciente();
+        List<Paciente> pacientes = bd.ConsultarPacientesEliminados();
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregarConsulta;
     private javax.swing.JButton btnAgregarPaciente;
     private javax.swing.JButton btnCargarEliminados;
     private javax.swing.JButton btnDesactivar;
     private javax.swing.JButton btnModificarPaciente;
+    private javax.swing.JButton btnRegresar;
     private javax.swing.JButton btnVerExpediente;
     private javax.swing.JComboBox<String> cbPoblacion;
     private javax.swing.JComboBox<String> jComboBox2;
@@ -155,7 +182,7 @@ public class ListarPacientes extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JRadioButton jRadioButton1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable tblPacientes;
     private javax.swing.JTextField txtBuscar;
     // End of variables declaration//GEN-END:variables
 }
