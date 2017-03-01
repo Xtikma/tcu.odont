@@ -106,34 +106,6 @@ public class ADPaciente {
         return null;
     }
     
-    public void ConsultarTodosPacientesActivos(JTable tblPacientes) {
-        try {
-            ResultSet rsPacientes;
-            
-            DefaultTableModel model = (DefaultTableModel) tblPacientes.getModel();
-            int a = model.getRowCount() - 1;
-            for (int i = a; i >= 0; i--) {
-                model.removeRow(i);
-            }
-            CallableStatement cs = conexion.prepareCall("{call consultar_pacientes_activos()}");
-            rsPacientes = cs.executeQuery();
-            
-            while (rsPacientes.next()) {
-                try {
-                    model.addRow(new Object[]{rsPacientes.getString(1), rsPacientes.getString(2), rsPacientes.getString(3), rsPacientes.getString(4),
-                        rsPacientes.getInt(5), rsPacientes.getString(6), rsPacientes.getString(7),rsPacientes.getInt(8),rsPacientes.getString(9),
-                        rsPacientes.getBoolean(10), rsPacientes.getBoolean(11), rsPacientes.getString(12), rsPacientes.getString(13), rsPacientes.getBoolean(14)});
-                } catch (SQLException ex) {
-                    JOptionPane.showMessageDialog(null, "Ha ocurrido un error. Detalle:\n"+ex.toString(), "ERROR", JOptionPane.ERROR_MESSAGE);
-                }
-            }
-            tblPacientes.setModel(model);
-            //conexion.close();
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Ha ocurrido un error. Detalle:\n"+ex.toString(), "ERROR", JOptionPane.ERROR_MESSAGE);
-        }
-    }
-    
     public List<Paciente> ConsultarPacientesActivos() {
         try {
             ResultSet rsPaciente = null;
@@ -170,4 +142,75 @@ public class ADPaciente {
         }
         return null;
     }
+    
+    public List<Paciente> ConsultarPacientesEliminados() {
+        try {
+            ResultSet rsPaciente = null;
+
+            CallableStatement cs = conexion.prepareCall("{call consultar_pacientes_eliminados()}");
+            rsPaciente = cs.executeQuery();
+            List<Paciente> listaPaciente = new ArrayList();
+            while (rsPaciente.next()) {
+                try {
+                    Paciente paciente = new Paciente();
+                    paciente.setId(rsPaciente.getInt(1));
+                    paciente.setNombre(rsPaciente.getString(2));
+                    paciente.setPrimerApellido(rsPaciente.getString(3));
+                    paciente.setSegundoApellido(rsPaciente.getString(4));
+                    paciente.setFechaNacimiento(rsPaciente.getDate(5).toString());
+                    paciente.setEdad(rsPaciente.getInt(6));
+                    paciente.setValorIdentificacion(rsPaciente.getString(7));
+                    paciente.setGenero(rsPaciente.getString(8));
+                    paciente.setBeca(rsPaciente.getInt(9));
+                    paciente.setCarne(rsPaciente.getString(10));
+                    paciente.setPrimerIngreso(rsPaciente.getBoolean(11));
+                    paciente.setEliminado(rsPaciente.getBoolean(12));
+                    paciente.setPoblacion(rsPaciente.getInt(13), rsPaciente.getString(14)
+                            , rsPaciente.getString(15), rsPaciente.getBoolean(16));
+                    listaPaciente.add(paciente);
+                } catch (SQLException ex) {
+                    JOptionPane.showMessageDialog(null, "Ha ocurrido un error. Detalle:\n" + ex.toString(), "ERROR", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+            conexion.close();
+            return listaPaciente;
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error. Detalle:\n" + ex.toString(), "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+        return null;
+    }
+/*
+    public void ConsultarPacientes(JTable tblPacientes, boolean eliminados) {
+        try {
+            ResultSet rsPacientes = null;
+
+            DefaultTableModel model = (DefaultTableModel) tblPacientes.getModel();
+            int a = model.getRowCount() - 1;
+            for (int i = a; i >= 0; i--) {
+                model.removeRow(i);
+            }
+            if (eliminados) {
+                CallableStatement cs = conexion.prepareCall("{call consultar_pacientes_eliminados()}");
+                rsPacientes = cs.executeQuery();
+            } else {
+                CallableStatement cs = conexion.prepareCall("{call consultar_pacientes_activos()}");
+                rsPacientes = cs.executeQuery();
+            }
+
+            while (rsPacientes.next()) {
+                try {
+                    model.addRow(new Object[]{rsPacientes.getInt(1), rsPacientes.getString(2), rsPacientes.getString(3), rsPacientes.getString(4), rsPacientes.getString(5),
+                        rsPacientes.getInt(6), rsPacientes.getString(7), rsPacientes.getString(8), rsPacientes.getInt(9), rsPacientes.getString(10),
+                        rsPacientes.getBoolean(11), rsPacientes.getBoolean(12), rsPacientes.getInt(13), rsPacientes.getString(14), rsPacientes.getString(15), rsPacientes.getBoolean(16)});
+                } catch (SQLException ex) {
+                    JOptionPane.showMessageDialog(null, "Ha ocurrido un error. Detalle:\n" + ex.toString(), "ERROR", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+            tblPacientes.setModel(model);
+            //conexion.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error. Detalle:\n" + ex.toString(), "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    */
 }

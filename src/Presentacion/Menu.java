@@ -26,6 +26,7 @@ public class Menu extends javax.swing.JFrame {
     private PanelGenerico panGen;
     private CrearConsulta consulta;
     private VerConsultas verCons;
+    private ListarPacientes lPacientes;
     /**
      * Creates new form Menu
      */
@@ -247,6 +248,12 @@ public class Menu extends javax.swing.JFrame {
                     verCons.setSize(1000,500);
                     verCons.setLocation(0,0);
                     insertarPanel(verCons);
+                    break;
+                case 9:// Lista de Pacientes
+                    lPacientes = new ListarPacientes();
+                    lPacientes.setSize(1000,500);
+                    lPacientes.setLocation(0,0);
+                    insertarPanel(lPacientes);
                     break;
                 default:
                     break;

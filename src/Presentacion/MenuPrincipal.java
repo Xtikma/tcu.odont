@@ -145,6 +145,11 @@ public class MenuPrincipal extends javax.swing.JPanel {
         btnPacientes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/confPacientes.png"))); // NOI18N
         btnPacientes.setBorderPainted(false);
         btnPacientes.setOpaque(false);
+        btnPacientes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPacientesActionPerformed(evt);
+            }
+        });
 
         btnFiltros.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
         btnFiltros.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/AreaFiltros.png"))); // NOI18N
@@ -239,6 +244,10 @@ public class MenuPrincipal extends javax.swing.JPanel {
     private void btnVerConsultaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerConsultaActionPerformed
         m.intercambiarPaneles(8);
     }//GEN-LAST:event_btnVerConsultaActionPerformed
+
+    private void btnPacientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPacientesActionPerformed
+        m.intercambiarPaneles(9);
+    }//GEN-LAST:event_btnPacientesActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

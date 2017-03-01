@@ -8,6 +8,7 @@ import Entidades.Poblacion;
 import Entidades.TipoIdentificacion;
 import java.awt.Component;
 import java.awt.Font;
+import java.util.Calendar;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
@@ -470,7 +471,7 @@ public class VPaciente extends javax.swing.JDialog {
             }
 
             String fecha = "";
-            String texto = TxtFechaNacimiento.getText();
+            String texto = TxtFechaNacimiento.getText().trim();
             if (RbNoFecha.isSelected()) {
                 fecha = null;
             } else if (texto.matches("\\d\\d-\\d\\d-\\d\\d\\d\\d")) {
@@ -481,8 +482,8 @@ public class VPaciente extends javax.swing.JDialog {
                 return;
             }
 
-            Paciente paciente = new Paciente(idPacienteModificar, fecha, TxtNombre.getText(), TxtPApellido.getText(), TxtsApellido.getText(), TxtIdentificacion.getText(),
-                    genero, beca, edad, TxtCarne.getText(), primerIngreso, false);
+            Paciente paciente = new Paciente(idPacienteModificar, fecha, TxtNombre.getText().trim(), TxtPApellido.getText().trim(), TxtsApellido.getText().trim(), TxtIdentificacion.getText().trim(),
+                    genero, beca, edad, TxtCarne.getText().trim(), primerIngreso, false);
 
             int idPoblacion = ((Poblacion) CbPoblacion.getSelectedItem()).getId();
             int idTipoId = ((TipoIdentificacion) CbTipoId.getSelectedItem()).getId();
@@ -495,6 +496,10 @@ public class VPaciente extends javax.swing.JDialog {
                     JOptionPane.showMessageDialog(null, "Paciente no Modificado", "ERROR", JOptionPane.ERROR_MESSAGE);
                 }
             } else {
+                if ((TxtEdad.getText().trim()).equals("") && !RbNoFecha.isSelected()) {
+                    int edad2 = calcularEdad(texto);
+                    paciente.setEdad(edad2);
+                }
                 if (adPaciente.InsertarPaciente(paciente, idPoblacion, idTipoId)) {
                     JOptionPane.showMessageDialog(null, "Paciente Registrado con Éxito");
                     this.dispose();
@@ -508,16 +513,7 @@ public class VPaciente extends javax.swing.JDialog {
     }//GEN-LAST:event_BtnGuardarActionPerformed
 
     private void CbPoblacionItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_CbPoblacionItemStateChanged
-        // TODO add your handling code here:
-        //String poblacion = ((Poblacion) CbPoblacion.getSelectedItem()).getNombre();
-        /*boolean becado = ((Poblacion) CbPoblacion.getSelectedItem()).getBecado();
-        if (becado) {
-            PanelEstudiante.setVisible(true);
-            this.setSize(375, 595);
-        } else {
-            PanelEstudiante.setVisible(false);
-            this.setSize(375, 485);
-        }*/
+
         definirTamanoVentana();
     }//GEN-LAST:event_CbPoblacionItemStateChanged
 
@@ -549,14 +545,26 @@ public class VPaciente extends javax.swing.JDialog {
     }
     
     private void definirTamanoVentana() {
-        boolean becado = ((Poblacion) CbPoblacion.getSelectedItem()).getBecado();
-        if (/*poblacion.equals("Estudiante")*/becado) {
-            PanelEstudiante.setVisible(true);
-            this.setSize(375, 595);
+        if ((CbPoblacion.getSelectedItem()) != null) {
+            boolean becado = ((Poblacion) CbPoblacion.getSelectedItem()).getBecado();
+            if (/*poblacion.equals("Estudiante")*/becado) {
+                PanelEstudiante.setVisible(true);
+                this.setSize(375, 595);
+            } else {
+                PanelEstudiante.setVisible(false);
+                this.setSize(375, 485);
+            }
         } else {
-            PanelEstudiante.setVisible(false);
-            this.setSize(375, 485);
+            JOptionPane.showMessageDialog(null, "Debe ingresar una población y un tipo de identificación primero.", "ERROR", JOptionPane.ERROR_MESSAGE);
+            BtnGuardar.setEnabled(false);
         }
+    }
+    
+    private int calcularEdad(String fechaNacimiento) {
+        String[] temp = fechaNacimiento.split("-");
+        int anno = Integer.parseInt(temp[2]);
+        int year = Calendar.getInstance().get(Calendar.YEAR);
+        return anno - year;
     }
 
     //</editor-fold>

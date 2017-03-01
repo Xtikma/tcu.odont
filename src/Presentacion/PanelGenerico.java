@@ -341,7 +341,7 @@ public class PanelGenerico extends javax.swing.JPanel {
                 //<editor-fold defaultstate="collapsed" desc="Tipo Id">
                 ADTipoIdentificacion bdTipoId = new ADTipoIdentificacion();
                 if (accion == 1) {//agregar
-                    String nombre = txtNombre.getText();
+                    String nombre = txtNombre.getText().trim();
                     if (nombre.equals("") || nombre.equals(" ")) {
                         JOptionPane.showMessageDialog(null, "No puede dejar el nombre en blanco.", "ERROR", JOptionPane.ERROR_MESSAGE);
                     } else {
@@ -351,7 +351,7 @@ public class PanelGenerico extends javax.swing.JPanel {
                     int indiceFila = TblGenerica.getSelectedRow();
                     if (indiceFila >= 0) {
                         int num = (int) TblGenerica.getValueAt(indiceFila, 0);
-                        bdTipoId.ModificarTipoIdentificacion(new TipoIdentificacion(num, txtNombre.getText()));
+                        bdTipoId.ModificarTipoIdentificacion(new TipoIdentificacion(num, txtNombre.getText().trim()));
                     } else {
                         JOptionPane.showMessageDialog(null, "Debe seleccionar un item.", "ERROR", JOptionPane.ERROR_MESSAGE);
                     }
@@ -367,7 +367,7 @@ public class PanelGenerico extends javax.swing.JPanel {
                     if (nombre.equals("") || nombre.equals(" ")) {
                         JOptionPane.showMessageDialog(null, "No puede dejar el nombre en blanco.", "ERROR", JOptionPane.ERROR_MESSAGE);
                     } else {
-                        bdDoctor.insertarDoctor(new Doctor(0, nombre, false));
+                        bdDoctor.insertarDoctor(new Doctor(0, nombre.trim(), false));
                     }
                 } else if (accion == 2) {//modificar
                     int indiceFila = TblGenerica.getSelectedRow();
@@ -377,7 +377,7 @@ public class PanelGenerico extends javax.swing.JPanel {
                         if ((TblGenerica.getValueAt(indiceFila, 2).equals("Inactivo"))) {
                             estado = true;
                         }
-                        bdDoctor.ModificarDoctor(new Doctor(num, txtNombre.getText(), estado));
+                        bdDoctor.ModificarDoctor(new Doctor(num, txtNombre.getText().trim(), estado));
                     } else {
                         JOptionPane.showMessageDialog(null, "Debe seleccionar un item.", "ERROR", JOptionPane.ERROR_MESSAGE);
                     }
@@ -397,7 +397,7 @@ public class PanelGenerico extends javax.swing.JPanel {
                     if (nombre.equals("") || nombre.equals(" ")) {
                         JOptionPane.showMessageDialog(null, "No puede dejar el nombre en blanco.", "ERROR", JOptionPane.ERROR_MESSAGE);
                     } else {
-                        bdPracticante.insertaPracticante(new Practicante(0, nombre, false));
+                        bdPracticante.insertaPracticante(new Practicante(0, nombre.trim(), false));
                     }
                 } else if (accion == 2) {//modificar
                     int indiceFila = TblGenerica.getSelectedRow();
@@ -407,7 +407,7 @@ public class PanelGenerico extends javax.swing.JPanel {
                         if ((TblGenerica.getValueAt(indiceFila, 2).equals("Inactivo"))) {
                             estado = true;
                         }
-                        bdPracticante.ModificarPracticante(new Practicante(num, txtNombre.getText(), estado));
+                        bdPracticante.ModificarPracticante(new Practicante(num, txtNombre.getText().trim(), estado));
                     } else {
                         JOptionPane.showMessageDialog(null, "Debe seleccionar un item.", "ERROR", JOptionPane.ERROR_MESSAGE);
                     }
@@ -428,7 +428,7 @@ public class PanelGenerico extends javax.swing.JPanel {
                     if (nombre.equals("") || nombre.equals(" ") || institucion.equals("") || institucion.equals(" ")) {
                         JOptionPane.showMessageDialog(null, "No puede dejar espacios en blanco.", "ERROR", JOptionPane.ERROR_MESSAGE);
                     } else {
-                        bdPoblacion.InsertarPoblacion(new Poblacion(0, nombre, institucion, rbBecado.isSelected()));
+                        bdPoblacion.InsertarPoblacion(new Poblacion(0, nombre.trim(), institucion.trim(), rbBecado.isSelected()));
                     }
                 } else if (accion == 2) {//modificar
                     int indiceFila = TblGenerica.getSelectedRow();
@@ -443,7 +443,7 @@ public class PanelGenerico extends javax.swing.JPanel {
                             if ((TblGenerica.getValueAt(indiceFila, 3).toString()).equals("Si")) {
                                 becado = true;
                             }
-                            bdPoblacion.ModificarPoblacion(new Poblacion(num, nombre, institucion, becado));
+                            bdPoblacion.ModificarPoblacion(new Poblacion(num, nombre.trim(), institucion.trim(), becado));
                         }
                     } else {
                         JOptionPane.showMessageDialog(null, "Debe seleccionar un item.", "ERROR", JOptionPane.ERROR_MESSAGE);
@@ -460,7 +460,7 @@ public class PanelGenerico extends javax.swing.JPanel {
                     if (nombre.equals("") || nombre.equals(" ")) {
                         JOptionPane.showMessageDialog(null, "No puede dejar el nombre en blanco.", "ERROR", JOptionPane.ERROR_MESSAGE);
                     } else {
-                        bdLugar.insertarLugarAtencion(new LugarAtencion(0, nombre, false));
+                        bdLugar.insertarLugarAtencion(new LugarAtencion(0, nombre.trim(), false));
                     }
                 } else if (accion == 2) {//modificar
                     int indiceFila = TblGenerica.getSelectedRow();
@@ -470,7 +470,7 @@ public class PanelGenerico extends javax.swing.JPanel {
                         if ((TblGenerica.getValueAt(indiceFila, 2).equals("Inactivo"))) {
                             estado = true;
                         }
-                        bdLugar.ModificarLugarAtencion(new LugarAtencion(num, txtNombre.getText(), estado));
+                        bdLugar.ModificarLugarAtencion(new LugarAtencion(num, txtNombre.getText().trim(), estado));
                     } else {
                         JOptionPane.showMessageDialog(null, "Debe seleccionar un item.", "ERROR", JOptionPane.ERROR_MESSAGE);
                     }
