@@ -52,17 +52,17 @@ public class ListarPacientes extends javax.swing.JPanel {
 
         tblPacientes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null, null, null, null, null, null, null}
+                {null, null, null, null, null}
             },
             new String [] {
-                "Nombre", "P. Apellido", "S. Apellido", "Fecha Nacimiento", "Edad", "Identificación", "Genero", "Beca", "Carné", "Primer Ingreso", "Población", "Institución", "Becado", "Activo"
+                "Nombre", "P. Apellido", "Edad", "Identificación", "Carné"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.Boolean.class, java.lang.String.class, java.lang.String.class, java.lang.Boolean.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -125,7 +125,7 @@ public class ListarPacientes extends javax.swing.JPanel {
                         .addComponent(btnCargarEliminados))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(btnRegresar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 373, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnAgregarConsulta)
                         .addGap(18, 18, 18)
                         .addComponent(btnAgregarPaciente)
