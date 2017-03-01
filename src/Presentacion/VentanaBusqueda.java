@@ -268,6 +268,7 @@ public class VentanaBusqueda extends javax.swing.JFrame {
                 case 0:
                     cargarTblPacientes(boxClasificacion.getSelectedItem().toString().trim());
                     break;
+                    
                 case 3://Procedimientos                    
                     cargarTblProcedimientos();
                     break;
@@ -283,7 +284,14 @@ public class VentanaBusqueda extends javax.swing.JFrame {
         if (evt.getClickCount() == 2 && selected >= 0) {
             switch (mostrando) {
                 case 0: //Paciente
-                    origen.setPaciente(pacientes.get(selected));
+                    Paciente pac = new Paciente();
+                    for (Paciente p : pacientes) {
+                        String concat = p.getNombre() + " " + p.getPrimerApellido();
+                        if (concat.equals(tblGenerica.getValueAt(selected, 1).toString()) == true) {
+                            pac = p;
+                        }
+                    }
+                    origen.setPaciente(pac);
                     this.dispose();
                     break;
                 case 1:

@@ -85,9 +85,9 @@ public class ConfigCatProc extends javax.swing.JPanel {
 
         boxCategoria.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         boxCategoria.setMinimumSize(new java.awt.Dimension(100, 30));
-        boxCategoria.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                boxCategoriaActionPerformed(evt);
+        boxCategoria.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                boxCategoriaItemStateChanged(evt);
             }
         });
 
@@ -392,22 +392,19 @@ public class ConfigCatProc extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    /***
-     * Evento que selecciona la categoria a editar dependiendo la selección del
-     * ComboBox
-     * @param evt cambio de selección del ComboBox
-     */
-    private void boxCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boxCategoriaActionPerformed
-        for (Categoria categoria : listaCompleta) {
-            if (categoria.getNombre() == boxCategoria.getSelectedItem().toString()) {
-                seleccionado = categoria;
+    private void cambioBox(){
+        if (boxCategoria.getItemCount() > 0) {
+            for (Categoria categoria : listaCompleta) {
+                if (categoria.getNombre() == boxCategoria.getSelectedItem().toString()) {
+                    seleccionado = categoria;
+                }
             }
+            txtNomCat.setText(seleccionado.getNombre());
+            btnEditCat.setEnabled(true);
+            cargarProcedimientos();
         }
-        txtNomCat.setText(seleccionado.getNombre());
-        btnEditCat.setEnabled(true);
-        cargarProcedimientos();
-    }//GEN-LAST:event_boxCategoriaActionPerformed
-
+    }
+    
     /**
      * Habilita la edición de una categoria habilitando la interfaz necesaria
      * y establece por medio de "edit" que se editara una categoria existente
@@ -488,17 +485,20 @@ public class ConfigCatProc extends javax.swing.JPanel {
             String seleccion = (String) JOptionPane.showInputDialog(this, "Seleccione la nueva categoria",
                     "Mover procedimiento", JOptionPane.INFORMATION_MESSAGE, null,
                     categorias, categorias[0]);
-            for (Categoria categoria : listaCompleta) {
-                if (seleccion.equalsIgnoreCase(categoria.getNombre())) {
-                    categoriaNueva = categoria.getId();
+            if (seleccion != null) {
+                for (Categoria categoria : listaCompleta) {
+                    if (seleccion.equalsIgnoreCase(categoria.getNombre())) {
+                        categoriaNueva = categoria.getId();
+                    }
                 }
+                seleccionado.eliminarProcedimiento(temp.getId());
+                access.moverProcedimiento(temp.getId(), categoriaNueva);
+                txtNomProc.setText("");
+                txtPrecio.setText("");
+                activarPanelProcedimiento(AddProcedimiento);
+                cargarProcedimientos();
             }
-            seleccionado.eliminarProcedimiento(temp.getId());
-            access.moverProcedimiento(temp.getId(), categoriaNueva);
-            txtNomProc.setText("");
-            txtPrecio.setText("");
-            activarPanelProcedimiento(AddProcedimiento);
-            cargarProcedimientos();
+            
         } else {
             JOptionPane.showMessageDialog(this, "No puede transladar un "
                     + "procedimiento que no se haya agregado al sistema aún.",
@@ -585,6 +585,10 @@ public class ConfigCatProc extends javax.swing.JPanel {
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
         reiniciar();
     }//GEN-LAST:event_btnCancelActionPerformed
+
+    private void boxCategoriaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_boxCategoriaItemStateChanged
+        cambioBox();
+    }//GEN-LAST:event_boxCategoriaItemStateChanged
 
     private void saveProcedimiento() {
         int txtPrecioLenght = txtPrecio.getText().length();
@@ -678,22 +682,23 @@ public class ConfigCatProc extends javax.swing.JPanel {
         txt.setValue(0.00);
     }
 
-    private void cargarCategorias(){
+    private void cargarCategorias() {
         try {
             boxCategoria.setEnabled(true);
-            int count = boxCategoria.getItemCount();
-            for (int i = 0; i < count; i++) {
-                boxCategoria.removeItemAt(0);
-            }            
+            //int count = boxCategoria.getItemCount();
+            //for (int i = 0; i < count; i++) {
+            //    boxCategoria.removeItemAt(0);
+            //}
+            boxCategoria.removeAllItems();
             listaCompleta = access.obtenerCategorias();
             if (listaCompleta.size() != 0) {
                 for (Categoria categoria : listaCompleta) {
                     boxCategoria.addItem(categoria.getNombre());
-                }                
+                }
             } else {
                 JOptionPane.showMessageDialog(this, "No se ha cargado anteriormente categorias", "Lista vacia", 1);
             }
-            boxCategoria.setSelectedIndex(0);
+
         } catch (Exception e) {
             System.out.println(">> " + e.getMessage());
         }
