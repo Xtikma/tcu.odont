@@ -9,12 +9,12 @@ package Presentacion;
  *
  * @author doliv
  */
-public class PanelListarPacientes extends javax.swing.JPanel {
+public class ListarPacientes extends javax.swing.JPanel {
 
     /**
      * Creates new form PanelListarPacientes
      */
-    public PanelListarPacientes() {
+    public ListarPacientes() {
         initComponents();
     }
 
