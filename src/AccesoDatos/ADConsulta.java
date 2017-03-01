@@ -10,6 +10,7 @@ package AccesoDatos;
  * @author Alejandra
  */
 import Entidades.Consulta;
+import Entidades.ProcedimientoConsulta;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.Date;
@@ -85,6 +86,77 @@ public class ADConsulta {
 //            return lista;
 //        }
     
+    // <editor-fold desc=" Metodos para almacenar una consulta nueva" >
+    /**
+     * Almacena la consulta, además invoca al metodo de guardarDetalles
+     * @param c objeto consulta.
+     * @return 
+     */
+    public boolean almacenarConsulta(Consulta c) {
+        ResultSet rs;
+        int index = 0;
+        boolean sucefull = false;
+        int agrego = 0;
+        try {
+            CallableStatement cc = conexion.prepareCall("{call insertar_consulta_encabezado(?,?,?,?,?,?)}");
+            cc.setString(1, c.getFechaConsulta().toString());
+            cc.setDouble(2, c.getTotalConsulta());
+            cc.setInt(3, c.getIdPaciente());
+            cc.setInt(4, c.getIdDoctor());
+            cc.setInt(5, c.getIdPracticante());
+            cc.setInt(6, c.getIdLugar());
+            agrego = cc.executeUpdate();
+
+            if (c.getListaProcedimientos().size() > 0) {
+                cc = conexion.prepareCall("call obtener_ultima_categoria()");
+                rs = cc.executeQuery();
+                rs.first();
+                index = rs.getInt(1);
+
+                sucefull = guardarDetalles(c.getListaProcedimientos(), index);
+
+            }
+        } catch (Exception e) {
+            return false;
+        }
+        if (sucefull == true && agrego > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Almacena uno a uno los ProcedimientosConsulta en la lista que posee la Consulta
+     * @param detalles una lista de procedimientos consulta.
+     * @param idConsulta la id de la consulta recien ingresada.
+     * @return true si se agregaron todos los detalles de la consulta
+     */
+    private boolean guardarDetalles(ArrayList<ProcedimientoConsulta> detalles, int idConsulta) {
+        int agregado = 0;
+        try {
+            CallableStatement cc = conexion.prepareCall("{call agregar_procedimiento_a_consulta(?,?,?,?)}");
+
+            for (ProcedimientoConsulta detalle : detalles) {
+                cc.setInt(1, idConsulta);
+                cc.setInt(2, detalle.getIdProcedimiento());
+                cc.setInt(3, detalle.getCantidad());
+                cc.setDouble(4, detalle.getPrecioHistorico());
+                int agrego = cc.executeUpdate();
+                if (agrego > 0) {
+                    agregado = agregado + 1;
+                }
+            }
+        } catch (Exception e) {
+            return false;
+        }
+        if (agregado == detalles.size()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
     
+    // </editor-fold>
     
 }

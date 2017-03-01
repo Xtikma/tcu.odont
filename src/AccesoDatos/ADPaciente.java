@@ -2,7 +2,6 @@
 package AccesoDatos;
 
 import Entidades.Paciente;
-import Entidades.Poblacion;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
