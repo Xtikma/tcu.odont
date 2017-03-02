@@ -58,7 +58,7 @@ public class VPaciente extends javax.swing.JDialog {
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc=" Constructor para editar paciente ">
-    public VPaciente(java.awt.Frame parent, boolean modal, int idPaciente) {
+    public VPaciente(java.awt.Frame parent, boolean modal, int idPaciente, boolean editar) {
         super(parent, modal);
         edicion = true;
         idPacienteModificar = idPaciente;
@@ -135,6 +135,9 @@ public class VPaciente extends javax.swing.JDialog {
         CbBeca.setSelectedIndex(paciente.getBeca());
         }
         definirTamanoVentana();
+        if (!editar) {
+            bloquearEdicion();
+        }
     }
     //</editor-fold>
     
@@ -336,14 +339,14 @@ public class VPaciente extends javax.swing.JDialog {
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(TxtFechaNacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(RbNoFecha))
+                                .addComponent(jLabel7)
+                                .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(CbPoblacion, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel7))
-                                .addGap(0, 0, Short.MAX_VALUE))))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(CbPoblacion, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(TxtFechaNacimiento, javax.swing.GroupLayout.DEFAULT_SIZE, 109, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(RbNoFecha))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(BtnGuardar)
@@ -545,7 +548,7 @@ public class VPaciente extends javax.swing.JDialog {
     }
     
     private void definirTamanoVentana() {
-        if ((CbPoblacion.getSelectedItem()) != null) {
+        if ((CbPoblacion.getSelectedItem()) != null || (CbTipoId.getSelectedItem()) != null) {
             boolean becado = ((Poblacion) CbPoblacion.getSelectedItem()).getBecado();
             if (/*poblacion.equals("Estudiante")*/becado) {
                 PanelEstudiante.setVisible(true);
@@ -564,9 +567,27 @@ public class VPaciente extends javax.swing.JDialog {
         String[] temp = fechaNacimiento.split("-");
         int anno = Integer.parseInt(temp[2]);
         int year = Calendar.getInstance().get(Calendar.YEAR);
-        return anno - year;
+        return year - anno;
     }
-
+    
+    private void bloquearEdicion() {
+        TxtNombre.setEditable(false);
+        TxtPApellido.setEditable(false);
+        TxtsApellido.setEditable(false);
+        TxtCarne.setEditable(false);
+        TxtEdad.setEditable(false);
+        TxtFechaNacimiento.setEditable(false);
+        TxtIdentificacion.setEditable(false);
+        RbFemenino.setEnabled(false);
+        RbMasculino.setEnabled(false);
+        RbNoFecha.setEnabled(false);
+        RbPrimerIngreso.setEnabled(false);
+        CbBeca.setEnabled(false);
+        CbPoblacion.setEnabled(false);
+        CbTipoId.setEnabled(false);
+        BtnGuardar.setVisible(false);
+        BtnCancelar.setText("Cerrar");
+    }
     //</editor-fold>
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

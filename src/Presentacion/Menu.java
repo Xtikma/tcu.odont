@@ -250,7 +250,7 @@ public class Menu extends javax.swing.JFrame {
                     insertarPanel(verCons);
                     break;
                 case 9:// Lista de Pacientes
-                    lPacientes = new ListarPacientes();
+                    lPacientes = new ListarPacientes(this);
                     lPacientes.setSize(1000,500);
                     lPacientes.setLocation(0,0);
                     insertarPanel(lPacientes);

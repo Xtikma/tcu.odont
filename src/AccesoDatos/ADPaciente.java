@@ -69,11 +69,12 @@ public class ADPaciente {
         return false;
     }
     
-    public boolean ActivarDesactivarPaciente(Paciente paciente) {
+    public boolean ActivarDesactivarPaciente(int id, boolean estado) {
+        //Hacer que sólo le mande el id y lo cambie.
         try {
             CallableStatement cs = conexion.prepareCall("{call activar_desactivar_paciente(?,?)}");
-            cs.setInt(1, paciente.getId());
-            cs.setBoolean(2, paciente.getEliminado());
+            cs.setInt(1, id);
+            cs.setBoolean(2, estado);
             int cambio = cs.executeUpdate();
             if (cambio > 0) {
                 return true;
@@ -120,7 +121,11 @@ public class ADPaciente {
                     paciente.setNombre(rsPaciente.getString(2));
                     paciente.setPrimerApellido(rsPaciente.getString(3));
                     paciente.setSegundoApellido(rsPaciente.getString(4));
-                    paciente.setFechaNacimiento(rsPaciente.getDate(5).toString());
+                    if (rsPaciente.getDate(5) == null) {
+                        paciente.setFechaNacimiento("");
+                    } else {
+                        paciente.setFechaNacimiento(rsPaciente.getDate(5).toString());
+                    }
                     paciente.setEdad(rsPaciente.getInt(6));
                     paciente.setValorIdentificacion(rsPaciente.getString(7));
                     paciente.setGenero(rsPaciente.getString(8));
@@ -132,13 +137,13 @@ public class ADPaciente {
                             , rsPaciente.getString(15), rsPaciente.getBoolean(16));
                     listaPaciente.add(paciente);
                 } catch (SQLException ex) {
-                    JOptionPane.showMessageDialog(null, "Ha ocurrido un error. Detalle:\n" + ex.toString(), "ERROR", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Ha ocurrido un error. Detalle:\n" + ex.toString() + "\nen ConsultarPacientesActivos en ADPaciente", "ERROR", JOptionPane.ERROR_MESSAGE);
                 }
             }
             conexion.close();
             return listaPaciente;
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Ha ocurrido un error. Detalle:\n" + ex.toString(), "ERROR", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error. Detalle:\n" + ex.toString() + "\nen ConsultarPacientesActivos en ADPaciente", "ERROR", JOptionPane.ERROR_MESSAGE);
         }
         return null;
     }
@@ -157,7 +162,11 @@ public class ADPaciente {
                     paciente.setNombre(rsPaciente.getString(2));
                     paciente.setPrimerApellido(rsPaciente.getString(3));
                     paciente.setSegundoApellido(rsPaciente.getString(4));
-                    paciente.setFechaNacimiento(rsPaciente.getDate(5).toString());
+                    if (rsPaciente.getDate(5) == null) {
+                        paciente.setFechaNacimiento("");
+                    } else {
+                        paciente.setFechaNacimiento(rsPaciente.getDate(5).toString());
+                    }
                     paciente.setEdad(rsPaciente.getInt(6));
                     paciente.setValorIdentificacion(rsPaciente.getString(7));
                     paciente.setGenero(rsPaciente.getString(8));
@@ -169,48 +178,14 @@ public class ADPaciente {
                             , rsPaciente.getString(15), rsPaciente.getBoolean(16));
                     listaPaciente.add(paciente);
                 } catch (SQLException ex) {
-                    JOptionPane.showMessageDialog(null, "Ha ocurrido un error. Detalle:\n" + ex.toString(), "ERROR", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Ha ocurrido un error. Detalle:\n" + ex.toString() + "\nen ConsultarPacientesEliminados en ADPaciente", "ERROR", JOptionPane.ERROR_MESSAGE);
                 }
             }
             conexion.close();
             return listaPaciente;
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Ha ocurrido un error. Detalle:\n" + ex.toString(), "ERROR", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error. Detalle:\n" + ex.toString() + "\nen ConsultarPacientesEliminados en ADPaciente", "ERROR", JOptionPane.ERROR_MESSAGE);
         }
         return null;
     }
-/*
-    public void ConsultarPacientes(JTable tblPacientes, boolean eliminados) {
-        try {
-            ResultSet rsPacientes = null;
-
-            DefaultTableModel model = (DefaultTableModel) tblPacientes.getModel();
-            int a = model.getRowCount() - 1;
-            for (int i = a; i >= 0; i--) {
-                model.removeRow(i);
-            }
-            if (eliminados) {
-                CallableStatement cs = conexion.prepareCall("{call consultar_pacientes_eliminados()}");
-                rsPacientes = cs.executeQuery();
-            } else {
-                CallableStatement cs = conexion.prepareCall("{call consultar_pacientes_activos()}");
-                rsPacientes = cs.executeQuery();
-            }
-
-            while (rsPacientes.next()) {
-                try {
-                    model.addRow(new Object[]{rsPacientes.getInt(1), rsPacientes.getString(2), rsPacientes.getString(3), rsPacientes.getString(4), rsPacientes.getString(5),
-                        rsPacientes.getInt(6), rsPacientes.getString(7), rsPacientes.getString(8), rsPacientes.getInt(9), rsPacientes.getString(10),
-                        rsPacientes.getBoolean(11), rsPacientes.getBoolean(12), rsPacientes.getInt(13), rsPacientes.getString(14), rsPacientes.getString(15), rsPacientes.getBoolean(16)});
-                } catch (SQLException ex) {
-                    JOptionPane.showMessageDialog(null, "Ha ocurrido un error. Detalle:\n" + ex.toString(), "ERROR", JOptionPane.ERROR_MESSAGE);
-                }
-            }
-            tblPacientes.setModel(model);
-            //conexion.close();
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Ha ocurrido un error. Detalle:\n" + ex.toString(), "ERROR", JOptionPane.ERROR_MESSAGE);
-        }
-    }
-    */
 }

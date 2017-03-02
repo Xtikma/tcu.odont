@@ -688,7 +688,6 @@ public class PanelGenerico extends javax.swing.JPanel {
     }//GEN-LAST:event_btnCargarEliminadosActionPerformed
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
-        // TODO add your handling code here:
         menu.intercambiarPaneles(0);
     }//GEN-LAST:event_btnRegresarActionPerformed
 
