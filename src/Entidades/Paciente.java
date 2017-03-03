@@ -1,8 +1,7 @@
-
 package Entidades;
 
 public class Paciente {
-    
+
     private int id;
     private String fechaNacimiento;
     private String nombre;
@@ -15,7 +14,7 @@ public class Paciente {
     private int edad;
     private boolean primerIngreso;
     private boolean eliminado;
-    
+
     private Poblacion poblacion;
     private String nombreTipoId;
     private String nombrePoblacion;
@@ -23,8 +22,6 @@ public class Paciente {
     public Paciente() {
         poblacion = new Poblacion();
     }
-    
-    
 
     public Paciente(int id, String fechaNacimiento, String nombre, String primerApellido, String segundoApellido,
             String valorIdentificacion, String genero, int beca, int edad, String carne, boolean primerIngreso, boolean eliminado) {
@@ -161,8 +158,4 @@ public class Paciente {
     public Poblacion getPoblacion() {
         return poblacion;
     }
-    
-    
-    
-    
 }

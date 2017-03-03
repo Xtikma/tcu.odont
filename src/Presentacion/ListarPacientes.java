@@ -1,10 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Presentacion;
 
+//<editor-fold defaultstate="collapsed" desc="Importaciones">
 import AccesoDatos.ADPaciente;
 import Entidades.Paciente;
 import java.awt.Font;
@@ -15,21 +11,21 @@ import javax.swing.JOptionPane;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+//</editor-fold>
 
-/**
- *
- * @author doliv
- */
 public class ListarPacientes extends javax.swing.JPanel {
 
+    //<editor-fold defaultstate="collapsed" desc="Declaración de variables">
     private boolean eliminado = false;
     private Menu menu = null;
     private VPaciente vPaciente = null;
     private ADPaciente adPaciente = null;
     private List<Paciente> pacientes = null;
+    //</editor-fold>
     
     /**
      * Creates new form PanelListarPacientes
+     * @param menu el menu de donde se llamó este panel
      */
     public ListarPacientes(Menu menu) {
         initComponents();
@@ -196,6 +192,10 @@ public class ListarPacientes extends javax.swing.JPanel {
     );
     }// </editor-fold>//GEN-END:initComponents
 
+    /** btnCargarEliminadosActionPerformed
+     * Cambia el contenido de la tabla con los pacientes eliminados o activos
+     * @param evt evento
+     */
     private void btnCargarEliminadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCargarEliminadosActionPerformed
         if (eliminado) {
                     consultarPacientesActivos();
@@ -210,16 +210,28 @@ public class ListarPacientes extends javax.swing.JPanel {
                 }
     }//GEN-LAST:event_btnCargarEliminadosActionPerformed
 
+    /** btnRegresarActionPerformed
+     * Regresa al menú principal
+     * @param evt evento
+     */
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
         menu.intercambiarPaneles(0);
     }//GEN-LAST:event_btnRegresarActionPerformed
 
+    /** btnAgregarPacienteActionPerformed
+     * Llama a la ventana para agregar un paciente nuevo
+     * @param evt evento
+     */
     private void btnAgregarPacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarPacienteActionPerformed
         vPaciente = new VPaciente(menu, true);
         vPaciente.setVisible(true);
         consultarPacientesActivos();
     }//GEN-LAST:event_btnAgregarPacienteActionPerformed
 
+    /** btnModificarPacienteActionPerformed
+     * Llama a la ventana para modificar un paciente seleccionado en la tabla
+     * @param evt evento
+     */
     private void btnModificarPacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarPacienteActionPerformed
         int indiceFila = tblPacientes.getSelectedRow();
         if (indiceFila == -1) {
@@ -232,6 +244,10 @@ public class ListarPacientes extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_btnModificarPacienteActionPerformed
 
+    /** tblPacientesMouseClicked
+     * Carga la información del paciente seleccionado en una ventana emergente
+     * @param evt evento
+     */
     private void tblPacientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblPacientesMouseClicked
         int indiceFila = tblPacientes.getSelectedRow();
         if (evt.getClickCount() == 2 && indiceFila >= 0) {
@@ -242,6 +258,10 @@ public class ListarPacientes extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_tblPacientesMouseClicked
 
+    /** btnDesactivarActionPerformed
+     * Cambia el estado del paciente según su estado actual (Eliminado o Activo)
+     * @param evt evento
+     */
     private void btnDesactivarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDesactivarActionPerformed
         int indiceFila = tblPacientes.getSelectedRow();
         if (indiceFila == -1) {
@@ -263,6 +283,11 @@ public class ListarPacientes extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_btnDesactivarActionPerformed
 
+    //<editor-fold defaultstate="collapsed" desc="Mis métodos">
+    
+    /** consultarPacientesActivos
+     * Carga la tabla con los pacientes activos
+     */
     private void consultarPacientesActivos() {
         try {
             ADPaciente bd = new ADPaciente();
@@ -294,6 +319,9 @@ public class ListarPacientes extends javax.swing.JPanel {
         cambiarTitulo("Lista de Pacientes Activos");
     }
     
+    /** consultarPacientesEliminados
+     * Carga la tabla con los pacientes activos
+     */
     private void consultarPacientesEliminados() {
         try {
             ADPaciente bd = new ADPaciente();
@@ -319,12 +347,15 @@ public class ListarPacientes extends javax.swing.JPanel {
             }
             tblPacientes.setModel(model);
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Ha ocurrido un error. Detalle:\n" + ex.toString(), "ERROR", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error. Detalle:\n" + ex.toString() + "\nen consultarPacientesEliminados en ListarPacientes", "ERROR", JOptionPane.ERROR_MESSAGE);
         }
         centrarColumans();
         cambiarTitulo("Lista de Pacientes Eliminados");
     }
     
+    /** centrarColumnas
+     * Centra el contenido de las celdas en la tabla
+     */
     private void centrarColumans() {
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(JLabel.CENTER);
@@ -336,6 +367,10 @@ public class ListarPacientes extends javax.swing.JPanel {
         tblPacientes.getColumnModel().getColumn(5).setCellRenderer(centerRenderer);
     }
     
+    /** cambiarTitulo
+     * Cambia el título del panel
+     * @param titulo nuevo título a mostrar
+     */
     private void cambiarTitulo(String titulo) {
         TitledBorder border = null;
         border = BorderFactory.createTitledBorder(titulo);
@@ -343,6 +378,7 @@ public class ListarPacientes extends javax.swing.JPanel {
         this.setBorder(border);
     }
     
+    //</editor-fold>
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregarConsulta;

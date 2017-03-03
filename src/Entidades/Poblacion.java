@@ -1,8 +1,7 @@
-
 package Entidades;
 
 public class Poblacion {
-    
+
     private int id;
     private String nombre;
     private String institucion;
@@ -16,7 +15,7 @@ public class Poblacion {
     }
 
     public Poblacion() {
-        
+
     }
 
     public int getId() {
@@ -50,7 +49,7 @@ public class Poblacion {
     public void setBecado(boolean becado) {
         this.becado = becado;
     }
-    
+
     @Override
     public String toString() {
         return nombre;

@@ -1,6 +1,6 @@
-
 package AccesoDatos;
 
+//<editor-fold defaultstate="collapsed" desc="Importaciones">
 import Entidades.Paciente;
 import java.sql.CallableStatement;
 import java.sql.Connection;
@@ -9,13 +9,19 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
+//</editor-fold>
 
 public class ADPaciente {
     
     private final Connection conexion = ConexionBD.conexion();
     
+    /** InsertarPaciente
+     * Inserta un nuevo pacienete a la base de datos
+     * @param paciente el paciente nuevo a insertar
+     * @param idPoblacion identificación a la población que pertenece el paciente
+     * @param idTipoId identificación del tipo de id que posee el paciente
+     * @return incersión exitosa o no
+     */
     public boolean InsertarPaciente(Paciente paciente, int idPoblacion, int idTipoId) {
         try {
             CallableStatement cs = conexion.prepareCall("{call insertar_paciente(?,?,?,?,?,?,?,?,?,?,?,?,?)}");
@@ -37,11 +43,18 @@ public class ADPaciente {
                 return true;
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Ha ocurrido un error. Detalle:\n"+ex.toString(), "ERROR", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error. Detalle:\n" + ex.toString() + "\nen InsertarPaciente en ADPaciente", "ERROR", JOptionPane.ERROR_MESSAGE);
         }
         return false;
     }
     
+    /** ModificarPaciente
+     * Modifica un paciente existente en la base de datos
+     * @param paciente el paciente a modificar con los nuevos valores
+     * @param idPoblacion identificación a la población que pertenece el paciente
+     * @param idTipoId identificación del tipo de id que posee el paciente
+     * @return incersión exitosa o no
+     */
     public boolean ModificarPaciente(Paciente paciente, int idPoblacion, int idTipoId) {
         try {
             CallableStatement cs = conexion.prepareCall("{call modificar_paciente(?,?,?,?,?,?,?,?,?,?,?,?,?,?)}");
@@ -64,13 +77,18 @@ public class ADPaciente {
                 return true;
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Ha ocurrido un error. Detalle:\n"+ex.toString(), "ERROR", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error. Detalle:\n" + ex.toString() + "\nen ModificarPaciente en ADPaciente", "ERROR", JOptionPane.ERROR_MESSAGE);
         }
         return false;
     }
-    
+   
+    /** ActivarDesactivarPaciente
+     * Activa o elimina un paciente existente en la base de datos
+     * @param id identificación del paciente a activar o eliminar
+     * @param estado el estado nuevo que va a tomar el paciente
+     * @return incersión exitosa o no
+     */
     public boolean ActivarDesactivarPaciente(int id, boolean estado) {
-        //Hacer que sólo le mande el id y lo cambie.
         try {
             CallableStatement cs = conexion.prepareCall("{call activar_desactivar_paciente(?,?)}");
             cs.setInt(1, id);
@@ -80,11 +98,16 @@ public class ADPaciente {
                 return true;
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Ha ocurrido un error. Detalle:\n"+ex.toString(), "ERROR", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error. Detalle:\n" + ex.toString() + "\nen ActivarDesactivarPaciente en ADPaciente", "ERROR", JOptionPane.ERROR_MESSAGE);
         }
         return false;
     }
     
+    /** ConsultarPacientePorId
+     * Consulta a la base de datos por un paciente en específico
+     * @param id identificación del paciente a consultar
+     * @return el paciente correspondiente a la identificación
+     */
     public Paciente ConsultarPacientePorId(int id) {
         try {
             Paciente paciente = null;
@@ -102,11 +125,15 @@ public class ADPaciente {
             //conexion.close();
             return paciente;
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Ha ocurrido un error. Detalle:\n"+ex.toString(), "ERROR", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error. Detalle:\n" + ex.toString() + "\nen ConsultarPacientePorId en ADPaciente", "ERROR", JOptionPane.ERROR_MESSAGE);
         }
         return null;
     }
     
+    /** ConsultarPacientesActivos
+     * Consulta todos los pacientes activos existentes en la base de datos
+     * @return una lista con todos los pacientes activos
+     */
     public List<Paciente> ConsultarPacientesActivos() {
         try {
             ResultSet rsPaciente = null;
@@ -148,6 +175,10 @@ public class ADPaciente {
         return null;
     }
     
+    /** ConsultarPacientesEliminados
+     * Consulta todos los pacientes eliminados existentes en la base de datos
+     * @return una lista con todos los pacientes eliminados
+     */
     public List<Paciente> ConsultarPacientesEliminados() {
         try {
             ResultSet rsPaciente = null;

@@ -1,10 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Presentacion;
 
+//<editor-fold defaultstate="collapsed" desc="Importaciones">
 import AccesoDatos.ADDoctor;
 import AccesoDatos.ADLugarAtencion;
 import AccesoDatos.ADPoblacion;
@@ -22,63 +18,53 @@ import javax.swing.JOptionPane;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
+//</editor-fold>
 
-/**
- *
- * @author doliv
- */
 public class PanelGenerico extends javax.swing.JPanel {
 
+    //<editor-fold defaultstate="collapsed" desc="Declaración de variables">
     private int tipoVentana = 0;
     private int accion = 0; //agregar(1) y modificar(2)
     private boolean eliminado = false;
     private boolean primeraVez = true;
     private Menu menu = null;
+    //</editor-fold>
     
-    /**
-     * Creates new form PanelGenerico
+    /** Constructor
+     * Crea un nuevo panel genérico con el tipo de ventana especificado
+     * @param tipoVentana define lo que se va a mostrar en el panel
+     * Si la ventana es para TipoId(1), Doctor(2), Practicante(3), Población(4) o Lugar de Atención(5)
+     * @param menu ventana de donde se llama este panel
      */
-    public PanelGenerico(int tipoVentana, Menu menu) {//Si la ventana es para TipoId(1), Doctor(2), Practicante(3), Población(4) o Lugar de Atención(5)
+    public PanelGenerico(int tipoVentana, Menu menu) {
         initComponents();
         this.menu = menu;
         this.tipoVentana = tipoVentana;
         centrarColumans();
         panelDatos.setVisible(false);
-        TitledBorder border = null;
         switch (tipoVentana) {
             case 1: //TIpo id
-                border = BorderFactory.createTitledBorder("Tipo de Identificación");
-                border.setTitleFont(new Font("Dialog", Font.BOLD, 14));
-                this.setBorder(border);
+                cambiarTitulo("Tipo de Identificación");
                 btnCargarEliminados.setVisible(false);
                 consultarTodosTipoId();
                 break;
             case 2: //Doctor
-                border = BorderFactory.createTitledBorder("Doctor");
-                border.setTitleFont(new Font("Dialog", Font.BOLD, 14));
-                this.setBorder(border);
-                //btnDesactivar.setVisible(true);
+                cambiarTitulo("Doctor");
                 btnCargarEliminados.setVisible(true);
                 consultarDoctoresActivos();
                 break;
             case 3: //Practicante
-                border = BorderFactory.createTitledBorder("Practicante");
-                border.setTitleFont(new Font("Dialog", Font.BOLD, 14));
-                this.setBorder(border);
+                cambiarTitulo("Practicante");
                 btnCargarEliminados.setVisible(true);
                 consultarPracticantesActivos();
                 break;
             case 4: //Población
-                border = BorderFactory.createTitledBorder("Población");
-                border.setTitleFont(new Font("Dialog", Font.BOLD, 14));
-                this.setBorder(border);
+                cambiarTitulo("Población");
                 btnCargarEliminados.setVisible(false);
                 consultarPoblaciones();
                 break;
             case 5: //Lugar Atención
-                border = BorderFactory.createTitledBorder("Lugar de Atención");
-                border.setTitleFont(new Font("Dialog", Font.BOLD, 14));
-                this.setBorder(border);
+                cambiarTitulo("Lugar de Atención");
                 btnCargarEliminados.setVisible(true);
                 consultarLugaresActivos();
                 break;
@@ -247,33 +233,36 @@ public class PanelGenerico extends javax.swing.JPanel {
                     .addComponent(jScrollPane1)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btnAgregar))
+                        .addComponent(btnCargarEliminados))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(btnRegresar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnCargarEliminados)))
+                        .addComponent(btnAgregar)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(31, 31, 31)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnCargarEliminados)
-                    .addComponent(btnRegresar))
+                .addComponent(btnCargarEliminados)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnAgregar)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAgregar)
+                    .addComponent(btnRegresar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(panelDatos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(84, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    /** TblGenericaMouseClicked
+     * Carga la información del item seleccionado para ser modificado
+     * @param evt evento
+     */
     private void TblGenericaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TblGenericaMouseClicked
         accion = 2;
-        TitledBorder border = null;
         int indiceFila = TblGenerica.getSelectedRow();
         String texto = (TblGenerica.getValueAt(indiceFila, 1)).toString();
         panelDatos.setVisible(true);
@@ -284,35 +273,27 @@ public class PanelGenerico extends javax.swing.JPanel {
                 btnDesactivar.setVisible(false);
                 lblVariable.setVisible(false);
                 txtVariable.setVisible(false);
-                border = BorderFactory.createTitledBorder("Modificar Tipo de Identificación");
-                border.setTitleFont(new Font("Dialog", Font.BOLD, 12));
-                panelDatos.setBorder(border);
+                cambiarTituloPanelDatos("Modificar Tipo de Identificación");
                 break;
             case 2: //doctor
                 rbBecado.setVisible(false);
                 lblVariable.setVisible(false);
                 txtVariable.setVisible(false);
-                border = BorderFactory.createTitledBorder("Modificar Doctor");
-                border.setTitleFont(new Font("Dialog", Font.BOLD, 12));
-                panelDatos.setBorder(border);
+                cambiarTituloPanelDatos("Modificar Doctor");
                 btnDesactivar.setVisible(true);
                 break;
             case 3: //practicante
                 rbBecado.setVisible(false);
                 lblVariable.setVisible(false);
                 txtVariable.setVisible(false);
-                border = BorderFactory.createTitledBorder("Modificar Practicante");
-                border.setTitleFont(new Font("Dialog", Font.BOLD, 12));
-                panelDatos.setBorder(border);
+                cambiarTituloPanelDatos("Modificar Practicante");
                 btnDesactivar.setVisible(true);
                 break;
             case 4: //población
                 rbBecado.setVisible(true);
                 lblVariable.setVisible(true);
                 txtVariable.setVisible(true);
-                border = BorderFactory.createTitledBorder("Modificar Población");
-                border.setTitleFont(new Font("Dialog", Font.BOLD, 12));
-                panelDatos.setBorder(border);
+                cambiarTituloPanelDatos("Modificar Población");
                 btnDesactivar.setVisible(false);
                 txtVariable.setText((TblGenerica.getValueAt(indiceFila, 2)).toString());
                 rbBecado.setSelected(false);
@@ -324,9 +305,7 @@ public class PanelGenerico extends javax.swing.JPanel {
                 rbBecado.setVisible(false);
                 lblVariable.setVisible(false);
                 txtVariable.setVisible(false);
-                border = BorderFactory.createTitledBorder("Modificar Lugar de Atención");
-                border.setTitleFont(new Font("Dialog", Font.BOLD, 12));
-                panelDatos.setBorder(border);
+                cambiarTituloPanelDatos("Modificar Lugar de Atención");
                 btnDesactivar.setVisible(true);
                 break;
             default:
@@ -334,8 +313,11 @@ public class PanelGenerico extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_TblGenericaMouseClicked
 
+    /** btnGuardarActionPerformed
+     * Guarda un objeto nuevo o los cambios realizados a uno existente
+     * @param evt evento
+     */
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        // TODO add your handling code here:
         switch (tipoVentana) {
             case 1:
                 //<editor-fold defaultstate="collapsed" desc="Tipo Id">
@@ -489,11 +471,13 @@ public class PanelGenerico extends javax.swing.JPanel {
         panelDatos.setVisible(false);
     }//GEN-LAST:event_btnGuardarActionPerformed
 
+    /** btnAgregarActionPerformed
+     * Carga el panel para ingresar la información para agregar un objeto nuevo
+     * @param evt evento
+     */
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-        // TODO add your handling code here:
         accion = 1;
         TblGenerica.clearSelection();
-        TitledBorder border = null;
         rbBecado.setVisible(false);
         switch (tipoVentana) {
             case 1: //tipo id
@@ -502,18 +486,14 @@ public class PanelGenerico extends javax.swing.JPanel {
                 txtVariable.setVisible(false);
                 btnDesactivar.setVisible(false);
                 txtNombre.setText("");
-                border = BorderFactory.createTitledBorder("Nuevo Tipo de Identificación");
-                border.setTitleFont(new Font("Dialog", Font.BOLD, 12));
-                panelDatos.setBorder(border);
+                cambiarTituloPanelDatos("Nuevo Tipo de Identificación");
                 break;
             case 2: //doctor
                 panelDatos.setVisible(true);
                 lblVariable.setVisible(false);
                 txtVariable.setVisible(false);
                 txtNombre.setText("");
-                border = BorderFactory.createTitledBorder("Nuevo Doctor");
-                border.setTitleFont(new Font("Dialog", Font.BOLD, 12));
-                panelDatos.setBorder(border);
+                cambiarTituloPanelDatos("Nuevo Doctor");
                 btnDesactivar.setVisible(false);
                 break;
             case 3: //practicante
@@ -521,9 +501,7 @@ public class PanelGenerico extends javax.swing.JPanel {
                 lblVariable.setVisible(false);
                 txtVariable.setVisible(false);
                 txtNombre.setText("");
-                border = BorderFactory.createTitledBorder("Nuevo Practicante");
-                border.setTitleFont(new Font("Dialog", Font.BOLD, 12));
-                panelDatos.setBorder(border);
+                cambiarTituloPanelDatos("Nuevo Practicante");
                 btnDesactivar.setVisible(false);
                 rbBecado.setSelected(false);
                 break;
@@ -533,9 +511,7 @@ public class PanelGenerico extends javax.swing.JPanel {
                 txtVariable.setVisible(true);
                 txtNombre.setText("");
                 txtVariable.setText("");
-                border = BorderFactory.createTitledBorder("Nueva Población");
-                border.setTitleFont(new Font("Dialog", Font.BOLD, 12));
-                panelDatos.setBorder(border);
+                cambiarTituloPanelDatos("Nueva Población");
                 rbBecado.setVisible(true);
                 btnDesactivar.setVisible(false);
                 rbBecado.setSelected(false);
@@ -545,9 +521,7 @@ public class PanelGenerico extends javax.swing.JPanel {
                 lblVariable.setVisible(false);
                 txtVariable.setVisible(false);
                 txtNombre.setText("");
-                border = BorderFactory.createTitledBorder("Nuevo Lugar de Atención");
-                border.setTitleFont(new Font("Dialog", Font.BOLD, 12));
-                panelDatos.setBorder(border);
+                cambiarTituloPanelDatos("Nueva Lugar de Atención");
                 btnDesactivar.setVisible(false);
                 break;
             default:
@@ -555,13 +529,17 @@ public class PanelGenerico extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_btnAgregarActionPerformed
 
+    /** btnDesactivarActionPerformed
+     * Cambia el estado del objeto dependiendo del estado en que esté (eliminado o Activo)
+     * @param evt evento
+     */
     private void btnDesactivarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDesactivarActionPerformed
-        // TODO add your handling code here:
         switch(tipoVentana) {
             case 1: //Tipo id
                 //nada
                 break;
-            case 2: //Doctor
+            case 2:
+                //<editor-fold defaultstate="collapsed" desc="Doctor">
                 ADDoctor bdDoctor = new ADDoctor();
                 if (eliminado) {
                     int indiceFila = TblGenerica.getSelectedRow();
@@ -571,7 +549,6 @@ public class PanelGenerico extends javax.swing.JPanel {
                     } else {
                         JOptionPane.showMessageDialog(null, "Debe seleccionar un item.", "ERROR", JOptionPane.ERROR_MESSAGE);
                     }
-                    //bdDoctor.consultarDoctoresEliminados(TblGenerica);
                     bdDoctor.consultarDoctor(TblGenerica, true);
                 } else {
                     int indiceFila = TblGenerica.getSelectedRow();
@@ -581,11 +558,12 @@ public class PanelGenerico extends javax.swing.JPanel {
                     } else {
                         JOptionPane.showMessageDialog(null, "Debe seleccionar un item.", "ERROR", JOptionPane.ERROR_MESSAGE);
                     }
-                    //bdDoctor.consultarDoctoresActivos(TblGenerica);
                     bdDoctor.consultarDoctor(TblGenerica, false);
                 }
                 break;
-            case 3: // practicante
+                //</editor-fold>
+            case 3:
+                //<editor-fold defaultstate="collapsed" desc="Practicante">
                 ADPracticante bdPracticante = new ADPracticante();
                 if (eliminado) {
                     int indiceFila = TblGenerica.getSelectedRow();
@@ -607,10 +585,12 @@ public class PanelGenerico extends javax.swing.JPanel {
                     bdPracticante.consultarPracticante(TblGenerica, false);
                 }
                 break;
+                //</editor-fold>
             case 4: //población
                 //nada
                 break;
-            case 5: //lugar atención
+            case 5:
+                //<editor-fold defaultstate="collapsed" desc="Lugar de Atención">
                 ADLugarAtencion bdLugar = new ADLugarAtencion();
                 if (eliminado) {
                     int indiceFila = TblGenerica.getSelectedRow();
@@ -620,7 +600,6 @@ public class PanelGenerico extends javax.swing.JPanel {
                     } else {
                         JOptionPane.showMessageDialog(null, "Debe seleccionar un item.", "ERROR", JOptionPane.ERROR_MESSAGE);
                     }
-                    //bdDoctor.consultarDoctoresEliminados(TblGenerica);
                     bdLugar.ConsultarLugaresAtención(TblGenerica, true);
                 } else {
                     int indiceFila = TblGenerica.getSelectedRow();
@@ -630,18 +609,21 @@ public class PanelGenerico extends javax.swing.JPanel {
                     } else {
                         JOptionPane.showMessageDialog(null, "Debe seleccionar un item.", "ERROR", JOptionPane.ERROR_MESSAGE);
                     }
-                    //bdDoctor.consultarDoctoresActivos(TblGenerica);
                     bdLugar.ConsultarLugaresAtención(TblGenerica, false);
                 }
                 break;
+                //</editor-fold>
             default:
                 break;
         }
         panelDatos.setVisible(false);
     }//GEN-LAST:event_btnDesactivarActionPerformed
 
+    /** btnCargarEliminadosActionPerformed
+     * Carga los objetos en estado eliminado y los muestra enuna tabla
+     * @param evt evento
+     */
     private void btnCargarEliminadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCargarEliminadosActionPerformed
-        // TODO add your handling code here:
         switch(tipoVentana) {
             case 1: //Tipo id
                 //nada
@@ -687,10 +669,19 @@ public class PanelGenerico extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_btnCargarEliminadosActionPerformed
 
+    /** btnRegresarActionPerformed
+     * Regresa al menu principal
+     * @param evt evento
+     */
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
         menu.intercambiarPaneles(0);
     }//GEN-LAST:event_btnRegresarActionPerformed
 
+    //<editor-fold defaultstate="collapsed" desc="Mis Métodos">
+    
+    /** consultarTodosTipoId
+     * Consulta los tipos de id existentes y los carga en la tabla genérica
+     */
     private void consultarTodosTipoId() {
         TableColumn column = TblGenerica.getColumn("Title 3");
         TblGenerica.removeColumn(column);
@@ -700,6 +691,9 @@ public class PanelGenerico extends javax.swing.JPanel {
         bd.ConsultarTipoIdentificacion(TblGenerica);
     }
     
+    /** consultarDoctoresActivos
+     * Consulta los doctores activos existentes y los carga en la tabla genérica
+     */
     private void consultarDoctoresActivos() {
         if (primeraVez) {
             TableColumn column = TblGenerica.getColumn("Title 3");
@@ -710,20 +704,24 @@ public class PanelGenerico extends javax.swing.JPanel {
             TblGenerica.removeColumn(column2);
         }
         ADDoctor bd = new ADDoctor();
-        //bd.consultarDoctoresActivos(TblGenerica);
         bd.consultarDoctor(TblGenerica, false);
         eliminado = false;
         btnDesactivar.setText("Eliminar");
     }
     
+    /** consultarDoctoresEliminados
+     * Consulta los doctores eliminados existentes y los carga en la tabla genérica
+     */
     private void consultarDoctoresEliminados() {
         ADDoctor bd = new ADDoctor();
-        //bd.consultarDoctoresEliminados(TblGenerica);
         bd.consultarDoctor(TblGenerica, true);
         eliminado = true;
         btnDesactivar.setText("Activar");
     }
     
+    /** consultarPracticantesActivos
+     * Consulta los practicantes activos existentes y los carga en la tabla genérica
+     */
     private void consultarPracticantesActivos() {
         if (primeraVez) {
             TableColumn column = TblGenerica.getColumn("Title 3");
@@ -734,12 +732,14 @@ public class PanelGenerico extends javax.swing.JPanel {
             TblGenerica.removeColumn(column2);
         }
         ADPracticante bd = new ADPracticante();
-        //bd.consultarDoctoresActivos(TblGenerica);
         bd.consultarPracticante(TblGenerica, false);
         eliminado = false;
         btnDesactivar.setText("Eliminar");
     }
     
+    /** consultarPracticantesEliminados
+     * Consulta los practicantes eliminados existentes y los carga en la tabla genérica
+     */
     private void consultarPracticantesEliminados() {
         ADPracticante bd = new ADPracticante();
         bd.consultarPracticante(TblGenerica, true);
@@ -748,6 +748,9 @@ public class PanelGenerico extends javax.swing.JPanel {
         //bd.consultarPracticante(TblGenerica);
     }
     
+    /** consultarPoblaciones
+     * Consulta las poblaciones existentes y los carga en la tabla genérica
+     */
     private void consultarPoblaciones() {
         TableColumn column = TblGenerica.getColumn("Title 3");
         TblGenerica.removeColumn(column);
@@ -763,6 +766,9 @@ public class PanelGenerico extends javax.swing.JPanel {
         bd.consultarPoblacion(TblGenerica);
     }
     
+    /** consultarLugaresActivos
+     * Consulta los lugares de atención activos existentes y los carga en la tabla genérica
+     */
     private void consultarLugaresActivos() {
         if (primeraVez) {
             TableColumn column = TblGenerica.getColumn("Title 3");
@@ -773,20 +779,24 @@ public class PanelGenerico extends javax.swing.JPanel {
             TblGenerica.removeColumn(column2);
         }
         ADLugarAtencion bd = new ADLugarAtencion();
-        //bd.consultarDoctoresActivos(TblGenerica);
         bd.ConsultarLugaresAtención(TblGenerica, false);
         eliminado = false;
         btnDesactivar.setText("Eliminar");
     }
     
+    /** consultarLugaresEliminados
+     * Consulta los lugares de atención eliminados existentes y los carga en la tabla genérica
+     */
     private void consultarLugaresEliminados() {
         ADLugarAtencion bd = new ADLugarAtencion();
-        //bd.consultarDoctoresEliminados(TblGenerica);
         bd.ConsultarLugaresAtención(TblGenerica, true);
         eliminado = true;
         btnDesactivar.setText("Activar");
     }
     
+    /** centrarColumans
+     * Centra los valores dentro de las celdas de la tabla genérica
+     */
     private void centrarColumans() {
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(JLabel.CENTER);
@@ -796,7 +806,28 @@ public class PanelGenerico extends javax.swing.JPanel {
         TblGenerica.getColumnModel().getColumn(3).setCellRenderer(centerRenderer);
     }
     
+    /** cambiarTituloPanelDatos
+     * cambia el título del panel de datos
+     * @param titulo nuevo título a mostrar
+     */
+    private void cambiarTituloPanelDatos(String titulo) {
+        TitledBorder border = BorderFactory.createTitledBorder(titulo);
+        border.setTitleFont(new Font("Dialog", Font.BOLD, 12));
+        panelDatos.setBorder(border);
+    }
+    
+    /** cambiarTitulo
+     * cambia el título del panel genérico
+     * @param titulo nuevo título a mostrar
+     */
+    private void cambiarTitulo(String titulo) {
+        TitledBorder border = BorderFactory.createTitledBorder(titulo);
+        border.setTitleFont(new Font("Dialog", Font.BOLD, 14));
+        this.setBorder(border);
+    }
 
+    //</editor-fold>
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable TblGenerica;
     private javax.swing.JButton btnAgregar;
