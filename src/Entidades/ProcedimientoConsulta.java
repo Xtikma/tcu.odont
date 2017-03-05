@@ -61,6 +61,7 @@ public class ProcedimientoConsulta {
     public void setProcedimiento(Procedimiento procedimiento) {
         this.procedimiento = procedimiento;
         this.precioHistorico = procedimiento.getPrecio();
+        this.idProcedimiento = procedimiento.getId();
     }
 
     public int getIdProcedimiento() {

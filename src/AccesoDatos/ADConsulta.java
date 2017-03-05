@@ -13,9 +13,10 @@ import Entidades.Consulta;
 import Entidades.ProcedimientoConsulta;
 import java.sql.CallableStatement;
 import java.sql.Connection;
-import java.sql.Date;
+import java.util.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -24,7 +25,8 @@ import javax.swing.table.DefaultTableModel;
 
 public class ADConsulta {
     
-    private final Connection conexion = ConexionBD.conexion();
+    private final Connection conexion = ConexionBD.conexion();    
+    private SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
     
     public void  listarConsultas(JTable TdConsultas,String desde,String hasta){
           try {
@@ -99,7 +101,7 @@ public class ADConsulta {
         int agrego = 0;
         try {
             CallableStatement cc = conexion.prepareCall("{call insertar_consulta_encabezado(?,?,?,?,?,?)}");
-            cc.setString(1, c.getFechaConsulta().toString());
+            cc.setString(1, getFecha(c.getFechaConsulta()));
             cc.setDouble(2, c.getTotalConsulta());
             cc.setInt(3, c.getIdPaciente());
             cc.setInt(4, c.getIdDoctor());
@@ -117,6 +119,7 @@ public class ADConsulta {
 
             }
         } catch (Exception e) {
+            System.out.println("Ubicación: almacenarConsulta " + e.getMessage());
             return false;
         }
         if (sucefull == true && agrego > 0) {
@@ -148,6 +151,7 @@ public class ADConsulta {
                 }
             }
         } catch (Exception e) {
+            System.out.println("Ubicación: guardarDetalles " + e.getMessage());
             return false;
         }
         if (agregado == detalles.size()) {
@@ -159,4 +163,35 @@ public class ADConsulta {
     
     // </editor-fold>
     
+    /**
+     * Transforma una objeto Date en una fecha formateada para la base de datos.
+     * @param fecha puede ser una fecha a filtrar o una para insertar en la base
+     * de datos.
+     * @return un string con la fecha formateada
+     */
+    public String getFecha(Date fecha) {
+        if (fecha != null) {
+            return formato.format(fecha);
+        } else {
+            return null;
+        }
+    }
+    
+    private boolean limpiarDetallesConsulta(int idconsulta){
+        int funciono = 0;
+        try {
+            CallableStatement cc = conexion.prepareCall("{call limpiar_detalles(?)}");
+            cc.setInt(1, idconsulta);            
+            funciono = cc.executeUpdate();
+            
+        } catch (Exception e) {
+            System.out.println("Ubicación: almacenarConsulta " + e.getMessage());
+            return false;
+        }        
+        if (funciono > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
