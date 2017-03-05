@@ -55,6 +55,7 @@ public class VPaciente extends javax.swing.JDialog {
 
         List<Poblacion> listaPoblacion = adPoblacion.ConsultarPoblacion();
         CbPoblacion.setModel(new DefaultComboBoxModel(listaPoblacion.toArray()));
+
         definirTamanoVentana();
     }
 
@@ -74,6 +75,7 @@ public class VPaciente extends javax.swing.JDialog {
         aplicarTema();
         buttonGroup.add(RbMasculino);
         buttonGroup.add(RbFemenino);
+
         //llenar combobox TipoIdentificación
         List<TipoIdentificacion> listaTipoId = adTipoId.ConsultarTipoIdentificacion();
         CbTipoId.setModel(new DefaultComboBoxModel(listaTipoId.toArray()));
@@ -583,7 +585,7 @@ public class VPaciente extends javax.swing.JDialog {
      * Define el tamaño de la ventana según el tipo de población
      */
     private void definirTamanoVentana() {
-        if ((CbPoblacion.getSelectedItem()) != null || (CbTipoId.getSelectedItem()) != null) {
+        try {
             boolean becado = ((Poblacion) CbPoblacion.getSelectedItem()).getBecado();
             if (becado) {
                 PanelEstudiante.setVisible(true);
@@ -592,9 +594,12 @@ public class VPaciente extends javax.swing.JDialog {
                 PanelEstudiante.setVisible(false);
                 this.setSize(375, 485);
             }
-        } else {
+        } catch (Exception ex) {
+            PanelEstudiante.setVisible(false);
+            this.setSize(375, 485);
             JOptionPane.showMessageDialog(null, "Debe ingresar una población y un tipo de identificación primero.", "ERROR", JOptionPane.ERROR_MESSAGE);
             BtnGuardar.setEnabled(false);
+            bloquearEdicion();
         }
     }
     

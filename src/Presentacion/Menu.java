@@ -5,8 +5,13 @@
  */
 package Presentacion;
 
+import AccesoDatos.ADPoblacion;
+import AccesoDatos.ADTipoIdentificacion;
 import Animacion.Animacion;
+import Entidades.Poblacion;
+import Entidades.TipoIdentificacion;
 import java.awt.BorderLayout;
+import java.util.List;
 import java.util.Locale;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -182,9 +187,18 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_btnRegresarMenuActionPerformed
 
     private void btnAgregarPacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarPacienteActionPerformed
-        VPaciente vista = new VPaciente(this, true);
-        vista.setLocationRelativeTo(this);
-        vista.setVisible(true);
+        ADTipoIdentificacion adTipoId = new ADTipoIdentificacion();
+        List<TipoIdentificacion> listaTipoId = adTipoId.ConsultarTipoIdentificacion();
+        ADPoblacion adPoblacion = new ADPoblacion();
+        List<Poblacion> listaPoblacion = adPoblacion.ConsultarPoblacion();
+        
+        if (listaTipoId.isEmpty() || listaPoblacion.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Debe ingresar una población y un tipo de identificación primero.", "ERROR", JOptionPane.ERROR_MESSAGE);
+        } else {
+            VPaciente vista = new VPaciente(this, true);
+            vista.setLocationRelativeTo(this);
+            vista.setVisible(true);
+        }
     }//GEN-LAST:event_btnAgregarPacienteActionPerformed
 
     /**
