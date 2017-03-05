@@ -5,7 +5,7 @@
  */
 package Entidades;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.ArrayList;
 
 /**
@@ -72,6 +72,7 @@ public class Consulta {
 
     public void setPaciente(Paciente paciente) {
         this.paciente = paciente;
+        this.idPaciente = paciente.getId();
     }
 
     public int getIdPaciente() {

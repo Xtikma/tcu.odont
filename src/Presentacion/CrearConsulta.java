@@ -5,9 +5,13 @@
  */
 package Presentacion;
 
-import AccesoDatos.ADLugarAtencion;
+import AccesoDatos.*;
 import Entidades.*;
+import com.toedter.calendar.JDateChooser;
+import java.util.Date;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -27,6 +31,9 @@ public class CrearConsulta extends javax.swing.JPanel{
     private Consulta consulta;
     private ProcedimientoConsulta detalle;
     private double total;
+    private boolean isNuevo = false;
+    private ADConsulta acceso;
+    
     
     
     
@@ -37,6 +44,7 @@ public class CrearConsulta extends javax.swing.JPanel{
         initComponents();
         consulta = new Consulta();
         cargarLugares();
+        isNuevo = true;
     }
     
     
@@ -83,6 +91,7 @@ public class CrearConsulta extends javax.swing.JPanel{
         lblPaciente.setText("Paciente");
 
         btnPaciente.setBackground(new java.awt.Color(255, 255, 255));
+        btnPaciente.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         btnPaciente.setForeground(new java.awt.Color(0, 0, 0));
         btnPaciente.setText("Seleccionar");
         btnPaciente.setMaximumSize(new java.awt.Dimension(200, 30));
@@ -98,6 +107,7 @@ public class CrearConsulta extends javax.swing.JPanel{
         lblDoctor.setText("Doctor");
 
         btnDoctor.setBackground(new java.awt.Color(255, 255, 255));
+        btnDoctor.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         btnDoctor.setForeground(new java.awt.Color(0, 0, 0));
         btnDoctor.setText("Seleccionar");
         btnDoctor.setMaximumSize(new java.awt.Dimension(200, 30));
@@ -113,6 +123,7 @@ public class CrearConsulta extends javax.swing.JPanel{
         lblPracticante.setText("Practicante");
 
         btnPracticante.setBackground(new java.awt.Color(255, 255, 255));
+        btnPracticante.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         btnPracticante.setForeground(new java.awt.Color(0, 0, 0));
         btnPracticante.setText("Seleccionar");
         btnPracticante.setMaximumSize(new java.awt.Dimension(200, 30));
@@ -127,6 +138,7 @@ public class CrearConsulta extends javax.swing.JPanel{
         lblPaciente1.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         lblPaciente1.setText("Lugar");
 
+        boxLugar.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         boxLugar.setMaximumSize(new java.awt.Dimension(200, 30));
         boxLugar.setMinimumSize(new java.awt.Dimension(200, 30));
         boxLugar.setPreferredSize(new java.awt.Dimension(200, 30));
@@ -139,6 +151,7 @@ public class CrearConsulta extends javax.swing.JPanel{
         lblFecha.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         lblFecha.setText("Fecha");
 
+        fechaConsulta.setToolTipText("");
         fechaConsulta.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 fechaConsultaKeyTyped(evt);
@@ -148,6 +161,7 @@ public class CrearConsulta extends javax.swing.JPanel{
         lblFecha1.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         lblFecha1.setText("Total:");
 
+        txtTotal.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         txtTotal.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         txtTotal.setToolTipText("Total de la consulta.");
         txtTotal.setEnabled(false);
@@ -270,7 +284,7 @@ public class CrearConsulta extends javax.swing.JPanel{
             panelProcedimientosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelProcedimientosLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 286, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 285, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -281,6 +295,7 @@ public class CrearConsulta extends javax.swing.JPanel{
         lblProcedimiento.setText("Agregar procedimiento:");
 
         btnProcedimiento.setBackground(new java.awt.Color(255, 255, 255));
+        btnProcedimiento.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         btnProcedimiento.setForeground(new java.awt.Color(0, 0, 0));
         btnProcedimiento.setText("Seleccionar");
         btnProcedimiento.setMaximumSize(new java.awt.Dimension(200, 30));
@@ -296,6 +311,11 @@ public class CrearConsulta extends javax.swing.JPanel{
         lblCantidad.setText("Cantidad:");
 
         txtCantidad.setToolTipText("Ingrese el número de procedimientos realizado");
+        txtCantidad.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtCantidadKeyTyped(evt);
+            }
+        });
 
         btnAgregar.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         btnAgregar.setText("Agregar");
@@ -318,16 +338,19 @@ public class CrearConsulta extends javax.swing.JPanel{
         panelDetalleLayout.setHorizontalGroup(
             panelDetalleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelDetalleLayout.createSequentialGroup()
-                .addContainerGap(8, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(panelDetalleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelDetalleLayout.createSequentialGroup()
                         .addGroup(panelDetalleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(lblCantidad)
                             .addComponent(lblProcedimiento))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(panelDetalleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnProcedimiento, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtCantidad, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(panelDetalleLayout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnProcedimiento, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(panelDetalleLayout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addComponent(txtCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(panelDetalleLayout.createSequentialGroup()
                         .addGap(88, 88, 88)
                         .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -355,6 +378,11 @@ public class CrearConsulta extends javax.swing.JPanel{
 
         btnGuardarCambios.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         btnGuardarCambios.setText("Guardar Cambios");
+        btnGuardarCambios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarCambiosActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -363,7 +391,7 @@ public class CrearConsulta extends javax.swing.JPanel{
             .addGroup(layout.createSequentialGroup()
                 .addGap(6, 6, 6)
                 .addComponent(panelEncabezado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 5, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(panelProcedimientos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -436,16 +464,75 @@ public class CrearConsulta extends javax.swing.JPanel{
         try {
             String cantidad = txtCantidad.getText().trim();
             if (cantidad.length() != 0) {
-                detalle.setPrecioHistorico(detalle.getProcedimiento().getPrecio());
-                detalle.setCantidad(Integer.parseInt(cantidad));
-                consulta.agregarProcedimiento(detalle);
+                boolean existe = false;
+                for (int i = 0; i < consulta.getListaProcedimientos().size(); i++) {
+                    if (consulta.getListaProcedimientos().get(i).getProcedimiento()
+                            .getNombre().equals(detalle.getProcedimiento().getNombre())) {
+                        consulta.getListaProcedimientos().get(i).setCantidad(
+                                consulta.getListaProcedimientos().get(i).getCantidad() 
+                                + Integer.parseInt(cantidad));
+                        existe = true;
+                    }
+                }
+                if (existe == false) {
+                    detalle.setPrecioHistorico(detalle.getProcedimiento().getPrecio());
+                    detalle.setCantidad(Integer.parseInt(cantidad));                
+                    consulta.agregarProcedimiento(detalle);
+                }                
                 cargarDetalles();
                 sumarTotal();
+                detalle = new ProcedimientoConsulta();
+                btnProcedimiento.setText("Seleccionar");
+                txtCantidad.setText("");
             }
         } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Existe un problema con la información ingresada.", "Error en información ingresada", 1);
         }
         
     }//GEN-LAST:event_btnAgregarActionPerformed
+
+    private void txtCantidadKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCantidadKeyTyped
+        char c = evt.getKeyChar();
+        if (Character.isLetter(c)) {
+            getToolkit().beep();
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtCantidadKeyTyped
+
+    private void btnGuardarCambiosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarCambiosActionPerformed
+        try {
+            if (fechaConsulta.getDate() != null) {
+                Date fecha = fechaConsulta.getDate();
+                if (practicante != null && doctor != null && lugar != null
+                        && consulta.getListaProcedimientos().size() > 0 && fecha != null) {
+                    consulta.setPaciente(paciente);
+                    consulta.setDoctor(doctor);
+                    consulta.setLugar(lugar);
+                    consulta.setFechaConsulta(fecha);
+
+                    if (practicante != null) {
+                        consulta.setPracticante(practicante);
+                    } else {
+                        consulta.setPracticante(null);
+                    }
+
+                    acceso = new ADConsulta();
+                    boolean exito = acceso.almacenarConsulta(consulta);
+                    if (exito == true) {
+                        JOptionPane.showMessageDialog(null, "Se ha almacenado con exito la consulta.", "Exito!", JOptionPane.INFORMATION_MESSAGE);
+                        limpiarCampos();
+                    }
+                }
+            }else{
+                getToolkit().beep();
+            }
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Ha fallado al almacenar la consulta.", "Fallido!", JOptionPane.ERROR_MESSAGE);
+        }
+
+
+    }//GEN-LAST:event_btnGuardarCambiosActionPerformed
 
     public void setPracticante(Practicante prac) {
         this.practicante = prac;
@@ -493,7 +580,7 @@ public class CrearConsulta extends javax.swing.JPanel{
         model.addColumn("Precio Unit.");
         model.addColumn("Cantidad");
         model.addColumn("SubTotal");
-        String[] fila = new String[4];
+        String[] fila = new String[4];        
         for (ProcedimientoConsulta detalle : consulta.getListaProcedimientos()) {
             fila[0] = detalle.getProcedimiento().getNombre();
             fila[1] = "₡ " + detalle.getPrecioHistorico();
@@ -501,8 +588,24 @@ public class CrearConsulta extends javax.swing.JPanel{
             fila[3] = "₡ " + detalle.getPrecioHistorico() * detalle.getCantidad();
             model.addRow(fila);
         }
+        tblProcedimientos.setModel(model);        
+    }
+    
+    private void limpiarCampos() {
+        lugar = null;
+        practicante = null;
+        paciente = null;
+        doctor = null;
+        consulta = new Consulta();
+        btnDoctor.setText("Seleccionar");
+        btnPaciente.setText("Seleccionar");
+        btnPracticante.setText("Seleccionar");
+        txtTotal.setText("");
+        DefaultTableModel model = new DefaultTableModel();
         tblProcedimientos.setModel(model);
     }
+    
+    
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
