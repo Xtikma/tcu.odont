@@ -1,6 +1,6 @@
-
 package AccesoDatos;
 
+//<editor-fold defaultstate="collapsed" desc="Importaciones">
 import Entidades.Poblacion;
 import java.sql.CallableStatement;
 import java.sql.Connection;
@@ -11,11 +11,17 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+//</editor-fold>
 
 public class ADPoblacion {
     
     private final Connection conexion = ConexionBD.conexion();
     
+     /** InsertarPoblacion
+      * Inserta en la base de datos una nueva población
+      * @param poblacion población a insertar
+      * @return si se insertó o no
+      */
     public boolean InsertarPoblacion(Poblacion poblacion) {
         try {
             CallableStatement cs = conexion.prepareCall("{call insertar_poblacion(?,?,?)}");
@@ -27,11 +33,16 @@ public class ADPoblacion {
                 return true;
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Ha ocurrido un error. Detalle:\n"+ex.toString(), "ERROR", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error. Detalle:\n" + ex.toString() + "\nen InsertarPoblacion en ADPoblacion", "ERROR", JOptionPane.ERROR_MESSAGE);
         }
         return false;
     }
     
+    /** ModificarPoblacion
+     * Modifica una población ya existente en la base de datos
+     * @param poblacion población a modificar con los datos nuevos
+     * @return si se modificó o no
+     */
     public boolean ModificarPoblacion(Poblacion poblacion) {
         try {
             CallableStatement cs = conexion.prepareCall("{call modificar_poblacion(?,?,?,?)}");
@@ -44,11 +55,16 @@ public class ADPoblacion {
                 return true;
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Ha ocurrido un error. Detalle:\n"+ex.toString(), "ERROR", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error. Detalle:\n" + ex.toString() + "\nen ModificarPoblacion en ADPoblacion", "ERROR", JOptionPane.ERROR_MESSAGE);
         }
         return false;
     }
     
+    /** EliminarPoblacion
+     * Cambia el estado de una población a eliminada
+     * @param poblacion la población a eliminar
+     * @return si se eliminó o no
+     */
     public boolean EliminarPoblacion(Poblacion poblacion) {
         try {
             CallableStatement cs = conexion.prepareCall("{call eliminar_poblacion(?)}");
@@ -58,11 +74,15 @@ public class ADPoblacion {
                 return true;
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Ha ocurrido un error. Detalle:\n"+ex.toString(), "ERROR", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error. Detalle:\n" + ex.toString() + "\nen EliminarPoblacion en ADPoblacion", "ERROR", JOptionPane.ERROR_MESSAGE);
         }
         return false;
     }
     
+    /** ConsultarPoblacion
+     * Consulta todas las poblaciones existentes en la base de datos
+     * @return una lista con las poblaciones
+     */
     public List<Poblacion> ConsultarPoblacion() {
         try {
             ResultSet rsPoblacion = null;
@@ -74,17 +94,21 @@ public class ADPoblacion {
                 try {
                     listaPoblacion.add(new Poblacion(rsPoblacion.getInt(1), rsPoblacion.getString(2), rsPoblacion.getString(3), rsPoblacion.getBoolean(4)));
                 } catch (SQLException ex) {
-                    JOptionPane.showMessageDialog(null, "Ha ocurrido un error. Detalle:\n"+ex.toString(), "ERROR", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Ha ocurrido un error. Detalle:\n" + ex.toString() + "\nen ConsultarPoblacion en ADPoblacion", "ERROR", JOptionPane.ERROR_MESSAGE);
                 }
             }
             conexion.close();
             return listaPoblacion;
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Ha ocurrido un error. Detalle:\n"+ex.toString(), "ERROR", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error. Detalle:\n" + ex.toString() + "\nen ConsultarPoblacion en ADPoblacion", "ERROR", JOptionPane.ERROR_MESSAGE);
         }
         return null;
     }
     
+    /** consultarPoblacion
+     * Consulta todas las poblaciones existentes en la base de datos
+     * @param tblPoblacion JTable donde se insertan las poblaciones consultadas
+     */
     public void consultarPoblacion(JTable tblPoblacion) {
         try {
             ResultSet rsPoblacion = null;
@@ -108,12 +132,12 @@ public class ADPoblacion {
                     }
                     modelo.addRow(new Object[]{rsPoblacion.getInt(1), rsPoblacion.getString(2), rsPoblacion.getString(3), estado2});
                 } catch (SQLException ex) {
-                    System.out.println("Mensaje de Error asd"); 
+                    JOptionPane.showMessageDialog(null, "Ha ocurrido un error. Detalle:\n" + ex.toString() + "\nen ConsultarPoblacion(JTable) en ADPoblacion", "ERROR", JOptionPane.ERROR_MESSAGE);
                 }
             }
             tblPoblacion.setModel(modelo);
         } catch (SQLException ex) {
-            System.out.println(ex.toString());
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error. Detalle:\n" + ex.toString() + "\nen ConsultarPoblacion(JTable) en ADPoblacion", "ERROR", JOptionPane.ERROR_MESSAGE);
         }
     }
 }

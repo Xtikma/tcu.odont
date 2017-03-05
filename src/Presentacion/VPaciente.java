@@ -1,5 +1,6 @@
 package Presentacion;
 
+//<editor-fold defaultstate="collapsed" desc="Importaciones">
 import AccesoDatos.ADPaciente;
 import AccesoDatos.ADPoblacion;
 import AccesoDatos.ADTipoIdentificacion;
@@ -17,29 +18,30 @@ import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import org.jvnet.substance.SubstanceLookAndFeel;
+//</editor-fold>
 
 public class VPaciente extends javax.swing.JDialog {
 
-    /**
-     * Creates new form VPaciente
-     */
+    //<editor-fold defaultstate="collapsed" desc="Declaración de variables">
     private ADPaciente adPaciente = new ADPaciente();
     private ADTipoIdentificacion adTipoId = new ADTipoIdentificacion();
     private ADPoblacion adPoblacion = new ADPoblacion();
     private boolean edicion = false;
     private int idPacienteModificar = 0;
+    //</editor-fold>
 
-    //<editor-fold defaultstate="collapsed" desc=" Constructor para agregar paciente ">
+    //<editor-fold defaultstate="collapsed" desc=" Constructores ">
+    /** VPaciente Agregar
+     * Constructor para agregar un nuevo paciente
+     * @param parent 
+     * @param modal 
+     */
     public VPaciente(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         edicion = false;
         initComponents();
-        this.setTitle("Ingresar Nuevo Paciente");
-        lblTitulo.setText("Nuevo Paciente");
-        lblTitulo.setFont(new Font("Dialog", Font.BOLD, 14));
-        setLocationRelativeTo(null);
-        JFrame.setDefaultLookAndFeelDecorated(true);
-        SubstanceLookAndFeel.setSkin("org.jvnet.substance.skin.OfficeBlue2007Skin");
+        cambiarTitulo("Nuevo Paciente");
+        aplicarTema();
         buttonGroup.add(RbMasculino);
         buttonGroup.add(RbFemenino);
 
@@ -55,20 +57,21 @@ public class VPaciente extends javax.swing.JDialog {
         CbPoblacion.setModel(new DefaultComboBoxModel(listaPoblacion.toArray()));
         definirTamanoVentana();
     }
-    //</editor-fold>
 
-    //<editor-fold defaultstate="collapsed" desc=" Constructor para editar paciente ">
-    public VPaciente(java.awt.Frame parent, boolean modal, int idPaciente) {
+    /** VPaciente Modificar
+     * Constructor para modificar o mostrar información de un paciente existente
+     * @param parent
+     * @param modal
+     * @param idPaciente id del paciente a modificar
+     * @param editar identificador para saber si se debe modificar o sólo mostrar la información
+     */
+    public VPaciente(java.awt.Frame parent, boolean modal, int idPaciente, boolean editar) {
         super(parent, modal);
         edicion = true;
         idPacienteModificar = idPaciente;
         initComponents();
-        this.setTitle("Modificar Paciente");
-        lblTitulo.setText("Modificar Paciente");
-        lblTitulo.setFont(new Font("Dialog", Font.BOLD, 14));
-        setLocationRelativeTo(null);
-        JFrame.setDefaultLookAndFeelDecorated(true);
-        SubstanceLookAndFeel.setSkin("org.jvnet.substance.skin.OfficeBlue2007Skin");
+        cambiarTitulo("Modificar Paciente");
+        aplicarTema();
         buttonGroup.add(RbMasculino);
         buttonGroup.add(RbFemenino);
         //llenar combobox TipoIdentificación
@@ -85,56 +88,60 @@ public class VPaciente extends javax.swing.JDialog {
             this.setTitle("Ingresar Nuevo Paciente");
             lblTitulo.setText("Nuevo Paciente");
         } else {
-        //llenar campos de texto
-        TxtNombre.setText(paciente.getNombre());
-        TxtPApellido.setText(paciente.getPrimerApellido());
-        TxtsApellido.setText(paciente.getSegundoApellido());
-        TxtIdentificacion.setText(paciente.getValorIdentificacion());
-        TxtEdad.setText(paciente.getEdad() + "");
-        TxtCarne.setText(paciente.getCarne());
-        //llenar la fecha de nacimiento
-        String texto = paciente.getFechaNacimiento();
-        if (texto == null) {
-            TxtFechaNacimiento.setEnabled(false);
-            RbNoFecha.setSelected(true);
-        } else if (texto.matches("\\d\\d\\d\\d-\\d\\d-\\d\\d")) {
-            String[] temp = texto.split("-");
-            TxtFechaNacimiento.setText(temp[2] + "-" + temp[1] + "-" + temp[0]);
-        }
-        //seleccionar el tipo de identificación
-        TipoIdentificacion tipoId = null;
-        for (TipoIdentificacion x : listaTipoId) {
-            if (paciente.getNombreTipoId().equals(x.getNombre())) {
-                tipoId = x;
+            //llenar campos de texto
+            TxtNombre.setText(paciente.getNombre());
+            TxtPApellido.setText(paciente.getPrimerApellido());
+            TxtsApellido.setText(paciente.getSegundoApellido());
+            TxtIdentificacion.setText(paciente.getValorIdentificacion());
+            TxtEdad.setText(paciente.getEdad() + "");
+            TxtCarne.setText(paciente.getCarne());
+            //llenar la fecha de nacimiento
+            String texto = paciente.getFechaNacimiento();
+            if (texto == null) {
+                TxtFechaNacimiento.setEnabled(false);
+                RbNoFecha.setSelected(true);
+            } else if (texto.matches("\\d\\d\\d\\d-\\d\\d-\\d\\d")) {
+                String[] temp = texto.split("-");
+                TxtFechaNacimiento.setText(temp[2] + "-" + temp[1] + "-" + temp[0]);
             }
-        }
-        CbTipoId.setSelectedItem(tipoId);
-        //seleccionar la población
-        Poblacion poblacion = null;
-        for (Poblacion x : listaPoblacion) {
-            if (paciente.getNombrePoblacion().equals(x.getNombre())) {
-                poblacion = x;
+            //seleccionar el tipo de identificación
+            TipoIdentificacion tipoId = null;
+            for (TipoIdentificacion x : listaTipoId) {
+                if (paciente.getNombreTipoId().equals(x.getNombre())) {
+                    tipoId = x;
+                }
             }
-        }
-        CbPoblacion.setSelectedItem(poblacion);
-        //seleccionar el sexo
-        if ((paciente.getGenero()).equals("Masculino")) {
-            RbMasculino.setSelected(true);
-            RbFemenino.setSelected(false);
-        } else {
-            RbMasculino.setSelected(false);
-            RbFemenino.setSelected(true);
-        }
-        //marcar si es becado o no
-        if (paciente.getPrimerIngreso()) {
-            RbPrimerIngreso.setSelected(true);
-        } else {
-            RbPrimerIngreso.setSelected(false);
-        }
-        //seleccionar la beca
-        CbBeca.setSelectedIndex(paciente.getBeca());
+            CbTipoId.setSelectedItem(tipoId);
+            //seleccionar la población
+            Poblacion poblacion = null;
+            for (Poblacion x : listaPoblacion) {
+                if (paciente.getNombrePoblacion().equals(x.getNombre())) {
+                    poblacion = x;
+                }
+            }
+            CbPoblacion.setSelectedItem(poblacion);
+            //seleccionar el sexo
+            if ((paciente.getGenero()).equals("Masculino")) {
+                RbMasculino.setSelected(true);
+                RbFemenino.setSelected(false);
+            } else {
+                RbMasculino.setSelected(false);
+                RbFemenino.setSelected(true);
+            }
+            //marcar si es becado o no
+            if (paciente.getPrimerIngreso()) {
+                RbPrimerIngreso.setSelected(true);
+            } else {
+                RbPrimerIngreso.setSelected(false);
+            }
+            //seleccionar la beca
+            CbBeca.setSelectedIndex(paciente.getBeca());
         }
         definirTamanoVentana();
+        if (!editar) {
+            bloquearEdicion();
+            cambiarTitulo("Paciente");
+        }
     }
     //</editor-fold>
     
@@ -336,14 +343,14 @@ public class VPaciente extends javax.swing.JDialog {
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(TxtFechaNacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(RbNoFecha))
+                                .addComponent(jLabel7)
+                                .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(CbPoblacion, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel7))
-                                .addGap(0, 0, Short.MAX_VALUE))))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(CbPoblacion, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(TxtFechaNacimiento, javax.swing.GroupLayout.DEFAULT_SIZE, 109, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(RbNoFecha))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(BtnGuardar)
@@ -432,9 +439,13 @@ public class VPaciente extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /** BtnGuardarActionPerformed
+     * Guarda los datos ingresados, ya sea un paciente nuevo o una modificación de uno existente
+     * @param evt evento
+     */
     private void BtnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnGuardarActionPerformed
-        // TODO add your handling code here:
         if (validarRequeridos()) {
+            //<editor-fold defaultstate="collapsed" desc="Definición del genero">
             String genero = "";
             if (RbFemenino.isSelected()) {
                 genero = "Femenino";
@@ -443,6 +454,9 @@ public class VPaciente extends javax.swing.JDialog {
             } else {
                 genero = "Desconocido";
             }
+            //</editor-fold>
+            
+            //<editor-fold defaultstate="collapsed" desc="Definición del tipo de beca, primer ingreso y carné">
             Component[] datosPanel = PanelEstudiante.getComponents();
             int beca = 0;
             boolean primerIngreso = false;
@@ -456,7 +470,9 @@ public class VPaciente extends javax.swing.JDialog {
                     carne = ((JTextField) x).getText();
                 }
             }
-            //Considerar espacios vacios
+            //</editor-fold>
+
+            //<editor-fold defaultstate="collapsed" desc="Definición de la edad">
             int edad = 0;
             try {
                 if (TxtEdad.getText().equals("") || TxtEdad.getText().equals(" ")) {
@@ -469,7 +485,9 @@ public class VPaciente extends javax.swing.JDialog {
                 JOptionPane.showMessageDialog(null, "La edad debe ser ingresada con números", "ERROR", JOptionPane.ERROR_MESSAGE);
                 return;
             }
-
+            //</editor-fold>
+            
+            //<editor-fold defaultstate="collapsed" desc="Definición de la fecha de nacimiento">
             String fecha = "";
             String texto = TxtFechaNacimiento.getText().trim();
             if (RbNoFecha.isSelected()) {
@@ -481,13 +499,15 @@ public class VPaciente extends javax.swing.JDialog {
                 JOptionPane.showMessageDialog(null, "Debe ingresar una fecha válida o seleccionar \"No disponible\"", "ERROR", JOptionPane.ERROR_MESSAGE);
                 return;
             }
-
+            //</editor-fold>
+            
             Paciente paciente = new Paciente(idPacienteModificar, fecha, TxtNombre.getText().trim(), TxtPApellido.getText().trim(), TxtsApellido.getText().trim(), TxtIdentificacion.getText().trim(),
                     genero, beca, edad, TxtCarne.getText().trim(), primerIngreso, false);
 
             int idPoblacion = ((Poblacion) CbPoblacion.getSelectedItem()).getId();
             int idTipoId = ((TipoIdentificacion) CbTipoId.getSelectedItem()).getId();
 
+            //<editor-fold defaultstate="collapsed" desc="Guardar nuevo paciente o modificaciones del paciente">
             if (edicion) {
                 if (adPaciente.ModificarPaciente(paciente, idPoblacion, idTipoId)) {
                     JOptionPane.showMessageDialog(null, "Paciente Modificado con Éxito");
@@ -507,23 +527,33 @@ public class VPaciente extends javax.swing.JDialog {
                     JOptionPane.showMessageDialog(null, "Paciente no Registrado", "ERROR", JOptionPane.ERROR_MESSAGE);
                 }
             }
+            //</editor-fold>
         } else {
             JOptionPane.showMessageDialog(null, "Los espacios marcados (*) no deben estar vacíos.", "ERROR", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_BtnGuardarActionPerformed
 
+    /** CbPoblacionItemStateChanged
+     * Cambia el tamaño de la ventana según la población seleccionada
+     * @param evt evento
+     */
     private void CbPoblacionItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_CbPoblacionItemStateChanged
-
         definirTamanoVentana();
     }//GEN-LAST:event_CbPoblacionItemStateChanged
 
+    /** BtnCancelarActionPerformed
+     * Cierra la ventana al ser presionado el botón
+     * @param evt evento
+     */
     private void BtnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnCancelarActionPerformed
-        // TODO add your handling code here:
         this.dispose();
     }//GEN-LAST:event_BtnCancelarActionPerformed
 
+    /** RbNoFechaMouseClicked
+     * Indica que no se va a ingresar ninguna fecha de nacimiento
+     * @param evt evento
+     */
     private void RbNoFechaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_RbNoFechaMouseClicked
-        // TODO add your handling code here:
         if (RbNoFecha.isSelected()) {
             TxtFechaNacimiento.setEnabled(false);
         } else {
@@ -531,7 +561,12 @@ public class VPaciente extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_RbNoFechaMouseClicked
 
-    //<editor-fold defaultstate="collapsed" desc="Mi Código">  
+    //<editor-fold defaultstate="collapsed" desc="Mis métodos">
+    
+    /** validarRequeridos
+     * Valida que los espacios requeridos no se queden vacíos
+     * @return si los espacios están vacíos o no
+     */
     private boolean validarRequeridos() {
         if (TxtNombre.getText().equals("") || TxtNombre.getText().equals(" ")) {
             TxtNombre.setText("");
@@ -544,10 +579,13 @@ public class VPaciente extends javax.swing.JDialog {
         return true;
     }
     
+    /** definirTamanoVentana
+     * Define el tamaño de la ventana según el tipo de población
+     */
     private void definirTamanoVentana() {
-        if ((CbPoblacion.getSelectedItem()) != null) {
+        if ((CbPoblacion.getSelectedItem()) != null || (CbTipoId.getSelectedItem()) != null) {
             boolean becado = ((Poblacion) CbPoblacion.getSelectedItem()).getBecado();
-            if (/*poblacion.equals("Estudiante")*/becado) {
+            if (becado) {
                 PanelEstudiante.setVisible(true);
                 this.setSize(375, 595);
             } else {
@@ -560,13 +598,59 @@ public class VPaciente extends javax.swing.JDialog {
         }
     }
     
+    /** calcularEdad
+     * Calcula la edad del paciente según su fecha de nacimiento
+     * @param fechaNacimiento fecha de nacimiento del paciente
+     * @return la edad del paciente
+     */
     private int calcularEdad(String fechaNacimiento) {
         String[] temp = fechaNacimiento.split("-");
         int anno = Integer.parseInt(temp[2]);
         int year = Calendar.getInstance().get(Calendar.YEAR);
-        return anno - year;
+        return year - anno;
     }
-
+    
+    /** bloquearEdicion
+     * Bloquea la edición de los componentes de la ventana para sólo mostrar la información del paciente
+     */
+    private void bloquearEdicion() {
+        TxtNombre.setEditable(false);
+        TxtPApellido.setEditable(false);
+        TxtsApellido.setEditable(false);
+        TxtCarne.setEditable(false);
+        TxtEdad.setEditable(false);
+        TxtFechaNacimiento.setEditable(false);
+        TxtIdentificacion.setEditable(false);
+        RbFemenino.setEnabled(false);
+        RbMasculino.setEnabled(false);
+        RbNoFecha.setEnabled(false);
+        RbPrimerIngreso.setEnabled(false);
+        CbBeca.setEnabled(false);
+        CbPoblacion.setEnabled(false);
+        CbTipoId.setEnabled(false);
+        BtnGuardar.setVisible(false);
+        BtnCancelar.setText("Cerrar");
+    }
+    
+    /** cambiarTitulo
+     * Cambia el título de la ventana
+     * @param titulo nuevo título de la ventana
+     */
+    private void cambiarTitulo(String titulo) {
+        this.setTitle(titulo);
+        lblTitulo.setText(titulo);
+        lblTitulo.setFont(new Font("Dialog", Font.BOLD, 14));
+    }
+    
+    /** aplicarTema
+     * Aplica el tema definiado para el programa a la ventana
+     */
+    private void aplicarTema() {
+        setLocationRelativeTo(null);
+        JFrame.setDefaultLookAndFeelDecorated(true);
+        SubstanceLookAndFeel.setSkin("org.jvnet.substance.skin.OfficeBlue2007Skin");
+    }
+    
     //</editor-fold>
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
