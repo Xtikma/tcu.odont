@@ -225,13 +225,15 @@ public class VentanaBusqueda extends javax.swing.JFrame {
         }
         
         private void cargarTblProcedimientos() {
-            categoria = categorias.get(boxClasificacion.getSelectedIndex());
+        int indCat = boxClasificacion.getSelectedIndex();
+        if (indCat >= 0) {
+            categoria = categorias.get(indCat);
             tblGenerica.setModel(new DefaultTableModel());
             String datos[] = new String[2];
             DefaultTableModel model = new DefaultTableModel();
             model.addColumn("Nombre");
             model.addColumn("Precio");
-            
+
             if (categoria.getProcedimientos() != null) {
                 for (Procedimiento procedimiento : categoria.getProcedimientos()) {
                     datos[0] = procedimiento.getNombre();
@@ -241,6 +243,7 @@ public class VentanaBusqueda extends javax.swing.JFrame {
                 tblGenerica.setModel(model);
             }
         }
+    }
         
         private void cargarProcedimientosLista(ArrayList<Procedimiento> lista) {
             DefaultTableModel model = new DefaultTableModel();
@@ -311,9 +314,9 @@ public class VentanaBusqueda extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tblGenerica);
 
-        boxClasificacion.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                boxClasificacionActionPerformed(evt);
+        boxClasificacion.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                boxClasificacionMouseClicked(evt);
             }
         });
 
@@ -392,22 +395,6 @@ public class VentanaBusqueda extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_txtBuscarKeyReleased
 
-    private void boxClasificacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boxClasificacionActionPerformed
-        if (desactivado == false) {
-            switch (mostrando) {
-                case 0:
-                    cargarTblPacientes(boxClasificacion.getSelectedItem().toString().trim());
-                    break;                    
-                case 3://Procedimientos                    
-                    cargarTblProcedimientos();
-                    break;
-                default:
-                    break;
-            }
-        }
-        
-    }//GEN-LAST:event_boxClasificacionActionPerformed
-
     private void tblGenericaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblGenericaMouseClicked
         int selected = tblGenerica.getSelectedRow();
         if (evt.getClickCount() == 2 && selected >= 0) {
@@ -459,6 +446,21 @@ public class VentanaBusqueda extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_tblGenericaMouseClicked
+
+    private void boxClasificacionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_boxClasificacionMouseClicked
+        if (desactivado == false) {
+            switch (mostrando) {
+                case 0:
+                    cargarTblPacientes(boxClasificacion.getSelectedItem().toString().trim());
+                    break;                    
+                case 3://Procedimientos                    
+                    cargarTblProcedimientos();
+                    break;
+                default:
+                    break;
+            }
+        }
+    }//GEN-LAST:event_boxClasificacionMouseClicked
     
     private void DefinirTema(){
         try {

@@ -12,6 +12,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import org.jvnet.substance.SubstanceLookAndFeel;
 import AccesoDatos.ADPassword;
+import java.awt.event.KeyEvent;
 
 /**
  *
@@ -69,6 +70,12 @@ public class VBloqueo extends javax.swing.JDialog {
         jLContraseña.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLContraseña.setText("Contraseña:");
 
+        jPassword.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jPasswordKeyPressed(evt);
+            }
+        });
+
         jBAceptar.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jBAceptar.setText("Aceptar");
         jBAceptar.addActionListener(new java.awt.event.ActionListener() {
@@ -122,7 +129,16 @@ public class VBloqueo extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jBAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBAceptarActionPerformed
-        // TODO add your handling code here:
+        Enter();
+    }//GEN-LAST:event_jBAceptarActionPerformed
+
+    private void jPasswordKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jPasswordKeyPressed
+         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            Enter();
+        }
+    }//GEN-LAST:event_jPasswordKeyPressed
+
+    private void Enter() {
         String pass = "";
         Boolean estado;
         char[] password = jPassword.getPassword();
@@ -145,10 +161,8 @@ public class VBloqueo extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(null, "Digite la Contraseña",
                     "WARNING_MESSAGE", JOptionPane.WARNING_MESSAGE);
         }
-
-
-    }//GEN-LAST:event_jBAceptarActionPerformed
-
+    }
+    
     /**
      * @param args the command line arguments
      */
