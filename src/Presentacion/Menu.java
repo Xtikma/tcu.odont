@@ -32,6 +32,7 @@ public class Menu extends javax.swing.JFrame {
     private CrearConsulta consulta;
     private VerConsultas verCons;
     private ListarPacientes lPacientes;
+    private Configuraciones conf;
     /**
      * Creates new form Menu
      */
@@ -212,7 +213,9 @@ public class Menu extends javax.swing.JFrame {
                 JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
         if (n == JOptionPane.YES_OPTION) {
         } else if (n == JOptionPane.NO_OPTION) {
-            System.exit(0);
+            VBloqueo bloqueo = new VBloqueo(this, true);
+                bloqueo.setLocationRelativeTo(this);
+                bloqueo.setVisible(true);
         }
     }//GEN-LAST:event_btnBloquearActionPerformed
 
@@ -281,8 +284,14 @@ public class Menu extends javax.swing.JFrame {
                 case 9:// Lista de Pacientes
                     lPacientes = new ListarPacientes(this);
                     lPacientes.setSize(1000,500);
-                    lPacientes.setLocation(0,0);
+                    lPacientes.setLocation(0, 0);
                     insertarPanel(lPacientes);
+                    break;
+                case 10:// Otros Ajustes
+                    conf = new Configuraciones(this);
+                    conf.setSize(1000, 500);
+                    conf.setLocation(0, 0);
+                    insertarPanel(conf);
                     break;
                 default:
                     break;

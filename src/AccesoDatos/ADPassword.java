@@ -42,5 +42,18 @@ public class ADPassword {
             return lista;
         }
     }
-
+    
+    public void insertarPassword( String contrasena){
+        ResultSet rs = null;
+          try {
+            CallableStatement cc = conexion.prepareCall("call insertar_contrasena(?)");
+            
+            cc.setString(1,contrasena);
+            //rs = cc.executeQuery();
+            cc.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("UbicaciÃ³n: insertarPassword " + e.getMessage());
+        }
+        
+    }
 }

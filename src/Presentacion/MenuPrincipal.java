@@ -120,6 +120,11 @@ public class MenuPrincipal extends javax.swing.JPanel {
 
         btnAjustes.setText("Otros Ajustes");
         btnAjustes.setPreferredSize(new java.awt.Dimension(182, 50));
+        btnAjustes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAjustesActionPerformed(evt);
+            }
+        });
         panelSecundarios.add(btnAjustes);
         btnAjustes.setBounds(11, 354, 253, 50);
 
@@ -262,9 +267,15 @@ public class MenuPrincipal extends javax.swing.JPanel {
                 JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
         if (n == JOptionPane.YES_OPTION) {
         } else if (n == JOptionPane.NO_OPTION) {
-            System.exit(0);
+            VBloqueo bloqueo = new VBloqueo(m, true);
+                bloqueo.setLocationRelativeTo(this);
+                bloqueo.setVisible(true);
         }
     }//GEN-LAST:event_btnBloqueoActionPerformed
+
+    private void btnAjustesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAjustesActionPerformed
+        m.intercambiarPaneles(10);
+    }//GEN-LAST:event_btnAjustesActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

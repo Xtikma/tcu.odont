@@ -5,17 +5,23 @@
  */
 package Presentacion;
 
+import javax.swing.JOptionPane;
+import AccesoDatos.ADPassword;
+import java.util.ArrayList;
+
 /**
  *
  * @author Keylor
  */
 public class Configuraciones extends javax.swing.JPanel {
 
+private Menu menu = null;
     /**
      * Creates new form Configuraciones
      */
-    public Configuraciones() {
+    public Configuraciones(Menu menu) {
         initComponents();
+       this.menu = menu;
     }
 
     /**
@@ -35,6 +41,7 @@ public class Configuraciones extends javax.swing.JPanel {
         passNew = new javax.swing.JPasswordField();
         passOldConfirm = new javax.swing.JPasswordField();
         btnAplicarPass = new javax.swing.JButton();
+        btnRegresar = new javax.swing.JButton();
 
         setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Otros Ajustes", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 14))); // NOI18N
         setMaximumSize(new java.awt.Dimension(1000, 500));
@@ -51,14 +58,13 @@ public class Configuraciones extends javax.swing.JPanel {
 
         lbPassConfirmed.setText("Confirme contraseña:");
 
-        passOld.setText("jPasswordField1");
-
-        passNew.setText("jPasswordField1");
-
-        passOldConfirm.setText("jPasswordField1");
-
         btnAplicarPass.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         btnAplicarPass.setText("Aplicar cambios");
+        btnAplicarPass.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAplicarPassActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout panelContrasenaLayout = new javax.swing.GroupLayout(panelContrasena);
         panelContrasena.setLayout(panelContrasenaLayout);
@@ -68,23 +74,23 @@ public class Configuraciones extends javax.swing.JPanel {
                 .addGroup(panelContrasenaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelContrasenaLayout.createSequentialGroup()
                         .addContainerGap()
-                        .addGroup(panelContrasenaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(panelContrasenaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(panelContrasenaLayout.createSequentialGroup()
                                 .addComponent(lbPassOld, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(passOld, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(passOld))
                             .addGroup(panelContrasenaLayout.createSequentialGroup()
                                 .addComponent(lbPassNew, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(passNew, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(passNew, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(panelContrasenaLayout.createSequentialGroup()
                                 .addComponent(lbPassConfirmed, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(passOldConfirm, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(passOldConfirm, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(panelContrasenaLayout.createSequentialGroup()
                         .addGap(101, 101, 101)
                         .addComponent(btnAplicarPass, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(28, Short.MAX_VALUE))
+                .addContainerGap(40, Short.MAX_VALUE))
         );
         panelContrasenaLayout.setVerticalGroup(
             panelContrasenaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -106,27 +112,107 @@ public class Configuraciones extends javax.swing.JPanel {
                 .addContainerGap(22, Short.MAX_VALUE))
         );
 
+        btnRegresar.setText("<< Regresar");
+        btnRegresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegresarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(panelContrasena, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(685, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(panelContrasena, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnRegresar))
+                .addContainerGap(665, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(panelContrasena, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(265, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnRegresar)
+                .addContainerGap(231, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
+        menu.intercambiarPaneles(0);
+    }//GEN-LAST:event_btnRegresarActionPerformed
+
+    private void btnAplicarPassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAplicarPassActionPerformed
+        String pass = "";
+        String passConfirm = "";
+        Boolean estado;
+        char[] passwordOld = passOld.getPassword();
+        for (int i = 0; i < passwordOld.length; i++) {
+            pass += passwordOld[i];
+        }
+
+        if (pass.isEmpty() == false) {
+            estado = consultarContrasena(pass);
+            if (estado == true) {
+                pass = "";
+                char[] passwordNew = passNew.getPassword();
+                for (int i = 0; i < passwordNew.length; i++) {
+                    pass += passwordNew[i];
+                }
+                char[] passwordConfirm = passOldConfirm.getPassword();
+                for (int i = 0; i < passwordConfirm.length; i++) {
+                    passConfirm += passwordConfirm[i];
+                }
+                if (pass.isEmpty() == false && passConfirm.isEmpty() == false && pass.equals(passConfirm) == true ) {
+                    if (consultarContrasena(passConfirm)== false) {
+                        
+                        ADPassword pw = new ADPassword();
+                        pw.insertarPassword(pass);
+                        JOptionPane.showMessageDialog(null, "Se ingreso correctamente",
+                                "INFORMATION_MESSAGE", JOptionPane.INFORMATION_MESSAGE);
+                    }else{
+                         JOptionPane.showMessageDialog(null, "La nueva contraseÃ±a debe ser distinta a cualquier contraseÃ±a anterior",
+                            "ERROR_MESSAGE", JOptionPane.ERROR_MESSAGE);
+                    }
+                  
+                } else {
+                    JOptionPane.showMessageDialog(null, "La contraseÃ±a de confirmaciÃ³n debe ser igual ala nueva contraseÃ±a",
+                            "ERROR_MESSAGE", JOptionPane.ERROR_MESSAGE);
+                }
+
+            } else {
+
+                JOptionPane.showMessageDialog(null, "ContraseÃ±a Incorrecta",
+                        "ERROR_MESSAGE", JOptionPane.ERROR_MESSAGE);
+            }
+        } else {
+
+            JOptionPane.showMessageDialog(null, "Digite la ContraseÃ±a Actual",
+                    "WARNING_MESSAGE", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_btnAplicarPassActionPerformed
+
+    public boolean consultarContrasena(String contrasena) {
+        boolean password = false;
+        ADPassword pw = new ADPassword();
+        ArrayList<String> lista = pw.obtenerPassword();
+
+        for (int i = 0; i < lista.size(); i++) {
+            if (lista.get(i).equals(contrasena)) {
+                password = true;
+            }
+
+        }
+        return password;
+
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAplicarPass;
+    private javax.swing.JButton btnRegresar;
     private javax.swing.JLabel lbPassConfirmed;
     private javax.swing.JLabel lbPassNew;
     private javax.swing.JLabel lbPassOld;
