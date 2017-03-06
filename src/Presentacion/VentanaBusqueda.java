@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import org.jvnet.substance.SubstanceLookAndFeel;
 
@@ -25,15 +24,15 @@ public class VentanaBusqueda extends javax.swing.JFrame {
     private ADPracticante accessPracticante;
     private ADCategoria accessCategoria;
     private ADPoblacion accessPoblacion;
-    private CrearConsulta origen;
+    private final CrearConsulta origen;
     private List<Paciente> pacientes;
     private List<Poblacion> poblaciones;
     private List<Categoria> categorias;
-    private ArrayList<Doctor> doctores;
-    private ArrayList<Practicante> practicantes;
+    private List<Doctor> doctores;
+    private List<Practicante> practicantes;
     private Categoria categoria;
     private boolean desactivado = true;
-    private DefaultTableModel modeloBusqueda;
+    private boolean busquedaActiva = false;
     
     
     private int mostrando;
@@ -97,7 +96,27 @@ public class VentanaBusqueda extends javax.swing.JFrame {
         } catch (Exception e) {
             System.out.println("" + e.getMessage());
         }               
-    }    
+    }  
+    
+    private void cargarPacientesLista(ArrayList<Paciente> lista) {
+            DefaultTableModel model = new DefaultTableModel();
+            model.addColumn("Identificación");
+            model.addColumn("Nombre paciente");
+            model.addColumn("Edad");
+            model.addColumn("Carné");
+            String fila[] = new String[4];
+            if (lista != null) {
+                for (Paciente p : lista) {
+                    fila[0] = p.getValorIdentificacion();
+                    fila[1] = "" + p.getNombre() + " " + p.getPrimerApellido();;
+                    fila[2] = "" + p.getEdad();
+                    fila[3] = "" + p.getCarne();
+                    model.addRow(fila);
+                }
+                tblGenerica.setModel(model);
+            }
+        }
+    
     // </editor-fold>  
     
     // <editor-fold desc=" Metodos con Doctor ">
@@ -124,6 +143,26 @@ public class VentanaBusqueda extends javax.swing.JFrame {
                     tblGenerica.getValueAt(i, 1).toString(), false));
         }
         
+    }
+    
+    private void cargarDoctoresLista(ArrayList<Doctor> lista) {
+
+        DefaultTableModel model = new DefaultTableModel();
+        model.addColumn("Id.");
+        model.addColumn("Nombre");
+        model.addColumn("Estado");
+
+        String fila[] = new String[3];
+
+        if (lista != null) {
+            for (Doctor d : lista) {
+                fila[0] = d.getIdDoctor() + "";
+                fila[1] = "" + d.getNombre();
+                fila[2] = "Activo";
+                model.addRow(fila);
+            }
+            tblGenerica.setModel(model);
+        }
     }
     // </editor-fold>
     
@@ -152,9 +191,28 @@ public class VentanaBusqueda extends javax.swing.JFrame {
         }
     }
     
+    private void cargarPracticantesLista(ArrayList<Practicante> lista) {
+
+        DefaultTableModel model = new DefaultTableModel();
+        model.addColumn("Id.");
+        model.addColumn("Nombre");
+        model.addColumn("Estado");
+
+        String fila[] = new String[3];
+
+        if (lista != null) {
+            for (Practicante p : lista) {
+                fila[0] = p.getIdPracticante() + "";
+                fila[1] = "" + p.getNombre();
+                fila[2] = "Activo";
+                model.addRow(fila);
+            }
+            tblGenerica.setModel(model);
+        }
+    }
     // </editor-fold>
     
-    // <editor-fold desc=" Metodos con Practicantes ">
+    // <editor-fold desc=" Metodos con Procedimientos ">
         private void cargarProcedimientos(){
             accessCategoria = new ADCategoria();
             categorias = accessCategoria.obtenerCategorias();
@@ -184,7 +242,20 @@ public class VentanaBusqueda extends javax.swing.JFrame {
             }
         }
         
-        
+        private void cargarProcedimientosLista(ArrayList<Procedimiento> lista) {
+            DefaultTableModel model = new DefaultTableModel();
+            model.addColumn("Nombre");
+            model.addColumn("Precio");
+            String fila[] = new String[2];
+            if (lista != null) {
+                for (Procedimiento p : lista) {
+                    fila[0] = p.getNombre();
+                    fila[1] = "" + p.getPrecio();
+                    model.addRow(fila);
+                }
+                tblGenerica.setModel(model);
+            }
+        }
     
     // </editor-fold>
     
@@ -280,8 +351,45 @@ public class VentanaBusqueda extends javax.swing.JFrame {
 
     // <editor-fold desc=" Metodos genericos ">
     private void txtBuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyReleased
-        
-        
+        MetodosBusqueda search = new MetodosBusqueda();
+        String criterio = txtBuscar.getText().trim();
+        switch(mostrando){
+            case 0://Paciente
+                if (txtBuscar.getText().length() > 0) {
+                    cargarPacientesLista(search.BuscarPacientes(criterio, (ArrayList<Paciente>) pacientes)); 
+                }
+                if (txtBuscar.getText().length() == 0) {
+                    cargarPacientesLista((ArrayList<Paciente>) pacientes);
+                }
+                break;
+            case 1://Doctor
+                if (txtBuscar.getText().length() > 0) {
+                    cargarDoctoresLista(search.BuscarDoctores(criterio, (ArrayList<Doctor>)doctores));
+                }
+                if (txtBuscar.getText().length() == 0) {
+                    cargarDoctoresLista((ArrayList<Doctor>) doctores);
+                }
+                break;
+            case 2://practicante
+                if (txtBuscar.getText().length() > 0) {
+                    cargarPracticantesLista(search.BuscarPracticantes(criterio, (ArrayList<Practicante>)practicantes));
+                }
+                if (txtBuscar.getText().length() == 0) {
+                    cargarPracticantesLista((ArrayList<Practicante>) practicantes);
+                }
+                break;
+            case 3://Procedimientos
+                
+                if (txtBuscar.getText().length() > 0) {
+                    cargarProcedimientosLista(search.BuscarProcedimientos(criterio, (ArrayList<Categoria>)categorias));
+                    busquedaActiva = true;
+                }
+                if (txtBuscar.getText().length() == 0) {
+                    cargarTblProcedimientos();
+                    busquedaActiva = false;
+                }
+                break;
+        }
     }//GEN-LAST:event_txtBuscarKeyReleased
 
     private void boxClasificacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boxClasificacionActionPerformed
@@ -289,8 +397,7 @@ public class VentanaBusqueda extends javax.swing.JFrame {
             switch (mostrando) {
                 case 0:
                     cargarTblPacientes(boxClasificacion.getSelectedItem().toString().trim());
-                    break;
-                    
+                    break;                    
                 case 3://Procedimientos                    
                     cargarTblProcedimientos();
                     break;
@@ -331,10 +438,24 @@ public class VentanaBusqueda extends javax.swing.JFrame {
                     this.dispose();
                     break;
                 case 3:
-                    Categoria temp  = categorias.get(boxClasificacion.getSelectedIndex());
-                    Procedimiento selecto = temp.getProcedimientos().get(tblGenerica.getSelectedRow());
-                    origen.setProcedimiento(selecto);
-                    this.dispose();                   
+                    if (busquedaActiva == false) {
+                        Categoria temp = categorias.get(boxClasificacion.getSelectedIndex());
+                        Procedimiento selecto = temp.getProcedimientos().get(tblGenerica.getSelectedRow());
+                        origen.setProcedimiento(selecto);
+                        this.dispose();
+                    }else{
+                        for (Categoria ct : categorias) {
+                            for (Procedimiento p : ct.getProcedimientos()) {
+                                if (p.getNombre().equals(
+                                        tblGenerica.getValueAt(selected, 0)) == true) {
+                                    origen.setProcedimiento(p);
+                                    this.dispose();
+                                }
+                            }
+                        }
+                        
+                    }
+                                       
             }
         }
     }//GEN-LAST:event_tblGenericaMouseClicked
@@ -365,11 +486,10 @@ public class VentanaBusqueda extends javax.swing.JFrame {
                 break;
             case 3://Procedimientos
                 cargarProcedimientos();
-                break;              
-            
+                break;            
         }
     }   
-        
+           
     // </editor-fold>
     
     
