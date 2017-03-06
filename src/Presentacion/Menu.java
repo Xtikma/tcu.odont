@@ -287,6 +287,12 @@ public class Menu extends javax.swing.JFrame {
         }
     }
     
+    public void crearConsultaPaciente(CrearConsulta consulta){
+        consulta.setSize(1000,500);
+        consulta.setLocation(0,0);
+        insertarPanel(consulta);
+    }
+    
     /**
      * @param args the command line arguments
      */

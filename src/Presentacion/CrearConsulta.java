@@ -7,9 +7,8 @@ package Presentacion;
 
 import AccesoDatos.*;
 import Entidades.*;
-import com.toedter.calendar.JDateChooser;
+import java.awt.event.KeyEvent;
 import java.util.Date;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -41,6 +40,27 @@ public class CrearConsulta extends javax.swing.JPanel{
      * Creates new form CrearConsulta
      */
     public CrearConsulta() {
+        initComponents();
+        consulta = new Consulta();
+        cargarLugares();
+        isNuevo = true;
+    }
+    
+    /**
+     * Contructor que recibe directamente un paciente
+     * @param p paciente que haya sido seleccionado desde su expediente o de listar pacientes
+     */
+    public CrearConsulta(Paciente p){
+        initComponents();
+        consulta = new Consulta();
+        cargarLugares();
+        isNuevo = true;
+        paciente = p;
+        btnPaciente.setText(p.getNombre() + " " + p.getPrimerApellido());
+    }
+    
+    
+    public CrearConsulta(Consulta c){
         initComponents();
         consulta = new Consulta();
         cargarLugares();
@@ -83,6 +103,11 @@ public class CrearConsulta extends javax.swing.JPanel{
         setMaximumSize(new java.awt.Dimension(1000, 500));
         setMinimumSize(new java.awt.Dimension(1000, 500));
         setOpaque(false);
+        addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                formKeyPressed(evt);
+            }
+        });
 
         panelEncabezado.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Encabezado", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 14))); // NOI18N
         panelEncabezado.setOpaque(false);
@@ -264,6 +289,11 @@ public class CrearConsulta extends javax.swing.JPanel{
         });
         tblProcedimientos.setToolTipText("");
         tblProcedimientos.getTableHeader().setReorderingAllowed(false);
+        tblProcedimientos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblProcedimientosMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblProcedimientos);
         if (tblProcedimientos.getColumnModel().getColumnCount() > 0) {
             tblProcedimientos.getColumnModel().getColumn(0).setResizable(false);
@@ -312,6 +342,9 @@ public class CrearConsulta extends javax.swing.JPanel{
 
         txtCantidad.setToolTipText("Ingrese el número de procedimientos realizado");
         txtCantidad.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtCantidadKeyPressed(evt);
+            }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtCantidadKeyTyped(evt);
             }
@@ -434,7 +467,15 @@ public class CrearConsulta extends javax.swing.JPanel{
     }//GEN-LAST:event_btnPacienteActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        // TODO add your handling code here:
+        for (ProcedimientoConsulta p : consulta.getListaProcedimientos()) {
+            if (p.getProcedimiento().getId() == detalle.getProcedimiento().getId()) {
+                consulta.getListaProcedimientos().remove(p);
+                detalle = new ProcedimientoConsulta();
+                btnProcedimiento.setText("Seleccionar");
+                txtCantidad.setText("");
+                cargarDetalles();
+            }            
+        }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnDoctorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDoctorActionPerformed
@@ -455,40 +496,11 @@ public class CrearConsulta extends javax.swing.JPanel{
     }//GEN-LAST:event_boxLugarActionPerformed
 
     private void btnProcedimientoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProcedimientoActionPerformed
-        VentanaBusqueda search = new VentanaBusqueda(3, this);
-        search.setLocationRelativeTo(this);
-        search.setVisible(true); 
+        crearVProcedimientos();
     }//GEN-LAST:event_btnProcedimientoActionPerformed
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-        try {
-            String cantidad = txtCantidad.getText().trim();
-            if (cantidad.length() != 0) {
-                boolean existe = false;
-                for (int i = 0; i < consulta.getListaProcedimientos().size(); i++) {
-                    if (consulta.getListaProcedimientos().get(i).getProcedimiento()
-                            .getNombre().equals(detalle.getProcedimiento().getNombre())) {
-                        consulta.getListaProcedimientos().get(i).setCantidad(
-                                consulta.getListaProcedimientos().get(i).getCantidad() 
-                                + Integer.parseInt(cantidad));
-                        existe = true;
-                    }
-                }
-                if (existe == false) {
-                    detalle.setPrecioHistorico(detalle.getProcedimiento().getPrecio());
-                    detalle.setCantidad(Integer.parseInt(cantidad));                
-                    consulta.agregarProcedimiento(detalle);
-                }                
-                cargarDetalles();
-                sumarTotal();
-                detalle = new ProcedimientoConsulta();
-                btnProcedimiento.setText("Seleccionar");
-                txtCantidad.setText("");
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Existe un problema con la información ingresada.", "Error en información ingresada", 1);
-        }
-        
+        agregarDetalle();
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void txtCantidadKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCantidadKeyTyped
@@ -515,7 +527,7 @@ public class CrearConsulta extends javax.swing.JPanel{
                     } else {
                         consulta.setPracticante(null);
                     }
-
+                    consulta.setTotalConsulta(total);
                     acceso = new ADConsulta();
                     boolean exito = acceso.almacenarConsulta(consulta);
                     if (exito == true) {
@@ -533,6 +545,33 @@ public class CrearConsulta extends javax.swing.JPanel{
 
 
     }//GEN-LAST:event_btnGuardarCambiosActionPerformed
+
+    private void txtCantidadKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCantidadKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            agregarDetalle();
+        }
+    }//GEN-LAST:event_txtCantidadKeyPressed
+
+    private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
+       if (evt.getKeyCode() == KeyEvent.VK_F3) {
+            crearVProcedimientos();
+        }
+    }//GEN-LAST:event_formKeyPressed
+
+    private void tblProcedimientosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblProcedimientosMouseClicked
+        int selected = tblProcedimientos.getSelectedRow();
+        if (selected >= 0) {
+            for (ProcedimientoConsulta pc : consulta.getListaProcedimientos()) {
+                if (pc.getProcedimiento().getNombre()
+                        .equals(tblProcedimientos.getValueAt(selected, 0).toString()) == true) {
+                    detalle = new ProcedimientoConsulta();
+                    detalle.setProcedimiento(pc.getProcedimiento());
+                    btnProcedimiento.setText(pc.getProcedimiento().getNombre());
+                    txtCantidad.setText(tblProcedimientos.getValueAt(selected, 2).toString());                    
+                }
+            }
+        }
+    }//GEN-LAST:event_tblProcedimientosMouseClicked
 
     public void setPracticante(Practicante prac) {
         this.practicante = prac;
@@ -605,7 +644,41 @@ public class CrearConsulta extends javax.swing.JPanel{
         tblProcedimientos.setModel(model);
     }
     
+    private void agregarDetalle() {
+        try {
+            String cantidad = txtCantidad.getText().trim();
+            if (cantidad.length() != 0) {
+                boolean existe = false;
+                for (int i = 0; i < consulta.getListaProcedimientos().size(); i++) {
+                    if (consulta.getListaProcedimientos().get(i).getProcedimiento()
+                            .getNombre().equals(detalle.getProcedimiento().getNombre())) {
+                        consulta.getListaProcedimientos().get(i).setCantidad(
+                                consulta.getListaProcedimientos().get(i).getCantidad()
+                                + Integer.parseInt(cantidad));
+                        existe = true;
+                    }
+                }
+                if (existe == false) {
+                    detalle.setPrecioHistorico(detalle.getProcedimiento().getPrecio());
+                    detalle.setCantidad(Integer.parseInt(cantidad));
+                    consulta.agregarProcedimiento(detalle);
+                }
+                cargarDetalles();
+                sumarTotal();
+                detalle = new ProcedimientoConsulta();
+                btnProcedimiento.setText("Seleccionar");
+                txtCantidad.setText("");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Existe un problema con la información ingresada.", "Error en información ingresada", 1);
+        }
+    }
     
+    private void crearVProcedimientos(){
+        VentanaBusqueda search = new VentanaBusqueda(3, this);
+        search.setLocationRelativeTo(this);
+        search.setVisible(true);
+    }
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
