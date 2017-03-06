@@ -68,7 +68,7 @@ public class VentanaBusqueda extends javax.swing.JFrame {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(origen, "Existe un problema con los elementos a consultar.\n"
                     + "Revise que se hayan cargado con anterioridad.", "Problema al cargar elementos", 1);
-        }
+        }       
         
         
     }

@@ -56,7 +56,7 @@ public class CrearConsulta extends javax.swing.JPanel{
         cargarLugares();
         isNuevo = true;
         paciente = p;
-        btnPaciente.setText(p.getNombre());
+        btnPaciente.setText(p.getNombre() + " " + p.getPrimerApellido());
     }
     
     

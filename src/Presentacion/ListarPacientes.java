@@ -90,6 +90,11 @@ public class ListarPacientes extends javax.swing.JPanel {
     });
 
     btnAgregarConsulta.setText("Agregar Consulta");
+    btnAgregarConsulta.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            btnAgregarConsultaActionPerformed(evt);
+        }
+    });
 
     btnAgregarPaciente.setText("Agregar Paciente");
     btnAgregarPaciente.addActionListener(new java.awt.event.ActionListener() {
@@ -282,6 +287,16 @@ public class ListarPacientes extends javax.swing.JPanel {
             }
         }
     }//GEN-LAST:event_btnDesactivarActionPerformed
+
+    private void btnAgregarConsultaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarConsultaActionPerformed
+        int selected = tblPacientes.getSelectedRow();
+        if (selected >= 0) {
+            if (eliminado == false) {
+                CrearConsulta consulta = new CrearConsulta(pacientes.get(selected));
+                menu.crearConsultaPaciente(consulta);
+            }            
+        }
+    }//GEN-LAST:event_btnAgregarConsultaActionPerformed
 
     //<editor-fold defaultstate="collapsed" desc="Mis métodos">
     

@@ -7,7 +7,6 @@ package Presentacion;
 
 import Animacion.Animacion;
 import java.awt.BorderLayout;
-import java.util.Locale;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -271,6 +270,12 @@ public class Menu extends javax.swing.JFrame {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Existe un problema al cargar la ventana", "Problema visual", JOptionPane.ERROR);
         }
+    }
+    
+    public void crearConsultaPaciente(CrearConsulta consulta){
+        consulta.setSize(1000,500);
+        consulta.setLocation(0,0);
+        insertarPanel(consulta);
     }
     
     /**
