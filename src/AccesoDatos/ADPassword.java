@@ -24,7 +24,7 @@ public class ADPassword {
         String temp;
         try {
             ResultSet rs = null;
-            CallableStatement cc = conexion.prepareCall("call Consultar_Contrasena()");
+            CallableStatement cc = conexion.prepareCall("call consultar_contrasena()");
             rs = cc.executeQuery();
 
             while (rs.next()) {
@@ -32,13 +32,13 @@ public class ADPassword {
                     temp = rs.getString(2);
                     lista.add(temp);
                 } catch (SQLException ex) {
-                    System.out.println("Ubicación: Consultar_Contrasena.while " + ex.getMessage());
+                    System.out.println("Ubicación: consultar_contrasena.while " + ex.getMessage());
                     throw ex;
                 }
             }
             return lista;
         } catch (Exception e) {
-            System.out.println("Ubicación: Consultar_Contrasena " + e.getMessage());
+            System.out.println("Ubicación: consultar_contrasena " + e.getMessage());
             return lista;
         }
     }

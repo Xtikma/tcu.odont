@@ -5,6 +5,8 @@
  */
 package Presentacion;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Keylor
@@ -165,6 +167,11 @@ public class MenuPrincipal extends javax.swing.JPanel {
         btnBloqueo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/bloquearSistema.png"))); // NOI18N
         btnBloqueo.setBorderPainted(false);
         btnBloqueo.setOpaque(false);
+        btnBloqueo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBloqueoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -248,6 +255,16 @@ public class MenuPrincipal extends javax.swing.JPanel {
     private void btnPacientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPacientesActionPerformed
         m.intercambiarPaneles(9);
     }//GEN-LAST:event_btnPacientesActionPerformed
+
+    private void btnBloqueoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBloqueoActionPerformed
+        Object[] options = {"Continuar", "Cerrar"};
+        int n = JOptionPane.showOptionDialog(null, "Desea salir del sistema", "Confirmación",
+                JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
+        if (n == JOptionPane.YES_OPTION) {
+        } else if (n == JOptionPane.NO_OPTION) {
+            System.exit(0);
+        }
+    }//GEN-LAST:event_btnBloqueoActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
