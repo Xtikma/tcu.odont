@@ -37,7 +37,7 @@ public class ADConsulta {
         Consulta temp;
         try {
             ResultSet rsConsultas = null;
-            CallableStatement cs = conexion.prepareCall("call Obtener_ConsultaPorPeriodo(?,?)");
+            CallableStatement cs = conexion.prepareCall("call obtener_consultaPorPeriodo(?,?)");
             cs.setString(1, desde);
             cs.setString(2, hasta);
             rsConsultas = cs.executeQuery();

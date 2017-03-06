@@ -94,6 +94,11 @@ public class Menu extends javax.swing.JFrame {
         btnBloquear.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         btnBloquear.setText("Bloquear ");
         btnBloquear.setPreferredSize(new java.awt.Dimension(150, 30));
+        btnBloquear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBloquearActionPerformed(evt);
+            }
+        });
 
         btnAgregarPaciente.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         btnAgregarPaciente.setText("Nuevo Paciente");
@@ -185,6 +190,16 @@ public class Menu extends javax.swing.JFrame {
         vista.setLocationRelativeTo(this);
         vista.setVisible(true);
     }//GEN-LAST:event_btnAgregarPacienteActionPerformed
+
+    private void btnBloquearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBloquearActionPerformed
+        Object[] options = {"Continuar", "Cerrar"};
+        int n = JOptionPane.showOptionDialog(null, "Desea salir del sistema", "Confirmación",
+                JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
+        if (n == JOptionPane.YES_OPTION) {
+        } else if (n == JOptionPane.NO_OPTION) {
+            System.exit(0);
+        }
+    }//GEN-LAST:event_btnBloquearActionPerformed
 
     /**
      * Metodo que cambia los paneles en el panel principal de la ventana
@@ -291,7 +306,11 @@ public class Menu extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Menu().setVisible(true);
+                Menu menu = new Menu();
+                menu.setVisible(true);
+                VBloqueo bloqueo = new VBloqueo(menu, true);
+                bloqueo.setLocationRelativeTo(menu);
+                bloqueo.setVisible(true);
             }
         });
     }
