@@ -17,12 +17,12 @@ public class Periodo {
         String[] fechaDividida = fecha.split("-");
         String[] semestre = new String[2];
         int mes = Integer.parseInt(fechaDividida[1]);
-        if (mes >= 3 && mes <= 6) {//Primer semestre de Marzo a Junio. Preguntar a doctora de cuando a cuando es el semestre
-            semestre[0] = fechaDividida[0] + "-" + "03" + "-" + "01";
+        if (mes >= 1 && mes <= 6) {//Primer semestre de Marzo a Junio. Preguntar a doctora de cuando a cuando es el semestre
+            semestre[0] = fechaDividida[0] + "-" + "01" + "-" + "01";
             semestre[1] = fechaDividida[0] + "-" + "06" + "-" + "30";
-        } else if (mes >= 8 && mes <= 11) {//Segundo semestre de Agosto a Noviembre. Preguntar a doctora de cuando a cuando es el semestre
-            semestre[0] = fechaDividida[0] + "-" + "08" + "-" + "01";
-            semestre[1] = fechaDividida[0] + "-" + "11" + "-" + "30";
+        } else if (mes >= 7 && mes <= 12) {//Segundo semestre de Agosto a Noviembre. Preguntar a doctora de cuando a cuando es el semestre
+            semestre[0] = fechaDividida[0] + "-" + "07" + "-" + "01";
+            semestre[1] = fechaDividida[0] + "-" + "12" + "-" + "31";
         } else {
             //ver que se hace con las fechas que no pertenecen a ningún semestre
         }
