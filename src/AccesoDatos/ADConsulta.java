@@ -14,6 +14,7 @@ import Entidades.Doctor;
 import Entidades.LugarAtencion;
 import Entidades.Paciente;
 import Entidades.Practicante;
+import Entidades.Procedimiento;
 import Entidades.ProcedimientoConsulta;
 import java.sql.CallableStatement;
 import java.sql.Connection;
@@ -25,11 +26,9 @@ import java.util.ArrayList;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-
-
 public class ADConsulta {
-    
-    private final Connection conexion = ConexionBD.conexion();    
+
+    private final Connection conexion = ConexionBD.conexion();
     private SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
 
     public ArrayList<Consulta> listarConsultasArray(String desde, String hasta) {
@@ -43,7 +42,7 @@ public class ADConsulta {
             rsConsultas = cs.executeQuery();
 
             while (rsConsultas.next()) {
-                try {                    
+                try {
                     Paciente pac = new Paciente();
                     pac.setId(rsConsultas.getInt(9));
                     String nombrecompleto = rsConsultas.getString(4);
@@ -54,15 +53,15 @@ public class ADConsulta {
                     pac.setCarne(rsConsultas.getString(8));
                     pac.setValorIdentificacion(rsConsultas.getString(6));
                     pac.setEdad(rsConsultas.getInt(5));
-                    pac.setBeca(rsConsultas.getInt(7)); 
-                    
-                    Practicante  pr = new Practicante(rsConsultas.getInt(13), rsConsultas.getString(12), true);
+                    pac.setBeca(rsConsultas.getInt(7));
+
+                    Practicante pr = new Practicante(rsConsultas.getInt(13), rsConsultas.getString(12), true);
                     Doctor dr = new Doctor(rsConsultas.getInt(11), rsConsultas.getString(10), true);
                     LugarAtencion lug = new LugarAtencion(rsConsultas.getInt(15), rsConsultas.getString(14), true);
-                    
+
                     temp = new Consulta(rsConsultas.getInt(1), rsConsultas.getDate(2),
                             rsConsultas.getDouble(3), pac, dr, pr, lug);
-                    
+
                     lista.add(temp);
                 } catch (SQLException ex) {
                     System.out.println("Ubicación: cargarConsultas.while " + ex.getMessage());
@@ -75,12 +74,13 @@ public class ADConsulta {
             return lista;
         }
     }
-    
+
     // <editor-fold desc=" Metodos para almacenar una consulta nueva" >
     /**
      * Almacena la consulta, además invoca al metodo de guardarDetalles
+     *
      * @param c objeto consulta.
-     * @return 
+     * @return
      */
     public boolean almacenarConsulta(Consulta c) {
         ResultSet rs;
@@ -118,7 +118,9 @@ public class ADConsulta {
     }
 
     /**
-     * Almacena uno a uno los ProcedimientosConsulta en la lista que posee la Consulta
+     * Almacena uno a uno los ProcedimientosConsulta en la lista que posee la
+     * Consulta
+     *
      * @param detalles una lista de procedimientos consulta.
      * @param idConsulta la id de la consulta recien ingresada.
      * @return true si se agregaron todos los detalles de la consulta
@@ -148,11 +150,11 @@ public class ADConsulta {
             return false;
         }
     }
-    
+
     // </editor-fold>
-    
     /**
      * Transforma una objeto Date en una fecha formateada para la base de datos.
+     *
      * @param fecha puede ser una fecha a filtrar o una para insertar en la base
      * de datos.
      * @return un string con la fecha formateada
@@ -164,22 +166,82 @@ public class ADConsulta {
             return null;
         }
     }
-    
-    private boolean limpiarDetallesConsulta(int idconsulta){
+
+    private boolean limpiarDetallesConsulta(int idconsulta) {
         int funciono = 0;
         try {
             CallableStatement cc = conexion.prepareCall("{call limpiar_detalles(?)}");
-            cc.setInt(1, idconsulta);            
+            cc.setInt(1, idconsulta);
             funciono = cc.executeUpdate();
-            
+
         } catch (Exception e) {
             System.out.println("Ubicación: almacenarConsulta " + e.getMessage());
             return false;
-        }        
+        }
         if (funciono > 0) {
             return true;
         } else {
             return false;
+        }
+    }
+
+    public boolean actualizarConsulta(Consulta c) {
+        ResultSet rs;
+        boolean sucefull = false;
+        int agrego = 0;
+        try {
+            CallableStatement cc = conexion.prepareCall("{call actualizar_consulta_encabezado(?,?,?,?,?,?,?)}");
+            cc.setInt(1, c.getIdConsulta());
+            cc.setString(2, getFecha(c.getFechaConsulta()));
+            cc.setDouble(3, c.getTotalConsulta());
+            cc.setInt(4, c.getIdPaciente());
+            cc.setInt(5, c.getIdDoctor());
+            cc.setInt(6, c.getIdPracticante());
+            cc.setInt(7, c.getIdLugar());
+            agrego = cc.executeUpdate();
+
+            if (c.getListaProcedimientos().size() > 0) {
+                limpiarDetallesConsulta(c.getIdConsulta());
+                sucefull = guardarDetalles(c.getListaProcedimientos(), c.getIdConsulta());
+            }
+        } catch (Exception e) {
+            System.out.println("Ubicación: almacenarConsulta " + e.getMessage());
+            return false;
+        }
+        if (sucefull == true && agrego > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public ArrayList<ProcedimientoConsulta> obtenerDetalles(int idConsulta) {
+        ArrayList<ProcedimientoConsulta> lista = new ArrayList<ProcedimientoConsulta>();
+        ProcedimientoConsulta temp;
+        try {
+            ResultSet rsConsultas = null;
+            CallableStatement cs = conexion.prepareCall("call obtener_detalles_consulta(?)");
+            cs.setInt(1, idConsulta);
+            rsConsultas = cs.executeQuery();
+
+            while (rsConsultas.next()) {
+                try {
+                    temp = new ProcedimientoConsulta();
+                    temp.setIdConsulta(rsConsultas.getInt(1));
+                    temp.setProcedimiento(new Procedimiento(rsConsultas.getInt(2),
+                            rsConsultas.getString(3), rsConsultas.getDouble(4), 0));
+                    temp.setCantidad(rsConsultas.getInt(5));
+                    temp.setPrecioHistorico(rsConsultas.getDouble(6));
+                    lista.add(temp);
+                } catch (SQLException ex) {
+                    System.out.println("Ubicación: cargarConsultas.while " + ex.getMessage());
+                    throw ex;
+                }
+            }
+            return lista;
+        } catch (Exception e) {
+            System.out.println("Ubicación: cargarConsultas " + e.getMessage());
+            return lista;
         }
     }
 }

@@ -273,7 +273,7 @@ public class Menu extends javax.swing.JFrame {
                     insertarPanel(consulta);
                     break;
                 case 8:
-                    verCons = new VerConsultas();
+                    verCons = new VerConsultas(this);
                     verCons.setSize(1000,500);
                     verCons.setLocation(0,0);
                     insertarPanel(verCons);

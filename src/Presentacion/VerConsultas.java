@@ -11,6 +11,7 @@ import com.toedter.calendar.JDateChooser;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -35,6 +36,16 @@ public class VerConsultas extends javax.swing.JPanel {
         initComponents();
         this.menu = menu;
 
+        String[] semestre = new String[2];
+        
+        Periodo p = new Periodo();
+        String fecha =Calendar.getInstance().get(Calendar.YEAR)+
+                "-"+Calendar.getInstance().get(Calendar.MONTH)+
+                "-"+Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
+        semestre = p.identificarSemestre(fecha);
+        fechaDesde = semestre[0];
+        fechaHasta = semestre[1];
+        listarConsultas();
     }
 
     public VerConsultas() {
@@ -239,11 +250,8 @@ public class VerConsultas extends javax.swing.JPanel {
 
     private void jBModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBModificarActionPerformed
         int indiceFila = jT_ListarConsultas.getSelectedRow();
-        if (indiceFila >= 0) {
-            String texto = (jT_ListarConsultas.getValueAt(indiceFila, 0)).toString().trim();
-
-            int id = Integer.parseInt(texto);
-            consulta = new CrearConsulta(lista.get(id));
+        if (indiceFila >= 0) {            
+            consulta = new CrearConsulta(lista.get(indiceFila));
             consulta.setSize(1000, 500);
             consulta.setLocation(0, 0);
             consulta.setVisible(true);

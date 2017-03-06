@@ -62,9 +62,33 @@ public class CrearConsulta extends javax.swing.JPanel{
     
     public CrearConsulta(Consulta c){
         initComponents();
-        consulta = new Consulta();
+        consulta = c;
         cargarLugares();
-        isNuevo = true;
+        isNuevo = false;
+        doctor = c.getDoctor();
+        btnDoctor.setText(doctor.getNombre());
+        practicante = c.getPracticante();
+        if (practicante != null) {
+            btnPracticante.setText(practicante.getNombre());
+        }else{
+            btnPracticante.setText("Vacio");
+        }        
+        paciente = c.getPaciente();
+        btnPaciente.setText(paciente.getNombre() + " " + paciente.getPrimerApellido());
+        lugar = c.getLugar();
+        btnPaciente.setEnabled(false);
+        for (int i = 0; i > boxLugar.getItemCount(); i++) {
+            String item = boxLugar.getItemAt(i).toString();
+            if (item.equals(lugar.getLugar()) == true) {
+                boxLugar.setSelectedIndex(i);
+                boxLugar.setEnabled(false);
+            }
+        }
+        acceso = new ADConsulta();
+        consulta.setListaProcedimientos(acceso.obtenerDetalles(consulta.getIdConsulta()));
+        fechaConsulta.setDate(c.getFechaConsulta());
+        cargarDetalles();
+        sumarTotal();
     }
     
     
@@ -529,21 +553,24 @@ public class CrearConsulta extends javax.swing.JPanel{
                     }
                     consulta.setTotalConsulta(total);
                     acceso = new ADConsulta();
-                    boolean exito = acceso.almacenarConsulta(consulta);
+                    boolean exito = false;
+                    if (isNuevo == true) {
+                        exito = acceso.almacenarConsulta(consulta);
+                    } else {
+                        exito = acceso.actualizarConsulta(consulta);
+                    }
                     if (exito == true) {
                         JOptionPane.showMessageDialog(null, "Se ha almacenado con exito la consulta.", "Exito!", JOptionPane.INFORMATION_MESSAGE);
                         limpiarCampos();
                     }
                 }
-            }else{
+
+            } else {
                 getToolkit().beep();
             }
-            
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Ha fallado al almacenar la consulta.", "Fallido!", JOptionPane.ERROR_MESSAGE);
         }
-
-
     }//GEN-LAST:event_btnGuardarCambiosActionPerformed
 
     private void txtCantidadKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCantidadKeyPressed
