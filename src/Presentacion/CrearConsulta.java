@@ -527,7 +527,7 @@ public class CrearConsulta extends javax.swing.JPanel{
                     } else {
                         consulta.setPracticante(null);
                     }
-
+                    consulta.setTotalConsulta(total);
                     acceso = new ADConsulta();
                     boolean exito = acceso.almacenarConsulta(consulta);
                     if (exito == true) {

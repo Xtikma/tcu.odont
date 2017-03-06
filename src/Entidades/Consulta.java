@@ -27,31 +27,24 @@ public class Consulta {
     private double totalConsulta;
     private ArrayList<ProcedimientoConsulta> listaProcedimientos;
 
-    public Consulta(int idConsulta, Doctor doctor, Practicante practicante, LugarAtencion lugar, Paciente paciente, Date fechaConsulta, double totalConsulta, ArrayList<ProcedimientoConsulta> listaProcedimientos) {
+    public Consulta(int idConsulta, Date fechaConsulta, double total, 
+            Paciente pac, Doctor dr , Practicante pr, LugarAtencion lg) {
         this.idConsulta = idConsulta;
-        this.doctor = doctor;
-        this.idDoctor = doctor.getIdDoctor();
-        this.practicante = practicante;
-        this.idPracticante = practicante.getIdPracticante();
-        this.lugar = lugar;
-        this.idLugar = lugar.getIdLugarAtencion();
-        this.paciente = paciente;
-        this.idPaciente = paciente.getId();
         this.fechaConsulta = fechaConsulta;
-        this.totalConsulta = totalConsulta;
-        this.listaProcedimientos = listaProcedimientos;
+        this.totalConsulta = total;
+        this.doctor = dr;
+        this.idDoctor = dr.getIdDoctor();
+        this.paciente = pac;
+        this.idPaciente = pac.getId();
+        this.practicante = pr;
+        this.idPracticante = pr.getIdPracticante();
+        this.lugar = lg;
+        this.idLugar = lg.getIdLugarAtencion();
+        
+        
     }
-
-    public Consulta(int idConsulta, int idDoctor, int idPracticante, int idLugar, int idPaciente, Date fechaConsulta, double totalConsulta, ArrayList<ProcedimientoConsulta> listaProcedimientos) {
-        this.idConsulta = idConsulta;
-        this.idDoctor = idDoctor;
-        this.idPracticante = idPracticante;
-        this.idLugar = idLugar;
-        this.idPaciente = idPaciente;
-        this.fechaConsulta = fechaConsulta;
-        this.totalConsulta = totalConsulta;
-        this.listaProcedimientos = listaProcedimientos;
-    }
+    
+    
 
     public Consulta(){
         this.listaProcedimientos = new ArrayList<ProcedimientoConsulta>();

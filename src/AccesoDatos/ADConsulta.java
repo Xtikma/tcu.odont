@@ -10,6 +10,10 @@ package AccesoDatos;
  * @author Alejandra
  */
 import Entidades.Consulta;
+import Entidades.Doctor;
+import Entidades.LugarAtencion;
+import Entidades.Paciente;
+import Entidades.Practicante;
 import Entidades.ProcedimientoConsulta;
 import java.sql.CallableStatement;
 import java.sql.Connection;
@@ -27,66 +31,50 @@ public class ADConsulta {
     
     private final Connection conexion = ConexionBD.conexion();    
     private SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
-    
-    public void  listarConsultas(JTable TdConsultas,String desde,String hasta){
-          try {
-            ResultSet rsConsultas = null;
-            DefaultTableModel modelo = (DefaultTableModel) TdConsultas.getModel();
-            
-            int a = modelo.getRowCount() - 1;
-            for (int i = a; i >= 0; i--) {
-                modelo.removeRow(i);
-            }
-           
-              CallableStatement cs = conexion.prepareCall("{call obtener_consultas_por_periodo(?,?)}");
-              cs.setString(1, desde);
-              cs.setString(2, hasta);
-              rsConsultas = cs.executeQuery();
 
-           
+    public ArrayList<Consulta> listarConsultasArray(String desde, String hasta) {
+        ArrayList<Consulta> lista = new ArrayList<Consulta>();
+        Consulta temp;
+        try {
+            ResultSet rsConsultas = null;
+            CallableStatement cs = conexion.prepareCall("call Obtener_ConsultaPorPeriodo(?,?)");
+            cs.setString(1, desde);
+            cs.setString(2, hasta);
+            rsConsultas = cs.executeQuery();
+
             while (rsConsultas.next()) {
-                try {
-                   
-                    modelo.addRow(new Object[]{rsConsultas.getDate(1),rsConsultas.getString(3),rsConsultas.getString(6) ,rsConsultas.getString(8),
-                        rsConsultas.getString(10),rsConsultas.getString(12),rsConsultas.getDouble(2)});
+                try {                    
+                    Paciente pac = new Paciente();
+                    pac.setId(rsConsultas.getInt(9));
+                    String nombrecompleto = rsConsultas.getString(4);
+                    String[] res = nombrecompleto.split(" ", 3);
+                    pac.setNombre(res[0].toString().trim());
+                    pac.setPrimerApellido(res[1].toString().trim());
+                    pac.setSegundoApellido(res[2].toString().trim());
+                    pac.setCarne(rsConsultas.getString(8));
+                    pac.setValorIdentificacion(rsConsultas.getString(6));
+                    pac.setEdad(rsConsultas.getInt(5));
+                    pac.setBeca(rsConsultas.getInt(7)); 
+                    
+                    Practicante  pr = new Practicante(rsConsultas.getInt(13), rsConsultas.getString(12), true);
+                    Doctor dr = new Doctor(rsConsultas.getInt(11), rsConsultas.getString(10), true);
+                    LugarAtencion lug = new LugarAtencion(rsConsultas.getInt(15), rsConsultas.getString(14), true);
+                    
+                    temp = new Consulta(rsConsultas.getInt(1), rsConsultas.getDate(2),
+                            rsConsultas.getDouble(3), pac, dr, pr, lug);
+                    
+                    lista.add(temp);
                 } catch (SQLException ex) {
-                    System.out.println("Mensaje de Error"); 
+                    System.out.println("Ubicación: cargarConsultas.while " + ex.getMessage());
+                    throw ex;
                 }
             }
-            TdConsultas.setModel(modelo);
-        } catch (SQLException ex) {
-            System.out.println(ex.toString());
+            return lista;
+        } catch (Exception e) {
+            System.out.println("Ubicación: cargarConsultas " + e.getMessage());
+            return lista;
         }
-        
     }
-    
-    
-    
-//        private ArrayList<Consulta> cargarConsultas(String desde,String hasta ){
-//        ArrayList<Consulta> lista = new ArrayList<Consulta>();
-//        Consulta temp;
-//        try {
-//            ResultSet rsConsultas = null;
-//            CallableStatement cs = conexion.prepareCall("call obtener_consultas_por_periodo(?,?)");
-//              cs.setString(1, desde);
-//              cs.setString(2, hasta);
-//            rsConsultas = cs.executeQuery();
-//            
-//            while (rsConsultas.next()) {
-//                try {
-//                    temp = new Consulta(rsConsultas.getDate(1),rsConsultas.getString(3),rsConsultas.getString(6) ,rsConsultas.getString(8),
-//                        rsConsultas.getString(10),rsConsultas.getString(12),rsConsultas.getDouble(2));
-//                    lista.add(temp);
-//                } catch (SQLException ex) {
-//                    System.out.println("Ubicación: cargarConsultas.while " + ex.getMessage());
-//                    throw ex;
-//                }                
-//            }
-//            return lista;
-//        } catch (Exception e){            
-//            System.out.println("Ubicación: cargarProcedimientos " + e.getMessage());
-//            return lista;
-//        }
     
     // <editor-fold desc=" Metodos para almacenar una consulta nueva" >
     /**
