@@ -2,7 +2,11 @@ package Presentacion;
 
 //<editor-fold defaultstate="collapsed" desc="Importaciones">
 import AccesoDatos.ADPaciente;
+import AccesoDatos.ADPoblacion;
+import AccesoDatos.ADTipoIdentificacion;
 import Entidades.Paciente;
+import Entidades.Poblacion;
+import Entidades.TipoIdentificacion;
 import java.awt.Font;
 import java.util.List;
 import javax.swing.BorderFactory;
@@ -228,9 +232,18 @@ public class ListarPacientes extends javax.swing.JPanel {
      * @param evt evento
      */
     private void btnAgregarPacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarPacienteActionPerformed
-        vPaciente = new VPaciente(menu, true);
-        vPaciente.setVisible(true);
-        consultarPacientesActivos();
+        ADTipoIdentificacion adTipoId = new ADTipoIdentificacion();
+        List<TipoIdentificacion> listaTipoId = adTipoId.ConsultarTipoIdentificacion();
+        ADPoblacion adPoblacion = new ADPoblacion();
+        List<Poblacion> listaPoblacion = adPoblacion.ConsultarPoblacion();
+        
+        if (listaTipoId.isEmpty() || listaPoblacion.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Debe ingresar una población y un tipo de identificación primero.", "ERROR", JOptionPane.ERROR_MESSAGE);
+        } else {
+            vPaciente = new VPaciente(menu, true);
+            vPaciente.setVisible(true);
+            consultarPacientesActivos();
+        }
     }//GEN-LAST:event_btnAgregarPacienteActionPerformed
 
     /** btnModificarPacienteActionPerformed
