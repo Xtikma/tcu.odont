@@ -35,11 +35,11 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="panelContrasena" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Component id="btnRegresar" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnRegresar" min="-2" max="-2" attributes="0"/>
+                  <Component id="panelContrasena" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace pref="665" max="32767" attributes="0"/>
           </Group>
@@ -52,7 +52,7 @@
               <Component id="panelContrasena" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="btnRegresar" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="231" max="32767" attributes="0"/>
+              <EmptySpace pref="229" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -132,17 +132,26 @@
       <SubComponents>
         <Component class="javax.swing.JLabel" name="lbPassOld">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Contrase&#xf1;a anterior:"/>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Dialog" size="12" style="1"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Contrase&#xf1;a Actual:"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="lbPassNew">
           <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Dialog" size="12" style="1"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Nueva Contrase&#xf1;a:"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="lbPassConfirmed">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Confirme contrase&#xf1;a:"/>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Dialog" size="12" style="1"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Confirme Contrase&#xf1;a:"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JPasswordField" name="passOld">
@@ -166,6 +175,9 @@
     </Container>
     <Component class="javax.swing.JButton" name="btnRegresar">
       <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Dialog" size="12" style="1"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="&lt;&lt; Regresar"/>
       </Properties>
       <Events>

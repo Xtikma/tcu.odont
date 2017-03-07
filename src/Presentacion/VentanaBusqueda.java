@@ -314,9 +314,9 @@ public class VentanaBusqueda extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tblGenerica);
 
-        boxClasificacion.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                boxClasificacionMouseClicked(evt);
+        boxClasificacion.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                boxClasificacionItemStateChanged(evt);
             }
         });
 
@@ -447,7 +447,7 @@ public class VentanaBusqueda extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_tblGenericaMouseClicked
 
-    private void boxClasificacionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_boxClasificacionMouseClicked
+    private void boxClasificacionItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_boxClasificacionItemStateChanged
         if (desactivado == false) {
             switch (mostrando) {
                 case 0:
@@ -460,7 +460,7 @@ public class VentanaBusqueda extends javax.swing.JFrame {
                     break;
             }
         }
-    }//GEN-LAST:event_boxClasificacionMouseClicked
+    }//GEN-LAST:event_boxClasificacionItemStateChanged
     
     private void DefinirTema(){
         try {
@@ -470,8 +470,6 @@ public class VentanaBusqueda extends javax.swing.JFrame {
             System.out.println("->" + e.getMessage());
         }
     }
-    
-    
     
     private void generarTabla(int modo){
         mostrando = modo;

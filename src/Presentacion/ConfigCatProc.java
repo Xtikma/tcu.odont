@@ -13,7 +13,9 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import javax.swing.JFormattedTextField;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 /**
  *
@@ -30,12 +32,14 @@ public class ConfigCatProc extends javax.swing.JPanel {
     private boolean AddProcedimiento = false;
     //Variable que determina si estoy editando una categoria o la estoy creando
     private boolean edit = false;
+    private Menu menu = null;
     
     /**
      * Creates new form ConfigCatProc
      */
-    public ConfigCatProc() {
+    public ConfigCatProc(Menu menu) {
         initComponents();
+        this.menu = menu;
         cargarCategorias();
     }
     
@@ -72,6 +76,7 @@ public class ConfigCatProc extends javax.swing.JPanel {
         btnAddProc = new javax.swing.JButton();
         btnAplicarCambios = new javax.swing.JButton();
         btnCancel = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Configuración de categorias y procedimientos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 14))); // NOI18N
         setMaximumSize(new java.awt.Dimension(1000, 500));
@@ -321,22 +326,31 @@ public class ConfigCatProc extends javax.swing.JPanel {
             }
         });
 
+        jButton1.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jButton1.setText("<< Regresar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout panelEdiciónCatLayout = new javax.swing.GroupLayout(panelEdiciónCat);
         panelEdiciónCat.setLayout(panelEdiciónCatLayout);
         panelEdiciónCatLayout.setHorizontalGroup(
             panelEdiciónCatLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelEdiciónCatLayout.createSequentialGroup()
                 .addGap(39, 39, 39)
-                .addGroup(panelEdiciónCatLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(panelEdiciónCatLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(panelProcedimientos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(panelEdiciónCatLayout.createSequentialGroup()
-                            .addComponent(lblNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(24, 24, 24)
-                            .addComponent(txtNomCat, javax.swing.GroupLayout.PREFERRED_SIZE, 315, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnEditCat, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(panelEdiciónCatLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(panelProcedimientos, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelEdiciónCatLayout.createSequentialGroup()
+                        .addComponent(lblNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(24, 24, 24)
+                        .addComponent(txtNomCat, javax.swing.GroupLayout.PREFERRED_SIZE, 315, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnEditCat, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(panelEdiciónCatLayout.createSequentialGroup()
+                        .addComponent(jButton1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnAplicarCambios, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -354,10 +368,12 @@ public class ConfigCatProc extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(panelProcedimientos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(panelEdiciónCatLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnAplicarCambios)
-                    .addComponent(btnCancel))
-                .addContainerGap(55, Short.MAX_VALUE))
+                .addGroup(panelEdiciónCatLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelEdiciónCatLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnAplicarCambios)
+                        .addComponent(btnCancel))
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(47, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -588,6 +604,10 @@ public class ConfigCatProc extends javax.swing.JPanel {
         cambioBox();
     }//GEN-LAST:event_boxCategoriaItemStateChanged
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        menu.intercambiarPaneles(0);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     private void saveProcedimiento() {
         int txtPrecioLenght = txtPrecio.getText().length();
         int txtNomProcLenght = txtNomProc.getText().length();
@@ -634,7 +654,8 @@ public class ConfigCatProc extends javax.swing.JPanel {
                 model.addRow(datos);
             }
             tablaProcedimientos.setModel(model);
-        }        
+        }    
+        centrarColumans();
     }
     
     private void activarPanelProcedimiento(boolean valor){
@@ -701,6 +722,16 @@ public class ConfigCatProc extends javax.swing.JPanel {
             System.out.println(">> " + e.getMessage());
         }
     }
+    
+    /** centrarColumnas
+     * Centra el contenido de las celdas en la tabla
+     */
+    private void centrarColumans() {
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+        tablaProcedimientos.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
+        tablaProcedimientos.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
+    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -712,6 +743,7 @@ public class ConfigCatProc extends javax.swing.JPanel {
     private javax.swing.JButton btnEditCat;
     private javax.swing.JButton btnMoveProc;
     private javax.swing.JButton btnSaveProc;
+    private javax.swing.JButton jButton1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblCategoria;
     private javax.swing.JLabel lblNomProc;

@@ -194,26 +194,37 @@ public class VPaciente extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
 
+        LblNombre.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         LblNombre.setText("Nombre:");
 
+        LblPApellido.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         LblPApellido.setText("Primer Apellido:");
 
+        LblSApellido.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         LblSApellido.setText("Segundo Apellido");
 
+        jLabel4.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         jLabel4.setText("Tipo de Identificación:");
 
+        jLabel5.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         jLabel5.setText("Identificación:");
 
+        jLabel6.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         jLabel6.setText("Genero:");
 
+        jLabel9.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         jLabel9.setText("Fecha de Nacimiento:");
 
+        jLabel11.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         jLabel11.setText("Edad:");
 
+        jLabel13.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         jLabel13.setText("Población:");
 
+        CbTipoId.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         CbTipoId.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
+        RbFemenino.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         RbFemenino.setText("Femenino");
 
         try {
@@ -223,6 +234,7 @@ public class VPaciente extends javax.swing.JDialog {
         }
         TxtFechaNacimiento.setToolTipText("dd-mm-aaaa");
 
+        CbPoblacion.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         CbPoblacion.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         CbPoblacion.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
@@ -230,6 +242,7 @@ public class VPaciente extends javax.swing.JDialog {
             }
         });
 
+        RbNoFecha.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         RbNoFecha.setText("No disponible");
         RbNoFecha.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -241,12 +254,16 @@ public class VPaciente extends javax.swing.JDialog {
         PanelEstudiante.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Estudiante", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 14))); // NOI18N
         PanelEstudiante.setOpaque(false);
 
+        jLabel1.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         jLabel1.setText("Carné:");
 
+        jLabel2.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         jLabel2.setText("Beca:");
 
+        RbPrimerIngreso.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         RbPrimerIngreso.setText("Primer Ingreso");
 
+        CbBeca.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         CbBeca.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "0", "1", "2", "3", "4", "5" }));
 
         javax.swing.GroupLayout PanelEstudianteLayout = new javax.swing.GroupLayout(PanelEstudiante);
@@ -283,6 +300,7 @@ public class VPaciente extends javax.swing.JDialog {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        BtnCancelar.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         BtnCancelar.setText("Cancelar");
         BtnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -290,6 +308,7 @@ public class VPaciente extends javax.swing.JDialog {
             }
         });
 
+        BtnGuardar.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         BtnGuardar.setText("Guardar");
         BtnGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -297,8 +316,10 @@ public class VPaciente extends javax.swing.JDialog {
             }
         });
 
+        RbMasculino.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         RbMasculino.setText("Masculino");
 
+        jLabel7.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         jLabel7.setText("Ej: 31-12-2017");
 
         jLabel3.setText("*");
@@ -432,7 +453,7 @@ public class VPaciente extends javax.swing.JDialog {
                 .addGap(18, 18, 18)
                 .addComponent(PanelEstudiante, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(BtnGuardar)
                     .addComponent(BtnCancelar))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -589,10 +610,10 @@ public class VPaciente extends javax.swing.JDialog {
             boolean becado = ((Poblacion) CbPoblacion.getSelectedItem()).getBecado();
             if (becado) {
                 PanelEstudiante.setVisible(true);
-                this.setSize(375, 595);
+                this.setSize(405, 595);
             } else {
                 PanelEstudiante.setVisible(false);
-                this.setSize(375, 485);
+                this.setSize(405, 485);
             }
         } catch (Exception ex) {
             PanelEstudiante.setVisible(false);

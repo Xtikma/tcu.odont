@@ -11,12 +11,15 @@ import Animacion.Animacion;
 import Entidades.Poblacion;
 import Entidades.TipoIdentificacion;
 import java.awt.BorderLayout;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.List;
 import java.util.Locale;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import static javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE;
 import org.jvnet.substance.SubstanceLookAndFeel;
 
 /**
@@ -42,6 +45,21 @@ public class Menu extends javax.swing.JFrame {
         this.setResizable(false);
         this.setIconImage(new ImageIcon(getClass().getResource("/Recursos/ico.png")).getImage());
         intercambiarPaneles(0);
+        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+
+                Object[] options = {"Aceptar", "Cancelar"};
+                int n = JOptionPane.showOptionDialog(null, "Si sale el sistema se cerrará.", "Advertencia",
+                        JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
+                if (n == JOptionPane.YES_OPTION) {
+                    System.exit(0);
+                } else if (n == JOptionPane.NO_OPTION) {
+                    
+                }
+            }
+        });
     }
     
     /**
@@ -208,14 +226,16 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAgregarPacienteActionPerformed
 
     private void btnBloquearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBloquearActionPerformed
-        Object[] options = {"Continuar", "Cerrar"};
-        int n = JOptionPane.showOptionDialog(null, "Desea salir del sistema", "Confirmación",
+        Object[] options = {"Bloquear", "Cancelar"};
+        int n = JOptionPane.showOptionDialog(null, "¿Desea bloquear del sistema?", "Confirmación",
                 JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
         if (n == JOptionPane.YES_OPTION) {
-        } else if (n == JOptionPane.NO_OPTION) {
+            this.setVisible(false);
             VBloqueo bloqueo = new VBloqueo(this, true);
                 bloqueo.setLocationRelativeTo(this);
                 bloqueo.setVisible(true);
+                this.setVisible(true);
+        } else if (n == JOptionPane.NO_OPTION) {
         }
     }//GEN-LAST:event_btnBloquearActionPerformed
 
@@ -264,13 +284,13 @@ public class Menu extends javax.swing.JFrame {
                     insertarPanel(panGen);
                     break;
                 case 6://Categoria y Procedimiento
-                    configCP = new ConfigCatProc();
+                    configCP = new ConfigCatProc(this);
                     configCP.setSize(1000, 500);
                     configCP.setLocation(0, 0);
                     insertarPanel(configCP);
                     break;
                 case 7://Crear consulta
-                    consulta = new CrearConsulta();
+                    consulta = new CrearConsulta(this);
                     consulta.setSize(1000, 500);
                     consulta.setLocation(0, 0);
                     insertarPanel(consulta);
@@ -331,10 +351,11 @@ public class Menu extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 Menu menu = new Menu();
-                menu.setVisible(true);
+                menu.setVisible(false);
                 VBloqueo bloqueo = new VBloqueo(menu, true);
                 bloqueo.setLocationRelativeTo(menu);
                 bloqueo.setVisible(true);
+                menu.setVisible(true);
             }
         });
     }

@@ -12,6 +12,9 @@ import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -23,12 +26,12 @@ public class VerConsultas extends javax.swing.JPanel {
     /**
      * Creates new form VerConsultas
      */
-    Date fechaActual;
-    String fechaDesde;
-    String fechaHasta;
+    private Date fechaActual;
+    private String fechaDesde;
+    private String fechaHasta;
     private Menu menu = null;
 
-    SimpleDateFormat Formato = new SimpleDateFormat("yyyy-MM-dd");
+    private SimpleDateFormat Formato = new SimpleDateFormat("yyyy-MM-dd");
     private ArrayList<Consulta> lista;
     private CrearConsulta consulta = null;
 
@@ -68,7 +71,11 @@ public class VerConsultas extends javax.swing.JPanel {
         jBuscarPeriodo = new javax.swing.JButton();
         JPanel_ListaConsulta = new javax.swing.JPanel();
         jScroll_ListaConsultas = new javax.swing.JScrollPane();
-        jT_ListarConsultas = new javax.swing.JTable();
+        jT_ListarConsultas = new javax.swing.JTable() {
+            public boolean isCellEditable(int rowIndex, int colIndex) {
+                return false;
+            }
+        };
         jBRegresar = new javax.swing.JButton();
         jBModificar = new javax.swing.JButton();
 
@@ -89,8 +96,10 @@ public class VerConsultas extends javax.swing.JPanel {
 
         jDate_Hasta.setDateFormatString("yyyy-MM-dd");
 
+        jB_Buscar.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         jB_Buscar.setText("Buscar");
 
+        jBuscarPeriodo.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         jBuscarPeriodo.setText("Buscar Período");
         jBuscarPeriodo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -181,9 +190,10 @@ public class VerConsultas extends javax.swing.JPanel {
             .addGroup(JPanel_ListaConsultaLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScroll_ListaConsultas, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(49, Short.MAX_VALUE))
+                .addContainerGap(50, Short.MAX_VALUE))
         );
 
+        jBRegresar.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         jBRegresar.setText("<< Regresar");
         jBRegresar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -191,6 +201,7 @@ public class VerConsultas extends javax.swing.JPanel {
             }
         });
 
+        jBModificar.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         jBModificar.setText("Modificar");
         jBModificar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -222,14 +233,11 @@ public class VerConsultas extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGap(6, 6, 6)
                 .addComponent(PanelBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jBRegresar)
-                        .addGap(6, 6, 6))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jBModificar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
+                    .addComponent(jBModificar)
+                    .addComponent(jBRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(11, 11, 11)
                 .addComponent(JPanel_ListaConsulta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
@@ -250,13 +258,14 @@ public class VerConsultas extends javax.swing.JPanel {
 
     private void jBModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBModificarActionPerformed
         int indiceFila = jT_ListarConsultas.getSelectedRow();
-        if (indiceFila >= 0) {            
-            consulta = new CrearConsulta(lista.get(indiceFila));
+        if (indiceFila >= 0) {          
+            consulta = new CrearConsulta(lista.get(indiceFila), menu);
             consulta.setSize(1000, 500);
             consulta.setLocation(0, 0);
             consulta.setVisible(true);
             menu.insertarPanel(consulta);
-
+        } else {
+            JOptionPane.showMessageDialog(null, "Debe seleccionar una consulta.", "Advertencia", JOptionPane.ERROR_MESSAGE);
         }
 
 
@@ -297,7 +306,23 @@ public class VerConsultas extends javax.swing.JPanel {
             jT_ListarConsultas.setModel(model);
 
         }
-
+        centrarColumans();
+    }
+    
+        /** centrarColumnas
+     * Centra el contenido de las celdas en la tabla
+     */
+    private void centrarColumans() {
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+        jT_ListarConsultas.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
+        jT_ListarConsultas.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
+        jT_ListarConsultas.getColumnModel().getColumn(2).setCellRenderer(centerRenderer);
+        jT_ListarConsultas.getColumnModel().getColumn(3).setCellRenderer(centerRenderer);
+        jT_ListarConsultas.getColumnModel().getColumn(4).setCellRenderer(centerRenderer);
+        jT_ListarConsultas.getColumnModel().getColumn(5).setCellRenderer(centerRenderer);
+        jT_ListarConsultas.getColumnModel().getColumn(6).setCellRenderer(centerRenderer);
+        jT_ListarConsultas.getColumnModel().getColumn(7).setCellRenderer(centerRenderer);
     }
 
     public String getFecha(JDateChooser jd) {

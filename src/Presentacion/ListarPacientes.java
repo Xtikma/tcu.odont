@@ -8,6 +8,7 @@ import Entidades.Paciente;
 import Entidades.Poblacion;
 import Entidades.TipoIdentificacion;
 import java.awt.Font;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
@@ -35,6 +36,13 @@ public class ListarPacientes extends javax.swing.JPanel {
         initComponents();
         this.menu = menu;
         consultarPacientesActivos();
+        //Reactivar cuando se agregue la función
+        cbBeca.setVisible(false);
+        cbPoblacion.setVisible(false);
+        cbTipoId.setVisible(false);
+        rbPrimerIngreso.setVisible(false);
+        btnVerExpediente.setVisible(false);
+        //
     }
 
     /**
@@ -59,10 +67,10 @@ public class ListarPacientes extends javax.swing.JPanel {
         btnDesactivar = new javax.swing.JButton();
         btnVerExpediente = new javax.swing.JButton();
         cbPoblacion = new javax.swing.JComboBox<>();
-        jComboBox2 = new javax.swing.JComboBox<>();
-        jComboBox3 = new javax.swing.JComboBox<>();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jLabel1 = new javax.swing.JLabel();
+        cbTipoId = new javax.swing.JComboBox<>();
+        cbBeca = new javax.swing.JComboBox<>();
+        rbPrimerIngreso = new javax.swing.JRadioButton();
+        lblBuscar = new javax.swing.JLabel();
         txtBuscar = new javax.swing.JTextField();
         btnRegresar = new javax.swing.JButton();
 
@@ -86,6 +94,7 @@ public class ListarPacientes extends javax.swing.JPanel {
     });
     jScrollPane1.setViewportView(tblPacientes);
 
+    btnCargarEliminados.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
     btnCargarEliminados.setText("Cargar Eliminados");
     btnCargarEliminados.addActionListener(new java.awt.event.ActionListener() {
         public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -93,6 +102,7 @@ public class ListarPacientes extends javax.swing.JPanel {
         }
     });
 
+    btnAgregarConsulta.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
     btnAgregarConsulta.setText("Agregar Consulta");
     btnAgregarConsulta.addActionListener(new java.awt.event.ActionListener() {
         public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -100,6 +110,7 @@ public class ListarPacientes extends javax.swing.JPanel {
         }
     });
 
+    btnAgregarPaciente.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
     btnAgregarPaciente.setText("Agregar Paciente");
     btnAgregarPaciente.addActionListener(new java.awt.event.ActionListener() {
         public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -107,6 +118,7 @@ public class ListarPacientes extends javax.swing.JPanel {
         }
     });
 
+    btnModificarPaciente.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
     btnModificarPaciente.setText("Modificar Paciente");
     btnModificarPaciente.addActionListener(new java.awt.event.ActionListener() {
         public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -114,6 +126,7 @@ public class ListarPacientes extends javax.swing.JPanel {
         }
     });
 
+    btnDesactivar.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
     btnDesactivar.setText("Eliminar");
     btnDesactivar.addActionListener(new java.awt.event.ActionListener() {
         public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -121,18 +134,31 @@ public class ListarPacientes extends javax.swing.JPanel {
         }
     });
 
+    btnVerExpediente.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
     btnVerExpediente.setText("Ver Expediente");
 
+    cbPoblacion.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
     cbPoblacion.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-    jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+    cbTipoId.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+    cbTipoId.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-    jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+    cbBeca.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+    cbBeca.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-    jRadioButton1.setText("Pimer Ingreso");
+    rbPrimerIngreso.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+    rbPrimerIngreso.setText("Pimer Ingreso");
 
-    jLabel1.setText("Buscar:");
+    lblBuscar.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+    lblBuscar.setText("Buscar:");
 
+    txtBuscar.addKeyListener(new java.awt.event.KeyAdapter() {
+        public void keyReleased(java.awt.event.KeyEvent evt) {
+            txtBuscarKeyReleased(evt);
+        }
+    });
+
+    btnRegresar.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
     btnRegresar.setText("<< Regresar");
     btnRegresar.addActionListener(new java.awt.event.ActionListener() {
         public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -151,13 +177,13 @@ public class ListarPacientes extends javax.swing.JPanel {
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                     .addComponent(cbPoblacion, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(18, 18, 18)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbTipoId, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(18, 18, 18)
-                    .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbBeca, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(18, 18, 18)
-                    .addComponent(jRadioButton1)
+                    .addComponent(rbPrimerIngreso)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel1)
+                    .addComponent(lblBuscar)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                     .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addComponent(btnCargarEliminados, javax.swing.GroupLayout.Alignment.TRAILING)
@@ -182,10 +208,10 @@ public class ListarPacientes extends javax.swing.JPanel {
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                 .addComponent(cbPoblacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(jRadioButton1)
-                .addComponent(jLabel1)
+                .addComponent(cbTipoId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(cbBeca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(rbPrimerIngreso)
+                .addComponent(lblBuscar)
                 .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGap(18, 18, 18)
             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -305,13 +331,68 @@ public class ListarPacientes extends javax.swing.JPanel {
         int selected = tblPacientes.getSelectedRow();
         if (selected >= 0) {
             if (eliminado == false) {
-                CrearConsulta consulta = new CrearConsulta(pacientes.get(selected));
+                CrearConsulta consulta = new CrearConsulta(pacientes.get(selected), menu);
                 menu.crearConsultaPaciente(consulta);
-            }            
-        }
+            }
+        } else {
+                JOptionPane.showMessageDialog(null, "Debe seleccionar un paciente.", "Advertencia", JOptionPane.ERROR_MESSAGE);
+            }
     }//GEN-LAST:event_btnAgregarConsultaActionPerformed
 
+    private void txtBuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyReleased
+        MetodosBusqueda search = new MetodosBusqueda();
+        String criterio = txtBuscar.getText().trim();
+        if (txtBuscar.getText().length() > 0) {
+            if (eliminado) {
+                consultarPacientesEliminados(search.BuscarPacientes(criterio, (ArrayList<Paciente>) pacientes));
+            } else {
+                consultarPacientesActivos(search.BuscarPacientes(criterio, (ArrayList<Paciente>) pacientes));
+            }
+        }
+        if (txtBuscar.getText().length() == 0) {
+            if (eliminado) {
+                consultarPacientesEliminados((ArrayList<Paciente>) pacientes);
+            } else {
+                consultarPacientesActivos((ArrayList<Paciente>) pacientes);
+            }
+        }
+    }//GEN-LAST:event_txtBuscarKeyReleased
+
     //<editor-fold defaultstate="collapsed" desc="Mis métodos">
+    
+    /** consultarPacientesActivos
+     * Carga la tabla con los pacientes activos de la lista con la busqueda
+     */
+    private void consultarPacientesActivos(ArrayList<Paciente> lista) {
+        try {
+            ADPaciente bd = new ADPaciente();
+            pacientes = bd.ConsultarPacientesActivos();
+            tblPacientes.setModel(new DefaultTableModel());
+            DefaultTableModel model = new DefaultTableModel();
+            model.addColumn("Código");
+            model.addColumn("Nombre");
+            model.addColumn("P. Apellido");
+            model.addColumn("Edad");
+            model.addColumn("Identificación");
+            model.addColumn("Carné");
+
+            String[] fila = new String[6];
+            for (Paciente paciente : lista) {
+                    fila[0] = paciente.getId() + "";
+                    fila[1] = paciente.getNombre();
+                    fila[2] = paciente.getPrimerApellido();
+                    fila[3] = paciente.getEdad() + "";
+                    fila[4] = paciente.getValorIdentificacion()+ "";
+                    fila[5] = paciente.getCarne() + "";
+                    model.addRow(fila);
+            }
+            tblPacientes.setModel(model);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error. Detalle:\n" + ex.toString() + "\nen ConsultarPacientesActivos en ListarPacientes", "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+        centrarColumans();
+        cambiarTitulo("Lista de Pacientes Activos");
+    }
     
     /** consultarPacientesActivos
      * Carga la tabla con los pacientes activos
@@ -348,7 +429,41 @@ public class ListarPacientes extends javax.swing.JPanel {
     }
     
     /** consultarPacientesEliminados
-     * Carga la tabla con los pacientes activos
+     * Carga la tabla con los pacientes eliminados de la lista con la busqueda
+     */
+    private void consultarPacientesEliminados(ArrayList<Paciente> lista) {
+        try {
+            ADPaciente bd = new ADPaciente();
+            pacientes = bd.ConsultarPacientesEliminados();
+            tblPacientes.setModel(new DefaultTableModel());
+            DefaultTableModel model = new DefaultTableModel();
+            model.addColumn("Código");
+            model.addColumn("Nombre");
+            model.addColumn("P. Apellido");
+            model.addColumn("Edad");
+            model.addColumn("Identificación");
+            model.addColumn("Carné");
+
+            String[] fila = new String[6];
+            for (Paciente paciente : lista) {
+                    fila[0] = paciente.getId() + "";
+                    fila[1] = paciente.getNombre();
+                    fila[2] = paciente.getPrimerApellido();
+                    fila[3] = paciente.getEdad() + "";
+                    fila[4] = paciente.getValorIdentificacion()+ "";
+                    fila[5] = paciente.getCarne() + "";
+                    model.addRow(fila);
+            }
+            tblPacientes.setModel(model);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error. Detalle:\n" + ex.toString() + "\nen consultarPacientesEliminados en ListarPacientes", "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+        centrarColumans();
+        cambiarTitulo("Lista de Pacientes Eliminados");
+    }
+    
+    /** consultarPacientesEliminados
+     * Carga la tabla con los pacientes eliminados
      */
     private void consultarPacientesEliminados() {
         try {
@@ -416,12 +531,12 @@ public class ListarPacientes extends javax.swing.JPanel {
     private javax.swing.JButton btnModificarPaciente;
     private javax.swing.JButton btnRegresar;
     private javax.swing.JButton btnVerExpediente;
+    private javax.swing.JComboBox<String> cbBeca;
     private javax.swing.JComboBox<String> cbPoblacion;
-    private javax.swing.JComboBox<String> jComboBox2;
-    private javax.swing.JComboBox<String> jComboBox3;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JRadioButton jRadioButton1;
+    private javax.swing.JComboBox<String> cbTipoId;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblBuscar;
+    private javax.swing.JRadioButton rbPrimerIngreso;
     private javax.swing.JTable tblPacientes;
     private javax.swing.JTextField txtBuscar;
     // End of variables declaration//GEN-END:variables

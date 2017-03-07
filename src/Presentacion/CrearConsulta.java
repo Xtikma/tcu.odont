@@ -10,7 +10,9 @@ import Entidades.*;
 import java.awt.event.KeyEvent;
 import java.util.Date;
 import java.util.ArrayList;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -32,6 +34,7 @@ public class CrearConsulta extends javax.swing.JPanel{
     private double total;
     private boolean isNuevo = false;
     private ADConsulta acceso;
+    private Menu menu = null;
     
     
     
@@ -39,19 +42,22 @@ public class CrearConsulta extends javax.swing.JPanel{
     /**
      * Creates new form CrearConsulta
      */
-    public CrearConsulta() {
+    public CrearConsulta(Menu menu) {
         initComponents();
+        this.menu = menu;
         consulta = new Consulta();
         cargarLugares();
         isNuevo = true;
+        centrarColumans();
     }
     
     /**
      * Contructor que recibe directamente un paciente
      * @param p paciente que haya sido seleccionado desde su expediente o de listar pacientes
      */
-    public CrearConsulta(Paciente p){
+    public CrearConsulta(Paciente p, Menu menu){
         initComponents();
+        this.menu = menu;
         consulta = new Consulta();
         cargarLugares();
         isNuevo = true;
@@ -60,8 +66,9 @@ public class CrearConsulta extends javax.swing.JPanel{
     }
     
     
-    public CrearConsulta(Consulta c){
+    public CrearConsulta(Consulta c, Menu menu){
         initComponents();
+        this.menu = menu;
         consulta = c;
         cargarLugares();
         isNuevo = false;
@@ -113,7 +120,11 @@ public class CrearConsulta extends javax.swing.JPanel{
         txtTotal = new javax.swing.JTextField();
         panelProcedimientos = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblProcedimientos = new javax.swing.JTable();
+        tblProcedimientos = new javax.swing.JTable() {
+            public boolean isCellEditable(int rowIndex, int colIndex) {
+                return false;
+            }
+        };
         panelDetalle = new javax.swing.JPanel();
         lblProcedimiento = new javax.swing.JLabel();
         btnProcedimiento = new javax.swing.JButton();
@@ -122,6 +133,7 @@ public class CrearConsulta extends javax.swing.JPanel{
         btnAgregar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
         btnGuardarCambios = new javax.swing.JButton();
+        btnRegresar = new javax.swing.JButton();
 
         setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Agregar consulta", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 14))); // NOI18N
         setMaximumSize(new java.awt.Dimension(1000, 500));
@@ -141,7 +153,6 @@ public class CrearConsulta extends javax.swing.JPanel{
 
         btnPaciente.setBackground(new java.awt.Color(255, 255, 255));
         btnPaciente.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        btnPaciente.setForeground(new java.awt.Color(0, 0, 0));
         btnPaciente.setText("Seleccionar");
         btnPaciente.setMaximumSize(new java.awt.Dimension(200, 30));
         btnPaciente.setMinimumSize(new java.awt.Dimension(200, 30));
@@ -157,7 +168,6 @@ public class CrearConsulta extends javax.swing.JPanel{
 
         btnDoctor.setBackground(new java.awt.Color(255, 255, 255));
         btnDoctor.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        btnDoctor.setForeground(new java.awt.Color(0, 0, 0));
         btnDoctor.setText("Seleccionar");
         btnDoctor.setMaximumSize(new java.awt.Dimension(200, 30));
         btnDoctor.setMinimumSize(new java.awt.Dimension(200, 30));
@@ -173,7 +183,6 @@ public class CrearConsulta extends javax.swing.JPanel{
 
         btnPracticante.setBackground(new java.awt.Color(255, 255, 255));
         btnPracticante.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        btnPracticante.setForeground(new java.awt.Color(0, 0, 0));
         btnPracticante.setText("Seleccionar");
         btnPracticante.setMaximumSize(new java.awt.Dimension(200, 30));
         btnPracticante.setMinimumSize(new java.awt.Dimension(200, 30));
@@ -350,7 +359,6 @@ public class CrearConsulta extends javax.swing.JPanel{
 
         btnProcedimiento.setBackground(new java.awt.Color(255, 255, 255));
         btnProcedimiento.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        btnProcedimiento.setForeground(new java.awt.Color(0, 0, 0));
         btnProcedimiento.setText("Seleccionar");
         btnProcedimiento.setMaximumSize(new java.awt.Dimension(200, 30));
         btnProcedimiento.setMinimumSize(new java.awt.Dimension(200, 30));
@@ -441,6 +449,14 @@ public class CrearConsulta extends javax.swing.JPanel{
             }
         });
 
+        btnRegresar.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        btnRegresar.setText("<< Regresar");
+        btnRegresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegresarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -452,12 +468,14 @@ public class CrearConsulta extends javax.swing.JPanel{
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(panelProcedimientos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(panelDetalle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(62, 62, 62)
+                        .addComponent(btnRegresar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
                         .addComponent(btnGuardarCambios)
                         .addContainerGap())))
         );
@@ -471,7 +489,9 @@ public class CrearConsulta extends javax.swing.JPanel{
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(panelDetalle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnGuardarCambios, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnGuardarCambios, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(panelProcedimientos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -525,6 +545,7 @@ public class CrearConsulta extends javax.swing.JPanel{
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         agregarDetalle();
+        centrarColumans();
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void txtCantidadKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCantidadKeyTyped
@@ -599,6 +620,10 @@ public class CrearConsulta extends javax.swing.JPanel{
             }
         }
     }//GEN-LAST:event_tblProcedimientosMouseClicked
+
+    private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
+        menu.intercambiarPaneles(0);
+    }//GEN-LAST:event_btnRegresarActionPerformed
 
     public void setPracticante(Practicante prac) {
         this.practicante = prac;
@@ -707,6 +732,18 @@ public class CrearConsulta extends javax.swing.JPanel{
         search.setVisible(true);
     }
     
+    /** centrarColumnas
+     * Centra el contenido de las celdas en la tabla
+     */
+    private void centrarColumans() {
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+        tblProcedimientos.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
+        tblProcedimientos.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
+        tblProcedimientos.getColumnModel().getColumn(2).setCellRenderer(centerRenderer);
+        tblProcedimientos.getColumnModel().getColumn(3).setCellRenderer(centerRenderer);
+    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> boxLugar;
@@ -717,6 +754,7 @@ public class CrearConsulta extends javax.swing.JPanel{
     private javax.swing.JButton btnPaciente;
     private javax.swing.JButton btnPracticante;
     private javax.swing.JButton btnProcedimiento;
+    private javax.swing.JButton btnRegresar;
     private com.toedter.calendar.JDateChooser fechaConsulta;
     private org.jdatepicker.util.JDatePickerUtil jDatePickerUtil1;
     private javax.swing.JScrollPane jScrollPane1;

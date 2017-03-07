@@ -100,6 +100,7 @@ public class PanelGenerico extends javax.swing.JPanel {
         setBorder(javax.swing.BorderFactory.createTitledBorder(null, "titulo", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 14))); // NOI18N
         setOpaque(false);
 
+        btnCargarEliminados.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         btnCargarEliminados.setText("Cargar Eliminados");
         btnCargarEliminados.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -107,6 +108,7 @@ public class PanelGenerico extends javax.swing.JPanel {
             }
         });
 
+        TblGenerica.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         TblGenerica.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -138,6 +140,7 @@ public class PanelGenerico extends javax.swing.JPanel {
         });
         jScrollPane1.setViewportView(TblGenerica);
 
+        btnAgregar.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         btnAgregar.setText("Agregar Nuevo");
         btnAgregar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -148,10 +151,13 @@ public class PanelGenerico extends javax.swing.JPanel {
         panelDatos.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Datos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 12))); // NOI18N
         panelDatos.setOpaque(false);
 
+        lblNombre.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         lblNombre.setText("Nombre:");
 
+        lblVariable.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         lblVariable.setText("Institución:");
 
+        btnGuardar.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         btnGuardar.setText("Guardar");
         btnGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -159,6 +165,7 @@ public class PanelGenerico extends javax.swing.JPanel {
             }
         });
 
+        btnDesactivar.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         btnDesactivar.setText("Desactivar");
         btnDesactivar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -166,6 +173,7 @@ public class PanelGenerico extends javax.swing.JPanel {
             }
         });
 
+        rbBecado.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         rbBecado.setText("Becado");
 
         javax.swing.GroupLayout panelDatosLayout = new javax.swing.GroupLayout(panelDatos);
@@ -183,7 +191,7 @@ public class PanelGenerico extends javax.swing.JPanel {
                         .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(txtNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 386, Short.MAX_VALUE)
                             .addComponent(txtVariable))
-                        .addGap(0, 40, Short.MAX_VALUE))
+                        .addGap(0, 32, Short.MAX_VALUE))
                     .addGroup(panelDatosLayout.createSequentialGroup()
                         .addComponent(rbBecado)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -215,6 +223,7 @@ public class PanelGenerico extends javax.swing.JPanel {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        btnRegresar.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         btnRegresar.setText("<< Regresar");
         btnRegresar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -232,12 +241,11 @@ public class PanelGenerico extends javax.swing.JPanel {
                     .addComponent(panelDatos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jScrollPane1)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btnCargarEliminados))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(btnRegresar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnAgregar)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnCargarEliminados, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(btnAgregar, javax.swing.GroupLayout.Alignment.TRAILING))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -248,12 +256,12 @@ public class PanelGenerico extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnAgregar)
-                    .addComponent(btnRegresar))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addComponent(panelDatos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(84, Short.MAX_VALUE))
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -418,14 +426,10 @@ public class PanelGenerico extends javax.swing.JPanel {
                         int num = (int) TblGenerica.getValueAt(indiceFila, 0);
                         String nombre = txtNombre.getText();
                         String institucion = txtVariable.getText();
-                        boolean becado = false;
                         if (nombre.equals("") || nombre.equals(" ") || institucion.equals("") || institucion.equals(" ")) {
                             JOptionPane.showMessageDialog(null, "No puede dejar espacios en blanco.", "ERROR", JOptionPane.ERROR_MESSAGE);
                         } else {
-                            if ((TblGenerica.getValueAt(indiceFila, 3).toString()).equals("Si")) {
-                                becado = true;
-                            }
-                            bdPoblacion.ModificarPoblacion(new Poblacion(num, nombre.trim(), institucion.trim(), becado));
+                            bdPoblacion.ModificarPoblacion(new Poblacion(num, nombre.trim(), institucion.trim(), rbBecado.isSelected()));
                         }
                     } else {
                         JOptionPane.showMessageDialog(null, "Debe seleccionar un item.", "ERROR", JOptionPane.ERROR_MESSAGE);
@@ -527,6 +531,7 @@ public class PanelGenerico extends javax.swing.JPanel {
             default:
                 break;
         }
+        txtNombre.requestFocus();
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     /** btnDesactivarActionPerformed

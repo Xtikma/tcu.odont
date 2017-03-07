@@ -52,11 +52,14 @@ private Menu menu = null;
         panelContrasena.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Cambio de Contraseña", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 14))); // NOI18N
         panelContrasena.setOpaque(false);
 
-        lbPassOld.setText("Contraseña anterior:");
+        lbPassOld.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        lbPassOld.setText("Contraseña Actual:");
 
+        lbPassNew.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         lbPassNew.setText("Nueva Contraseña:");
 
-        lbPassConfirmed.setText("Confirme contraseña:");
+        lbPassConfirmed.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        lbPassConfirmed.setText("Confirme Contraseña:");
 
         btnAplicarPass.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         btnAplicarPass.setText("Aplicar cambios");
@@ -112,6 +115,7 @@ private Menu menu = null;
                 .addContainerGap(22, Short.MAX_VALUE))
         );
 
+        btnRegresar.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         btnRegresar.setText("<< Regresar");
         btnRegresar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -126,8 +130,8 @@ private Menu menu = null;
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(panelContrasena, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnRegresar))
+                    .addComponent(btnRegresar)
+                    .addComponent(panelContrasena, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(665, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -137,7 +141,7 @@ private Menu menu = null;
                 .addComponent(panelContrasena, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnRegresar)
-                .addContainerGap(231, Short.MAX_VALUE))
+                .addContainerGap(229, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 

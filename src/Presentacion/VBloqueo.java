@@ -27,19 +27,20 @@ public class VBloqueo extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         aplicarTema();
-        this.setSize(375, 485);
+        this.setSize(375, 395);
         this.setResizable(false);
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
 
-                Object[] options = {"Continuar", "Cerrar"};
-                int n = JOptionPane.showOptionDialog(null, "Digite la contraseña.\n Si sale el sistema se Cerrara", "Confirmación",
+                Object[] options = {"Aceptar", "Cancelar"};
+                int n = JOptionPane.showOptionDialog(null, "Si sale el sistema se cerrará.", "Advertencia",
                         JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
                 if (n == JOptionPane.YES_OPTION) {
-                } else if (n == JOptionPane.NO_OPTION) {
                     System.exit(0);
+                } else if (n == JOptionPane.NO_OPTION) {
+                    
                 }
             }
         });
@@ -77,7 +78,7 @@ public class VBloqueo extends javax.swing.JDialog {
         });
 
         jBAceptar.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jBAceptar.setText("Aceptar");
+        jBAceptar.setText("Ingresar");
         jBAceptar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBAceptarActionPerformed(evt);
@@ -154,12 +155,12 @@ public class VBloqueo extends javax.swing.JDialog {
             } else {
 
                 JOptionPane.showMessageDialog(null, "Contraseña Incorrecta",
-                        "ERROR_MESSAGE", JOptionPane.ERROR_MESSAGE);
+                        "ERROR", JOptionPane.ERROR_MESSAGE);
             }
         } else {
 
             JOptionPane.showMessageDialog(null, "Digite la Contraseña",
-                    "WARNING_MESSAGE", JOptionPane.WARNING_MESSAGE);
+                    "Advertencia", JOptionPane.WARNING_MESSAGE);
         }
     }
     
