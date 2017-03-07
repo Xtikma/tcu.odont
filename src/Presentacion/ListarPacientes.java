@@ -285,6 +285,7 @@ public class ListarPacientes extends javax.swing.JPanel {
             int id = Integer.parseInt(texto);
             vPaciente = new VPaciente(menu, true, id, true);
             vPaciente.setVisible(true);
+            consultarPacientesActivos();
         }
     }//GEN-LAST:event_btnModificarPacienteActionPerformed
 
