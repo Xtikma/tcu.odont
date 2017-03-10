@@ -158,7 +158,7 @@ private Menu menu = null;
         }
 
         if (pass.isEmpty() == false) {
-            estado = consultarContrasena(pass);
+            estado = consultarUltimaContrasena(pass);
             if (estado == true) {
                 pass = "";
                 char[] passwordNew = passNew.getPassword();
@@ -170,7 +170,7 @@ private Menu menu = null;
                     passConfirm += passwordConfirm[i];
                 }
                 if (pass.isEmpty() == false && passConfirm.isEmpty() == false && pass.equals(passConfirm) == true ) {
-                    if (consultarContrasena(passConfirm)== false) {
+                    if (consultarListaContrasena(passConfirm)== false) {
                         
                         ADPassword pw = new ADPassword();
                         pw.insertarPassword(pass);
@@ -188,7 +188,7 @@ private Menu menu = null;
 
             } else {
 
-                JOptionPane.showMessageDialog(null, "ContraseÃ±a Incorrecta",
+                JOptionPane.showMessageDialog(null, "ContraseÃ±a Actual Incorrecta",
                         "ERROR_MESSAGE", JOptionPane.ERROR_MESSAGE);
             }
         } else {
@@ -198,10 +198,10 @@ private Menu menu = null;
         }
     }//GEN-LAST:event_btnAplicarPassActionPerformed
 
-    public boolean consultarContrasena(String contrasena) {
+    public boolean consultarListaContrasena(String contrasena) {
         boolean password = false;
         ADPassword pw = new ADPassword();
-        ArrayList<String> lista = pw.obtenerPassword();
+        ArrayList<String> lista = pw.obtenerListaPassword();
 
         for (int i = 0; i < lista.size(); i++) {
             if (lista.get(i).equals(contrasena)) {
@@ -211,6 +211,18 @@ private Menu menu = null;
         }
         return password;
 
+    }
+    
+       public boolean consultarUltimaContrasena(String contrasena) {
+        String ultimaPass;
+        boolean password = false;
+        ADPassword pw = new ADPassword();
+        ultimaPass = pw.obtenerPassword();
+
+        if (ultimaPass.equals(contrasena)) {
+            password = true;
+        }
+        return password;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

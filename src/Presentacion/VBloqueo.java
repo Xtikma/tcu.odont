@@ -145,7 +145,7 @@ public class VBloqueo extends javax.swing.JDialog {
         char[] password = jPassword.getPassword();
         for (int i = 0; i < password.length; i++) {
             pass += password[i];
-
+           
         }
         if (pass.isEmpty() == false) {
 
@@ -168,18 +168,15 @@ public class VBloqueo extends javax.swing.JDialog {
      * @param args the command line arguments
      */
     public boolean consultarContrasena(String contrasena) {
+        String ultimaPass;
         boolean password = false;
         ADPassword pw = new ADPassword();
-        ArrayList<String> lista = pw.obtenerPassword();
+        ultimaPass = pw.obtenerPassword();
 
-        for (int i = 0; i < lista.size(); i++) {
-            if (lista.get(i).equals(contrasena)) {
-                password = true;
-            }
-
+        if (ultimaPass.equals(contrasena)) {
+            password = true;
         }
         return password;
-
     }
 
     private void aplicarTema() {

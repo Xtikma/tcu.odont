@@ -19,7 +19,7 @@ public class ADPassword {
 
     private final Connection conexion = ConexionBD.conexion();
 
-    public ArrayList<String> obtenerPassword() {
+    public ArrayList<String> obtenerListaPassword() {
         ArrayList<String> lista = new ArrayList<String>();
         String temp;
         try {
@@ -55,5 +55,28 @@ public class ADPassword {
             System.out.println("UbicaciÃ³n: insertarPassword " + e.getMessage());
         }
         
+    }
+    
+    public String obtenerPassword() {
+        
+        String temp = "";
+        try {
+            ResultSet rs = null;
+            CallableStatement cc = conexion.prepareCall("call obtener_ultima_contrasena()");
+            rs = cc.executeQuery();
+
+            while (rs.next()) {
+                try {
+                    temp = rs.getString(1);
+                } catch (SQLException ex) {
+                    System.out.println("Ubicación: obtener_ultima_contrasena().while " + ex.getMessage());
+                    throw ex;
+                }
+            }
+            return temp;
+        } catch (Exception e) {
+            System.out.println("Ubicación: obtener_ultima_contrasena() " + e.getMessage());
+            return temp;
+        }
     }
 }
