@@ -100,8 +100,10 @@ public class PanelGenerico extends javax.swing.JPanel {
         setBorder(javax.swing.BorderFactory.createTitledBorder(null, "titulo", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 14))); // NOI18N
         setOpaque(false);
 
-        btnCargarEliminados.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         btnCargarEliminados.setText("Cargar Eliminados");
+        btnCargarEliminados.setMaximumSize(new java.awt.Dimension(135, 35));
+        btnCargarEliminados.setMinimumSize(new java.awt.Dimension(135, 35));
+        btnCargarEliminados.setPreferredSize(new java.awt.Dimension(135, 35));
         btnCargarEliminados.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCargarEliminadosActionPerformed(evt);
@@ -140,40 +142,43 @@ public class PanelGenerico extends javax.swing.JPanel {
         });
         jScrollPane1.setViewportView(TblGenerica);
 
-        btnAgregar.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         btnAgregar.setText("Agregar Nuevo");
+        btnAgregar.setMaximumSize(new java.awt.Dimension(135, 35));
+        btnAgregar.setMinimumSize(new java.awt.Dimension(135, 35));
+        btnAgregar.setPreferredSize(new java.awt.Dimension(135, 35));
         btnAgregar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAgregarActionPerformed(evt);
             }
         });
 
-        panelDatos.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Datos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 12))); // NOI18N
+        panelDatos.setBorder(javax.swing.BorderFactory.createTitledBorder("Datos"));
         panelDatos.setOpaque(false);
 
-        lblNombre.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         lblNombre.setText("Nombre:");
 
-        lblVariable.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         lblVariable.setText("Institución:");
 
-        btnGuardar.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         btnGuardar.setText("Guardar");
+        btnGuardar.setMaximumSize(new java.awt.Dimension(135, 35));
+        btnGuardar.setMinimumSize(new java.awt.Dimension(135, 35));
+        btnGuardar.setPreferredSize(new java.awt.Dimension(135, 35));
         btnGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnGuardarActionPerformed(evt);
             }
         });
 
-        btnDesactivar.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         btnDesactivar.setText("Desactivar");
+        btnDesactivar.setMaximumSize(new java.awt.Dimension(135, 35));
+        btnDesactivar.setMinimumSize(new java.awt.Dimension(135, 35));
+        btnDesactivar.setPreferredSize(new java.awt.Dimension(135, 35));
         btnDesactivar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnDesactivarActionPerformed(evt);
             }
         });
 
-        rbBecado.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         rbBecado.setText("Becado");
 
         javax.swing.GroupLayout panelDatosLayout = new javax.swing.GroupLayout(panelDatos);
@@ -195,9 +200,9 @@ public class PanelGenerico extends javax.swing.JPanel {
                     .addGroup(panelDatosLayout.createSequentialGroup()
                         .addComponent(rbBecado)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnDesactivar)
+                        .addComponent(btnDesactivar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(btnGuardar)))
+                        .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         panelDatosLayout.setVerticalGroup(
@@ -215,16 +220,18 @@ public class PanelGenerico extends javax.swing.JPanel {
                     .addGroup(panelDatosLayout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnDesactivar)
-                            .addComponent(btnGuardar)))
+                            .addComponent(btnDesactivar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(panelDatosLayout.createSequentialGroup()
                         .addGap(10, 10, 10)
                         .addComponent(rbBecado)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        btnRegresar.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         btnRegresar.setText("<< Regresar");
+        btnRegresar.setMaximumSize(new java.awt.Dimension(135, 35));
+        btnRegresar.setMinimumSize(new java.awt.Dimension(135, 35));
+        btnRegresar.setPreferredSize(new java.awt.Dimension(135, 35));
         btnRegresar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnRegresarActionPerformed(evt);
@@ -241,25 +248,25 @@ public class PanelGenerico extends javax.swing.JPanel {
                     .addComponent(panelDatos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jScrollPane1)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(btnRegresar)
+                        .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnCargarEliminados, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(btnAgregar, javax.swing.GroupLayout.Alignment.TRAILING))))
+                            .addComponent(btnCargarEliminados, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnAgregar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(31, 31, 31)
-                .addComponent(btnCargarEliminados)
+                .addComponent(btnCargarEliminados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnAgregar)
-                    .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnRegresar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(24, 24, 24)
                 .addComponent(panelDatos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );

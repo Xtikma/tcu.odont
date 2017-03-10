@@ -51,12 +51,6 @@ public class VerConsultas extends javax.swing.JPanel {
         listarConsultas();
     }
 
-    public VerConsultas() {
-        initComponents();
-        this.menu = menu;
-
-    }
-
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -78,6 +72,7 @@ public class VerConsultas extends javax.swing.JPanel {
         };
         jBRegresar = new javax.swing.JButton();
         jBModificar = new javax.swing.JButton();
+        jBEliminar = new javax.swing.JButton();
 
         setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Buscar Consultas", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 14))); // NOI18N
         setMaximumSize(new java.awt.Dimension(1000, 500));
@@ -93,14 +88,28 @@ public class VerConsultas extends javax.swing.JPanel {
         fechaFin.setText("Hasta:");
 
         jDate_Desde.setDateFormatString("yyyy-MM-dd");
+        jDate_Desde.setMaximumSize(new java.awt.Dimension(130, 35));
+        jDate_Desde.setMinimumSize(new java.awt.Dimension(130, 35));
+        jDate_Desde.setPreferredSize(new java.awt.Dimension(130, 35));
 
         jDate_Hasta.setDateFormatString("yyyy-MM-dd");
+        jDate_Hasta.setMaximumSize(new java.awt.Dimension(130, 35));
+        jDate_Hasta.setMinimumSize(new java.awt.Dimension(130, 35));
+        jDate_Hasta.setPreferredSize(new java.awt.Dimension(130, 35));
 
-        jB_Buscar.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        jText_Buscar.setMaximumSize(new java.awt.Dimension(250, 35));
+        jText_Buscar.setMinimumSize(new java.awt.Dimension(250, 35));
+        jText_Buscar.setPreferredSize(new java.awt.Dimension(250, 35));
+
         jB_Buscar.setText("Buscar");
+        jB_Buscar.setMaximumSize(new java.awt.Dimension(135, 35));
+        jB_Buscar.setMinimumSize(new java.awt.Dimension(135, 35));
+        jB_Buscar.setPreferredSize(new java.awt.Dimension(135, 35));
 
-        jBuscarPeriodo.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         jBuscarPeriodo.setText("Buscar Período");
+        jBuscarPeriodo.setMaximumSize(new java.awt.Dimension(120, 35));
+        jBuscarPeriodo.setMinimumSize(new java.awt.Dimension(120, 35));
+        jBuscarPeriodo.setPreferredSize(new java.awt.Dimension(120, 35));
         jBuscarPeriodo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBuscarPeriodoActionPerformed(evt);
@@ -123,10 +132,10 @@ public class VerConsultas extends javax.swing.JPanel {
                         .addGap(18, 18, 18)
                         .addComponent(jDate_Hasta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(118, 118, 118)
-                        .addComponent(jBuscarPeriodo)
+                        .addComponent(jBuscarPeriodo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(PanelBuscarLayout.createSequentialGroup()
-                        .addComponent(jText_Buscar)
+                        .addComponent(jText_Buscar, javax.swing.GroupLayout.DEFAULT_SIZE, 779, Short.MAX_VALUE)
                         .addGap(18, 18, 18)
                         .addComponent(jB_Buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(81, 81, 81))))
@@ -134,19 +143,19 @@ public class VerConsultas extends javax.swing.JPanel {
         PanelBuscarLayout.setVerticalGroup(
             PanelBuscarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PanelBuscarLayout.createSequentialGroup()
-                .addGap(21, 21, 21)
+                .addGap(19, 19, 19)
                 .addGroup(PanelBuscarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jText_Buscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jB_Buscar))
-                .addGap(15, 15, 15)
+                    .addComponent(jB_Buscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(PanelBuscarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(fechaInicio, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jDate_Desde, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, PanelBuscarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(fechaFin)
-                        .addComponent(jDate_Hasta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jBuscarPeriodo, javax.swing.GroupLayout.Alignment.LEADING))
-                .addContainerGap(35, Short.MAX_VALUE))
+                    .addGroup(PanelBuscarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(jDate_Hasta, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jBuscarPeriodo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jDate_Desde, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(fechaFin, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(fechaInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(46, Short.MAX_VALUE))
         );
 
         JPanel_ListaConsulta.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Lista Consulta", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 14))); // NOI18N
@@ -182,7 +191,7 @@ public class VerConsultas extends javax.swing.JPanel {
             JPanel_ListaConsultaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(JPanel_ListaConsultaLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScroll_ListaConsultas, javax.swing.GroupLayout.DEFAULT_SIZE, 936, Short.MAX_VALUE)
+                .addComponent(jScroll_ListaConsultas)
                 .addContainerGap())
         );
         JPanel_ListaConsultaLayout.setVerticalGroup(
@@ -190,22 +199,36 @@ public class VerConsultas extends javax.swing.JPanel {
             .addGroup(JPanel_ListaConsultaLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScroll_ListaConsultas, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(50, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jBRegresar.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         jBRegresar.setText("<< Regresar");
+        jBRegresar.setMaximumSize(new java.awt.Dimension(135, 35));
+        jBRegresar.setMinimumSize(new java.awt.Dimension(135, 35));
+        jBRegresar.setPreferredSize(new java.awt.Dimension(135, 35));
         jBRegresar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBRegresarActionPerformed(evt);
             }
         });
 
-        jBModificar.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         jBModificar.setText("Modificar");
+        jBModificar.setMaximumSize(new java.awt.Dimension(135, 35));
+        jBModificar.setMinimumSize(new java.awt.Dimension(135, 35));
+        jBModificar.setPreferredSize(new java.awt.Dimension(135, 35));
         jBModificar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBModificarActionPerformed(evt);
+            }
+        });
+
+        jBEliminar.setText("Eliminar");
+        jBEliminar.setMaximumSize(new java.awt.Dimension(135, 35));
+        jBEliminar.setMinimumSize(new java.awt.Dimension(135, 35));
+        jBEliminar.setPreferredSize(new java.awt.Dimension(135, 35));
+        jBEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBEliminarActionPerformed(evt);
             }
         });
 
@@ -216,17 +239,16 @@ public class VerConsultas extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(JPanel_ListaConsulta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(PanelBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addContainerGap())
+                    .addComponent(JPanel_ListaConsulta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(PanelBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(26, 26, 26)
-                        .addComponent(jBRegresar)
+                        .addComponent(jBRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jBModificar)
-                        .addGap(86, 86, 86))))
+                        .addComponent(jBModificar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jBEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -234,10 +256,11 @@ public class VerConsultas extends javax.swing.JPanel {
                 .addGap(6, 6, 6)
                 .addComponent(PanelBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jBModificar)
-                    .addComponent(jBRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(11, 11, 11)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jBRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jBModificar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jBEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(19, 19, 19)
                 .addComponent(JPanel_ListaConsulta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
@@ -270,6 +293,24 @@ public class VerConsultas extends javax.swing.JPanel {
 
 
     }//GEN-LAST:event_jBModificarActionPerformed
+
+    private void jBEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBEliminarActionPerformed
+        int indiceFila = jT_ListarConsultas.getSelectedRow();
+        
+        if (indiceFila >= 0) {
+            ADConsulta bd = new ADConsulta();
+            boolean resultado = bd.eliminarConsulta(lista.get(indiceFila).getIdConsulta());
+            if (resultado == true) {
+                JOptionPane.showMessageDialog(null, "Se ha eliminado la consulta requerida.", "Operación exitosa", JOptionPane.INFORMATION_MESSAGE);
+                listarConsultas();
+            }else{
+                JOptionPane.showMessageDialog(null, "No se ha eliminado la consulta.", "Operación fallida", JOptionPane.ERROR_MESSAGE);
+            }
+            
+        } else {
+            JOptionPane.showMessageDialog(null, "Debe seleccionar una consulta.", "Advertencia", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_jBEliminarActionPerformed
     private void listarConsultas() {
         ADConsulta bd = new ADConsulta();
         lista = bd.listarConsultasArray(fechaDesde, fechaHasta);
@@ -338,6 +379,7 @@ public class VerConsultas extends javax.swing.JPanel {
     private javax.swing.JPanel PanelBuscar;
     private javax.swing.JLabel fechaFin;
     private javax.swing.JLabel fechaInicio;
+    private javax.swing.JButton jBEliminar;
     private javax.swing.JButton jBModificar;
     private javax.swing.JButton jBRegresar;
     private javax.swing.JButton jB_Buscar;

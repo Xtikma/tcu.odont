@@ -129,9 +129,9 @@ public class CrearConsulta extends javax.swing.JPanel{
         lblProcedimiento = new javax.swing.JLabel();
         btnProcedimiento = new javax.swing.JButton();
         lblCantidad = new javax.swing.JLabel();
-        txtCantidad = new javax.swing.JTextField();
         btnAgregar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
+        txtCantidad = new javax.swing.JTextField();
         btnGuardarCambios = new javax.swing.JButton();
         btnRegresar = new javax.swing.JButton();
 
@@ -250,7 +250,7 @@ public class CrearConsulta extends javax.swing.JPanel{
                         .addComponent(lblPaciente1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(boxLugar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(89, 89, 89)
+                .addGap(65, 65, 65)
                 .addGroup(panelEncabezadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelEncabezadoLayout.createSequentialGroup()
                         .addComponent(lblFecha)
@@ -353,6 +353,11 @@ public class CrearConsulta extends javax.swing.JPanel{
 
         panelDetalle.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Detalle de consulta", javax.swing.border.TitledBorder.RIGHT, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 14))); // NOI18N
         panelDetalle.setOpaque(false);
+        panelDetalle.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                panelDetalleKeyPressed(evt);
+            }
+        });
 
         lblProcedimiento.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         lblProcedimiento.setText("Agregar procedimiento:");
@@ -360,6 +365,7 @@ public class CrearConsulta extends javax.swing.JPanel{
         btnProcedimiento.setBackground(new java.awt.Color(255, 255, 255));
         btnProcedimiento.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         btnProcedimiento.setText("Seleccionar");
+        btnProcedimiento.setToolTipText("Seleccione el procedimiento a la consulta.");
         btnProcedimiento.setMaximumSize(new java.awt.Dimension(200, 30));
         btnProcedimiento.setMinimumSize(new java.awt.Dimension(200, 30));
         btnProcedimiento.setPreferredSize(new java.awt.Dimension(200, 30));
@@ -371,16 +377,6 @@ public class CrearConsulta extends javax.swing.JPanel{
 
         lblCantidad.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         lblCantidad.setText("Cantidad:");
-
-        txtCantidad.setToolTipText("Ingrese el número de procedimientos realizado");
-        txtCantidad.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                txtCantidadKeyPressed(evt);
-            }
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtCantidadKeyTyped(evt);
-            }
-        });
 
         btnAgregar.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         btnAgregar.setText("Agregar");
@@ -398,30 +394,34 @@ public class CrearConsulta extends javax.swing.JPanel{
             }
         });
 
+        txtCantidad.setToolTipText("Agregue la cantidad del mismo procedimiento que agrego");
+        txtCantidad.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtCantidadKeyTyped(evt);
+            }
+        });
+
         javax.swing.GroupLayout panelDetalleLayout = new javax.swing.GroupLayout(panelDetalle);
         panelDetalle.setLayout(panelDetalleLayout);
         panelDetalleLayout.setHorizontalGroup(
             panelDetalleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelDetalleLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(panelDetalleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(panelDetalleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(panelDetalleLayout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(panelDetalleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(lblCantidad)
                             .addComponent(lblProcedimiento))
-                        .addGroup(panelDetalleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(panelDetalleLayout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btnProcedimiento, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(panelDetalleLayout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addComponent(txtCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(panelDetalleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btnProcedimiento, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtCantidad)))
                     .addGroup(panelDetalleLayout.createSequentialGroup()
-                        .addGap(88, 88, 88)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(12, 12, 12))
+                .addContainerGap(9, Short.MAX_VALUE))
         );
         panelDetalleLayout.setVerticalGroup(
             panelDetalleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -432,8 +432,8 @@ public class CrearConsulta extends javax.swing.JPanel{
                     .addComponent(lblProcedimiento))
                 .addGap(14, 14, 14)
                 .addGroup(panelDetalleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblCantidad))
+                    .addComponent(lblCantidad)
+                    .addComponent(txtCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(panelDetalleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAgregar)
@@ -464,20 +464,20 @@ public class CrearConsulta extends javax.swing.JPanel{
             .addGroup(layout.createSequentialGroup()
                 .addGap(6, 6, 6)
                 .addComponent(panelEncabezado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(0, 29, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(panelProcedimientos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnGuardarCambios, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(37, 37, 37))
                     .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(panelDetalle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(62, 62, 62)
-                        .addComponent(btnRegresar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnGuardarCambios)
-                        .addContainerGap())))
+                        .addComponent(panelDetalle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -548,14 +548,6 @@ public class CrearConsulta extends javax.swing.JPanel{
         centrarColumans();
     }//GEN-LAST:event_btnAgregarActionPerformed
 
-    private void txtCantidadKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCantidadKeyTyped
-        char c = evt.getKeyChar();
-        if (Character.isLetter(c)) {
-            getToolkit().beep();
-            evt.consume();
-        }
-    }//GEN-LAST:event_txtCantidadKeyTyped
-
     private void btnGuardarCambiosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarCambiosActionPerformed
         try {
             if (fechaConsulta.getDate() != null) {
@@ -587,18 +579,14 @@ public class CrearConsulta extends javax.swing.JPanel{
                 }
 
             } else {
+                JOptionPane.showMessageDialog(null, "Debe agregar todos los elementos de selección y/o "
+                        + "\nagregar al menos un procedimiento a la consulta.", "Operación cancelada", JOptionPane.INFORMATION_MESSAGE);
                 getToolkit().beep();
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Ha fallado al almacenar la consulta.", "Fallido!", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnGuardarCambiosActionPerformed
-
-    private void txtCantidadKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCantidadKeyPressed
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            agregarDetalle();
-        }
-    }//GEN-LAST:event_txtCantidadKeyPressed
 
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
        if (evt.getKeyCode() == KeyEvent.VK_F3) {
@@ -624,6 +612,20 @@ public class CrearConsulta extends javax.swing.JPanel{
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
         menu.intercambiarPaneles(0);
     }//GEN-LAST:event_btnRegresarActionPerformed
+
+    private void panelDetalleKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_panelDetalleKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            agregarDetalle();
+        }
+    }//GEN-LAST:event_panelDetalleKeyPressed
+
+    private void txtCantidadKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCantidadKeyTyped
+        char c = evt.getKeyChar();
+        if (Character.isLetter(c)) {
+            getToolkit().beep();
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtCantidadKeyTyped
 
     public void setPracticante(Practicante prac) {
         this.practicante = prac;

@@ -52,13 +52,10 @@ private Menu menu = null;
         panelContrasena.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Cambio de Contraseña", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 14))); // NOI18N
         panelContrasena.setOpaque(false);
 
-        lbPassOld.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         lbPassOld.setText("Contraseña Actual:");
 
-        lbPassNew.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         lbPassNew.setText("Nueva Contraseña:");
 
-        lbPassConfirmed.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         lbPassConfirmed.setText("Confirme Contraseña:");
 
         btnAplicarPass.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
@@ -115,8 +112,10 @@ private Menu menu = null;
                 .addContainerGap(22, Short.MAX_VALUE))
         );
 
-        btnRegresar.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         btnRegresar.setText("<< Regresar");
+        btnRegresar.setMaximumSize(new java.awt.Dimension(100, 35));
+        btnRegresar.setMinimumSize(new java.awt.Dimension(100, 35));
+        btnRegresar.setPreferredSize(new java.awt.Dimension(100, 35));
         btnRegresar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnRegresarActionPerformed(evt);
@@ -130,7 +129,7 @@ private Menu menu = null;
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnRegresar)
+                    .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(panelContrasena, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(665, Short.MAX_VALUE))
         );
@@ -140,8 +139,8 @@ private Menu menu = null;
                 .addContainerGap()
                 .addComponent(panelContrasena, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnRegresar)
-                .addContainerGap(229, Short.MAX_VALUE))
+                .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(224, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 

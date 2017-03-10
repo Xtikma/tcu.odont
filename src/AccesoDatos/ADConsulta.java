@@ -244,4 +244,21 @@ public class ADConsulta {
             return lista;
         }
     }
+    
+    public boolean eliminarConsulta(int idc){
+        int eliminado = 0;
+        try {
+            CallableStatement cc = conexion.prepareCall("{CALL eliminar_consulta (?)}");
+            cc.setInt(1, idc);
+            
+             eliminado = cc.executeUpdate();
+        } catch (Exception e) {
+            return false;
+        }
+        if (eliminado > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

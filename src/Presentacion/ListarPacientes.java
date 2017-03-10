@@ -94,72 +94,90 @@ public class ListarPacientes extends javax.swing.JPanel {
     });
     jScrollPane1.setViewportView(tblPacientes);
 
-    btnCargarEliminados.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
     btnCargarEliminados.setText("Cargar Eliminados");
+    btnCargarEliminados.setPreferredSize(new java.awt.Dimension(135, 35));
     btnCargarEliminados.addActionListener(new java.awt.event.ActionListener() {
         public void actionPerformed(java.awt.event.ActionEvent evt) {
             btnCargarEliminadosActionPerformed(evt);
         }
     });
 
-    btnAgregarConsulta.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
     btnAgregarConsulta.setText("Agregar Consulta");
+    btnAgregarConsulta.setMaximumSize(new java.awt.Dimension(120, 35));
+    btnAgregarConsulta.setMinimumSize(new java.awt.Dimension(120, 35));
+    btnAgregarConsulta.setPreferredSize(new java.awt.Dimension(120, 35));
     btnAgregarConsulta.addActionListener(new java.awt.event.ActionListener() {
         public void actionPerformed(java.awt.event.ActionEvent evt) {
             btnAgregarConsultaActionPerformed(evt);
         }
     });
 
-    btnAgregarPaciente.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
     btnAgregarPaciente.setText("Agregar Paciente");
+    btnAgregarPaciente.setMaximumSize(new java.awt.Dimension(120, 35));
+    btnAgregarPaciente.setMinimumSize(new java.awt.Dimension(120, 35));
+    btnAgregarPaciente.setPreferredSize(new java.awt.Dimension(120, 35));
     btnAgregarPaciente.addActionListener(new java.awt.event.ActionListener() {
         public void actionPerformed(java.awt.event.ActionEvent evt) {
             btnAgregarPacienteActionPerformed(evt);
         }
     });
 
-    btnModificarPaciente.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
     btnModificarPaciente.setText("Modificar Paciente");
+    btnModificarPaciente.setMaximumSize(new java.awt.Dimension(120, 35));
+    btnModificarPaciente.setMinimumSize(new java.awt.Dimension(120, 35));
+    btnModificarPaciente.setPreferredSize(new java.awt.Dimension(120, 35));
     btnModificarPaciente.addActionListener(new java.awt.event.ActionListener() {
         public void actionPerformed(java.awt.event.ActionEvent evt) {
             btnModificarPacienteActionPerformed(evt);
         }
     });
 
-    btnDesactivar.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
     btnDesactivar.setText("Eliminar");
+    btnDesactivar.setMaximumSize(new java.awt.Dimension(120, 35));
+    btnDesactivar.setMinimumSize(new java.awt.Dimension(120, 35));
+    btnDesactivar.setPreferredSize(new java.awt.Dimension(120, 35));
     btnDesactivar.addActionListener(new java.awt.event.ActionListener() {
         public void actionPerformed(java.awt.event.ActionEvent evt) {
             btnDesactivarActionPerformed(evt);
         }
     });
 
-    btnVerExpediente.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
     btnVerExpediente.setText("Ver Expediente");
+    btnVerExpediente.setMaximumSize(new java.awt.Dimension(120, 35));
+    btnVerExpediente.setMinimumSize(new java.awt.Dimension(120, 35));
+    btnVerExpediente.setPreferredSize(new java.awt.Dimension(120, 35));
 
-    cbPoblacion.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
     cbPoblacion.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+    cbPoblacion.setMaximumSize(new java.awt.Dimension(120, 35));
+    cbPoblacion.setMinimumSize(new java.awt.Dimension(120, 35));
+    cbPoblacion.setPreferredSize(new java.awt.Dimension(120, 35));
 
-    cbTipoId.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
     cbTipoId.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+    cbTipoId.setMaximumSize(new java.awt.Dimension(120, 35));
+    cbTipoId.setMinimumSize(new java.awt.Dimension(120, 35));
+    cbTipoId.setPreferredSize(new java.awt.Dimension(120, 35));
 
-    cbBeca.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
     cbBeca.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+    cbBeca.setMaximumSize(new java.awt.Dimension(120, 35));
+    cbBeca.setMinimumSize(new java.awt.Dimension(120, 35));
+    cbBeca.setPreferredSize(new java.awt.Dimension(120, 35));
 
-    rbPrimerIngreso.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
     rbPrimerIngreso.setText("Pimer Ingreso");
 
-    lblBuscar.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
     lblBuscar.setText("Buscar:");
 
+    txtBuscar.setMaximumSize(new java.awt.Dimension(150, 35));
+    txtBuscar.setMinimumSize(new java.awt.Dimension(150, 35));
     txtBuscar.addKeyListener(new java.awt.event.KeyAdapter() {
         public void keyReleased(java.awt.event.KeyEvent evt) {
             txtBuscarKeyReleased(evt);
         }
     });
 
-    btnRegresar.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
     btnRegresar.setText("<< Regresar");
+    btnRegresar.setMaximumSize(new java.awt.Dimension(120, 35));
+    btnRegresar.setMinimumSize(new java.awt.Dimension(120, 35));
+    btnRegresar.setPreferredSize(new java.awt.Dimension(120, 35));
     btnRegresar.addActionListener(new java.awt.event.ActionListener() {
         public void actionPerformed(java.awt.event.ActionEvent evt) {
             btnRegresarActionPerformed(evt);
@@ -175,6 +193,18 @@ public class ListarPacientes extends javax.swing.JPanel {
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addComponent(jScrollPane1)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
+                    .addComponent(btnAgregarConsulta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(18, 18, 18)
+                    .addComponent(btnAgregarPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(18, 18, 18)
+                    .addComponent(btnModificarPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(18, 18, 18)
+                    .addComponent(btnDesactivar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(18, 18, 18)
+                    .addComponent(btnVerExpediente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                     .addComponent(cbPoblacion, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(18, 18, 18)
                     .addComponent(cbTipoId, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -184,27 +214,16 @@ public class ListarPacientes extends javax.swing.JPanel {
                     .addComponent(rbPrimerIngreso)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(lblBuscar)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                    .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addComponent(btnCargarEliminados, javax.swing.GroupLayout.Alignment.TRAILING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                    .addComponent(btnRegresar)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
-                    .addComponent(btnAgregarConsulta)
                     .addGap(18, 18, 18)
-                    .addComponent(btnAgregarPaciente)
-                    .addGap(18, 18, 18)
-                    .addComponent(btnModificarPaciente)
-                    .addGap(18, 18, 18)
-                    .addComponent(btnDesactivar)
-                    .addGap(18, 18, 18)
-                    .addComponent(btnVerExpediente)))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(txtBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnCargarEliminados, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE))))
             .addContainerGap())
     );
     layout.setVerticalGroup(
         layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(layout.createSequentialGroup()
-            .addComponent(btnCargarEliminados)
+            .addComponent(btnCargarEliminados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                 .addComponent(cbPoblacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -217,12 +236,12 @@ public class ListarPacientes extends javax.swing.JPanel {
             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addGap(18, 18, 18)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(btnAgregarConsulta)
-                .addComponent(btnAgregarPaciente)
-                .addComponent(btnModificarPaciente)
-                .addComponent(btnDesactivar)
-                .addComponent(btnVerExpediente)
-                .addComponent(btnRegresar))
+                .addComponent(btnAgregarConsulta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnAgregarPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnModificarPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnDesactivar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnVerExpediente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
     );
     }// </editor-fold>//GEN-END:initComponents
