@@ -449,7 +449,9 @@ public class CrearConsulta extends javax.swing.JPanel{
             }
         });
 
+        btnRegresar.setBackground(new java.awt.Color(204, 0, 0));
         btnRegresar.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        btnRegresar.setForeground(new java.awt.Color(255, 0, 0));
         btnRegresar.setText("<< Regresar");
         btnRegresar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -511,32 +513,50 @@ public class CrearConsulta extends javax.swing.JPanel{
     }//GEN-LAST:event_btnPacienteActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        for (ProcedimientoConsulta p : consulta.getListaProcedimientos()) {
-            if (p.getProcedimiento().getId() == detalle.getProcedimiento().getId()) {
-                consulta.getListaProcedimientos().remove(p);
-                detalle = new ProcedimientoConsulta();
-                btnProcedimiento.setText("Seleccionar");
-                txtCantidad.setText("");
-                cargarDetalles();
-            }            
+        try {
+            for (ProcedimientoConsulta p : consulta.getListaProcedimientos()) {
+                if (p.getProcedimiento().getId() == detalle.getProcedimiento().getId()) {
+                    consulta.getListaProcedimientos().remove(p);
+                    detalle = new ProcedimientoConsulta();
+                    btnProcedimiento.setText("Seleccionar");
+                    txtCantidad.setText("");
+                    cargarDetalles();
+                }
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error al eliminar el procedimiento", "Error!", JOptionPane.ERROR_MESSAGE);
         }
+ 
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnDoctorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDoctorActionPerformed
-        VentanaBusqueda searchPaciente = new VentanaBusqueda(1, this);
-        searchPaciente.setLocationRelativeTo(this);
-        searchPaciente.setVisible(true);  
+        try {
+            VentanaBusqueda searchPaciente = new VentanaBusqueda(1, this);
+            searchPaciente.setLocationRelativeTo(this);
+            searchPaciente.setVisible(true);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error al iniciar la busqueda de doctores", "Error!", JOptionPane.ERROR_MESSAGE);
+        }        
     }//GEN-LAST:event_btnDoctorActionPerformed
 
     private void btnPracticanteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPracticanteActionPerformed
-        VentanaBusqueda search = new VentanaBusqueda(2, this);
-        search.setLocationRelativeTo(this);
-        search.setVisible(true);
+        try {
+            VentanaBusqueda search = new VentanaBusqueda(2, this);
+            search.setLocationRelativeTo(this);
+            search.setVisible(true);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error al iniciar la busqueda de Practicantes", "Error!", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btnPracticanteActionPerformed
 
     private void boxLugarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boxLugarActionPerformed
-        int selected = boxLugar.getSelectedIndex();
-        this.lugar = lugares.get(selected);
+        try {
+            int selected = boxLugar.getSelectedIndex();
+            this.lugar = lugares.get(selected);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error al seleccionar el lugar de atención", "Error!", JOptionPane.ERROR_MESSAGE);
+        }
+        
     }//GEN-LAST:event_boxLugarActionPerformed
 
     private void btnProcedimientoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProcedimientoActionPerformed
@@ -668,20 +688,25 @@ public class CrearConsulta extends javax.swing.JPanel{
     }
     
     private void cargarDetalles(){
-        DefaultTableModel model = new DefaultTableModel();
-        model.addColumn("Procedimiento");
-        model.addColumn("Precio Unit.");
-        model.addColumn("Cantidad");
-        model.addColumn("SubTotal");
-        String[] fila = new String[4];        
-        for (ProcedimientoConsulta detalle : consulta.getListaProcedimientos()) {
-            fila[0] = detalle.getProcedimiento().getNombre();
-            fila[1] = "₡ " + detalle.getPrecioHistorico();
-            fila[2] = "" + detalle.getCantidad();
-            fila[3] = "₡ " + detalle.getPrecioHistorico() * detalle.getCantidad();
-            model.addRow(fila);
+        try {
+            DefaultTableModel model = new DefaultTableModel();
+            model.addColumn("Procedimiento");
+            model.addColumn("Precio Unit.");
+            model.addColumn("Cantidad");
+            model.addColumn("SubTotal");
+            String[] fila = new String[4];
+            for (ProcedimientoConsulta detalle : consulta.getListaProcedimientos()) {
+                fila[0] = detalle.getProcedimiento().getNombre();
+                fila[1] = "₡ " + detalle.getPrecioHistorico();
+                fila[2] = "" + detalle.getCantidad();
+                fila[3] = "₡ " + detalle.getPrecioHistorico() * detalle.getCantidad();
+                model.addRow(fila);
+            }
+            tblProcedimientos.setModel(model);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Ha ocurrdio un error alactualizar los detalles de la consulta.", "Fallido!", JOptionPane.ERROR_MESSAGE);
         }
-        tblProcedimientos.setModel(model);        
+               
     }
     
     private void limpiarCampos() {

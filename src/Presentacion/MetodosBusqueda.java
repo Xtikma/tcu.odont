@@ -85,4 +85,19 @@ public class MetodosBusqueda {
         return copia;
     }
     
+    public ArrayList<Consulta> BuscarConsultas(String criterio, ArrayList<Consulta> lista){
+        ArrayList<Consulta> copia = new ArrayList<>();
+        for (Consulta c : lista) {
+            if (c.getDoctor().getNombre().matches("(.*)" + criterio.toLowerCase() + "(.*)") ||
+                    c.getLugar().getLugar().matches("(.*)" + criterio.toLowerCase() + "(.*)") ||
+                    c.getPracticante().getNombre().matches("(.*)" + criterio.toLowerCase() + "(.*)") ||
+                    c.getPaciente().getNombre().matches("(.*)" + criterio.toLowerCase() + "(.*)") ||
+                    c.getPaciente().getPrimerApellido().matches("(.*)" + criterio.toLowerCase() + "(.*)") ||
+                    c.getPaciente().getSegundoApellido().matches("(.*)" + criterio.toLowerCase() + "(.*)")) {
+                copia.add(c);
+            }            
+        }
+        return copia;
+    }
+    
 }

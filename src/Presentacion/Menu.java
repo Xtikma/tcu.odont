@@ -77,14 +77,15 @@ public class Menu extends javax.swing.JFrame {
         btnRegresarMenu = new javax.swing.JButton();
         btnBloquear = new javax.swing.JButton();
         btnAgregarPaciente = new javax.swing.JButton();
+        btnConfPacientes = new javax.swing.JButton();
+        btnAddConsulta = new javax.swing.JButton();
+        btnVerConsultas = new javax.swing.JButton();
         panelPrincipal = new javax.swing.JPanel();
         lblFondo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Sistema de Control de Servicios Odontológicos");
-        setMaximumSize(new java.awt.Dimension(1100, 600));
         setMinimumSize(new java.awt.Dimension(1100, 600));
-        setPreferredSize(new java.awt.Dimension(1100, 600));
         getContentPane().setLayout(null);
 
         panelBase.setMaximumSize(new java.awt.Dimension(1280, 700));
@@ -134,6 +135,33 @@ public class Menu extends javax.swing.JFrame {
             }
         });
 
+        btnConfPacientes.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        btnConfPacientes.setText("Conf. de Pacientes");
+        btnConfPacientes.setPreferredSize(new java.awt.Dimension(150, 30));
+        btnConfPacientes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConfPacientesActionPerformed(evt);
+            }
+        });
+
+        btnAddConsulta.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        btnAddConsulta.setText("Agregar Consulta");
+        btnAddConsulta.setPreferredSize(new java.awt.Dimension(150, 30));
+        btnAddConsulta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddConsultaActionPerformed(evt);
+            }
+        });
+
+        btnVerConsultas.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        btnVerConsultas.setText("Ver Consultas");
+        btnVerConsultas.setPreferredSize(new java.awt.Dimension(150, 30));
+        btnVerConsultas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVerConsultasActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout panelMenuLayout = new javax.swing.GroupLayout(panelMenu);
         panelMenu.setLayout(panelMenuLayout);
         panelMenuLayout.setHorizontalGroup(
@@ -144,18 +172,29 @@ public class Menu extends javax.swing.JFrame {
                     .addGroup(panelMenuLayout.createSequentialGroup()
                         .addComponent(btnRegresarMenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(btnAgregarPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(btnBloquear, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(756, Short.MAX_VALUE))
+                        .addComponent(btnAgregarPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnAddConsulta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(panelMenuLayout.createSequentialGroup()
+                        .addComponent(btnBloquear, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnConfPacientes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnVerConsultas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(588, Short.MAX_VALUE))
         );
         panelMenuLayout.setVerticalGroup(
             panelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelMenuLayout.createSequentialGroup()
                 .addGroup(panelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnRegresarMenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnAgregarPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnAgregarPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnAddConsulta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnBloquear, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(panelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnBloquear, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnConfPacientes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnVerConsultas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(36, 36, 36))
         );
 
@@ -238,6 +277,18 @@ public class Menu extends javax.swing.JFrame {
         } else if (n == JOptionPane.NO_OPTION) {
         }
     }//GEN-LAST:event_btnBloquearActionPerformed
+
+    private void btnConfPacientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfPacientesActionPerformed
+        intercambiarPaneles(9);
+    }//GEN-LAST:event_btnConfPacientesActionPerformed
+
+    private void btnAddConsultaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddConsultaActionPerformed
+        intercambiarPaneles(7);
+    }//GEN-LAST:event_btnAddConsultaActionPerformed
+
+    private void btnVerConsultasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerConsultasActionPerformed
+        intercambiarPaneles(8);
+    }//GEN-LAST:event_btnVerConsultasActionPerformed
 
     /**
      * Metodo que cambia los paneles en el panel principal de la ventana
@@ -361,9 +412,12 @@ public class Menu extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAddConsulta;
     private javax.swing.JButton btnAgregarPaciente;
     private javax.swing.JButton btnBloquear;
+    private javax.swing.JButton btnConfPacientes;
     private javax.swing.JButton btnRegresarMenu;
+    private javax.swing.JButton btnVerConsultas;
     private javax.swing.JLabel lblFondo;
     private javax.swing.JLabel lbl_icon;
     private javax.swing.JPanel panelBase;

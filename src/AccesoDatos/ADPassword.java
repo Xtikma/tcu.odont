@@ -52,7 +52,7 @@ public class ADPassword {
             //rs = cc.executeQuery();
             cc.executeUpdate();
         } catch (SQLException e) {
-            System.out.println("UbicaciÃ³n: insertarPassword " + e.getMessage());
+            System.out.println("Ubicación: insertarPassword " + e.getMessage());
         }
         
     }

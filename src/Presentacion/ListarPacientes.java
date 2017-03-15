@@ -174,6 +174,7 @@ public class ListarPacientes extends javax.swing.JPanel {
         }
     });
 
+    btnRegresar.setForeground(new java.awt.Color(255, 0, 0));
     btnRegresar.setText("<< Regresar");
     btnRegresar.setMaximumSize(new java.awt.Dimension(120, 35));
     btnRegresar.setMinimumSize(new java.awt.Dimension(120, 35));

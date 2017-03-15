@@ -112,6 +112,7 @@ private Menu menu = null;
                 .addContainerGap(22, Short.MAX_VALUE))
         );
 
+        btnRegresar.setForeground(new java.awt.Color(255, 0, 0));
         btnRegresar.setText("<< Regresar");
         btnRegresar.setMaximumSize(new java.awt.Dimension(100, 35));
         btnRegresar.setMinimumSize(new java.awt.Dimension(100, 35));

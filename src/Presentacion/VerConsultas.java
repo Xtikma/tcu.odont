@@ -34,6 +34,7 @@ public class VerConsultas extends javax.swing.JPanel {
     private SimpleDateFormat Formato = new SimpleDateFormat("yyyy-MM-dd");
     private ArrayList<Consulta> lista;
     private CrearConsulta consulta = null;
+    MetodosBusqueda search = new MetodosBusqueda();
 
     public VerConsultas(Menu menu) {
         initComponents();
@@ -61,8 +62,8 @@ public class VerConsultas extends javax.swing.JPanel {
         jDate_Desde = new com.toedter.calendar.JDateChooser();
         jDate_Hasta = new com.toedter.calendar.JDateChooser();
         jText_Buscar = new javax.swing.JTextField();
-        jB_Buscar = new javax.swing.JButton();
         jBuscarPeriodo = new javax.swing.JButton();
+        lbBusqueda = new javax.swing.JLabel();
         JPanel_ListaConsulta = new javax.swing.JPanel();
         jScroll_ListaConsultas = new javax.swing.JScrollPane();
         jT_ListarConsultas = new javax.swing.JTable() {
@@ -100,11 +101,11 @@ public class VerConsultas extends javax.swing.JPanel {
         jText_Buscar.setMaximumSize(new java.awt.Dimension(250, 35));
         jText_Buscar.setMinimumSize(new java.awt.Dimension(250, 35));
         jText_Buscar.setPreferredSize(new java.awt.Dimension(250, 35));
-
-        jB_Buscar.setText("Buscar");
-        jB_Buscar.setMaximumSize(new java.awt.Dimension(135, 35));
-        jB_Buscar.setMinimumSize(new java.awt.Dimension(135, 35));
-        jB_Buscar.setPreferredSize(new java.awt.Dimension(135, 35));
+        jText_Buscar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jText_BuscarKeyReleased(evt);
+            }
+        });
 
         jBuscarPeriodo.setText("Buscar Período");
         jBuscarPeriodo.setMaximumSize(new java.awt.Dimension(120, 35));
@@ -116,14 +117,23 @@ public class VerConsultas extends javax.swing.JPanel {
             }
         });
 
+        lbBusqueda.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        lbBusqueda.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lbBusqueda.setText("Busqueda:");
+
         javax.swing.GroupLayout PanelBuscarLayout = new javax.swing.GroupLayout(PanelBuscar);
         PanelBuscar.setLayout(PanelBuscarLayout);
         PanelBuscarLayout.setHorizontalGroup(
             PanelBuscarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PanelBuscarLayout.createSequentialGroup()
-                .addGap(23, 23, 23)
                 .addGroup(PanelBuscarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(PanelBuscarLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(lbBusqueda)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jText_Buscar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelBuscarLayout.createSequentialGroup()
+                        .addGap(23, 23, 23)
                         .addComponent(fechaInicio)
                         .addGap(18, 18, 18)
                         .addComponent(jDate_Desde, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -132,21 +142,16 @@ public class VerConsultas extends javax.swing.JPanel {
                         .addGap(18, 18, 18)
                         .addComponent(jDate_Hasta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(118, 118, 118)
-                        .addComponent(jBuscarPeriodo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(PanelBuscarLayout.createSequentialGroup()
-                        .addComponent(jText_Buscar, javax.swing.GroupLayout.DEFAULT_SIZE, 779, Short.MAX_VALUE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jB_Buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(81, 81, 81))))
+                        .addComponent(jBuscarPeriodo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(176, Short.MAX_VALUE))
         );
         PanelBuscarLayout.setVerticalGroup(
             PanelBuscarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PanelBuscarLayout.createSequentialGroup()
-                .addGap(19, 19, 19)
+                .addGap(18, 18, 18)
                 .addGroup(PanelBuscarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jText_Buscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jB_Buscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lbBusqueda, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(PanelBuscarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(PanelBuscarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -202,6 +207,8 @@ public class VerConsultas extends javax.swing.JPanel {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        jBRegresar.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jBRegresar.setForeground(new java.awt.Color(255, 0, 0));
         jBRegresar.setText("<< Regresar");
         jBRegresar.setMaximumSize(new java.awt.Dimension(135, 35));
         jBRegresar.setMinimumSize(new java.awt.Dimension(135, 35));
@@ -212,6 +219,7 @@ public class VerConsultas extends javax.swing.JPanel {
             }
         });
 
+        jBModificar.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jBModificar.setText("Modificar");
         jBModificar.setMaximumSize(new java.awt.Dimension(135, 35));
         jBModificar.setMinimumSize(new java.awt.Dimension(135, 35));
@@ -222,6 +230,7 @@ public class VerConsultas extends javax.swing.JPanel {
             }
         });
 
+        jBEliminar.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jBEliminar.setText("Eliminar");
         jBEliminar.setMaximumSize(new java.awt.Dimension(135, 35));
         jBEliminar.setMinimumSize(new java.awt.Dimension(135, 35));
@@ -311,9 +320,30 @@ public class VerConsultas extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "Debe seleccionar una consulta.", "Advertencia", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jBEliminarActionPerformed
+
+    private void jText_BuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jText_BuscarKeyReleased
+        String criterio = jText_Buscar.getText().trim();
+        if (criterio.length() == 0) {
+            cargarLista(this.lista);
+        }else{
+            cargarLista(search.BuscarConsultas(criterio, this.lista));
+        }
+    }//GEN-LAST:event_jText_BuscarKeyReleased
+    /**
+     * Carga de manera inicial y al aplicar un filtro de fechas la lista
+     */
     private void listarConsultas() {
         ADConsulta bd = new ADConsulta();
         lista = bd.listarConsultasArray(fechaDesde, fechaHasta);
+        cargarLista(lista);
+    }
+    
+    /**
+     * Carga una lista recibida en la tabla de consultas (ya se una filtrada por
+     * fechas o por busqueda)
+     * @param lista consultas que coincidan con el filtro escogido
+     */
+    private void cargarLista(ArrayList<Consulta> lista){
         DefaultTableModel model = new DefaultTableModel();
         model.addColumn("ID");
         model.addColumn("Fecha");
@@ -349,7 +379,6 @@ public class VerConsultas extends javax.swing.JPanel {
         }
         centrarColumans();
     }
-    
         /** centrarColumnas
      * Centra el contenido de las celdas en la tabla
      */
@@ -373,6 +402,9 @@ public class VerConsultas extends javax.swing.JPanel {
             return null;
         }
     }
+    
+    
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel JPanel_ListaConsulta;
@@ -382,12 +414,12 @@ public class VerConsultas extends javax.swing.JPanel {
     private javax.swing.JButton jBEliminar;
     private javax.swing.JButton jBModificar;
     private javax.swing.JButton jBRegresar;
-    private javax.swing.JButton jB_Buscar;
     private javax.swing.JButton jBuscarPeriodo;
     private com.toedter.calendar.JDateChooser jDate_Desde;
     private com.toedter.calendar.JDateChooser jDate_Hasta;
     private javax.swing.JScrollPane jScroll_ListaConsultas;
     private javax.swing.JTable jT_ListarConsultas;
     private javax.swing.JTextField jText_Buscar;
+    private javax.swing.JLabel lbBusqueda;
     // End of variables declaration//GEN-END:variables
 }
