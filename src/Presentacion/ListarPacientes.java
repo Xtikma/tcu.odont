@@ -94,6 +94,7 @@ public class ListarPacientes extends javax.swing.JPanel {
     });
     jScrollPane1.setViewportView(tblPacientes);
 
+    btnCargarEliminados.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
     btnCargarEliminados.setText("Cargar Eliminados");
     btnCargarEliminados.setPreferredSize(new java.awt.Dimension(135, 35));
     btnCargarEliminados.addActionListener(new java.awt.event.ActionListener() {
@@ -174,6 +175,7 @@ public class ListarPacientes extends javax.swing.JPanel {
         }
     });
 
+    btnRegresar.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
     btnRegresar.setForeground(new java.awt.Color(255, 0, 0));
     btnRegresar.setText("<< Regresar");
     btnRegresar.setMaximumSize(new java.awt.Dimension(120, 35));
@@ -218,7 +220,7 @@ public class ListarPacientes extends javax.swing.JPanel {
                     .addGap(18, 18, 18)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(txtBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnCargarEliminados, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE))))
+                        .addComponent(btnCargarEliminados, javax.swing.GroupLayout.DEFAULT_SIZE, 157, Short.MAX_VALUE))))
             .addContainerGap())
     );
     layout.setVerticalGroup(
