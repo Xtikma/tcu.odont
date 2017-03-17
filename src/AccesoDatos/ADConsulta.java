@@ -82,17 +82,14 @@ public class ADConsulta {
      * @param c objeto consulta.
      * @return
      */
-    public boolean almacenarConsulta(Consulta c) {
+    public boolean almacenarConsulta(Consulta c) throws SQLException{
         ResultSet rs;
         int index = 0;
         boolean sucefull = false;
         int agrego = 0;
         
         try {
-            if (conexion.isClosed()) {
-                conexion.close();
-                conexion = ConexionBD.conexion();
-            }
+            conexion.close();
             CallableStatement cc = conexion.prepareCall("{call insertar_consulta_encabezado(?,?,?,?,?,?)}");
             cc.setString(1, getFecha(c.getFechaConsulta()));
             cc.setDouble(2, c.getTotalConsulta());
@@ -110,11 +107,11 @@ public class ADConsulta {
                 index = rs.getInt(1);
 
                 sucefull = guardarDetalles(c.getListaProcedimientos(), index);
-
+                
             }
         } catch (Exception e) {
-            System.out.println("Ubicación: almacenarConsulta " + e.getMessage());
-            return false;
+            Herramientas.InformeErrores.getInforme().escribirError(e);
+            throw e;
         }
         if (sucefull == true && agrego > 0) {
             return true;

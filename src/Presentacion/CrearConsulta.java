@@ -604,7 +604,8 @@ public class CrearConsulta extends javax.swing.JPanel{
                 getToolkit().beep();
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Ha fallado al almacenar la consulta.", "Fallido!", JOptionPane.ERROR_MESSAGE);
+            
+            JOptionPane.showMessageDialog(null, "Ha fallado al almacenar la consulta.\n", "Fallido!", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnGuardarCambiosActionPerformed
 
@@ -731,6 +732,7 @@ public class CrearConsulta extends javax.swing.JPanel{
                 for (int i = 0; i < consulta.getListaProcedimientos().size(); i++) {
                     if (consulta.getListaProcedimientos().get(i).getProcedimiento()
                             .getNombre().equals(detalle.getProcedimiento().getNombre())) {
+                        
                         consulta.getListaProcedimientos().get(i).setCantidad(
                                 consulta.getListaProcedimientos().get(i).getCantidad()
                                 + Integer.parseInt(cantidad));

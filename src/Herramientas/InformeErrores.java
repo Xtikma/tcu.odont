@@ -7,6 +7,7 @@ package Herramientas;
 
 import java.io.*;
 import java.util.Calendar;
+import javax.swing.JOptionPane;
 /**
  *
  * @author Keylor
@@ -14,22 +15,37 @@ import java.util.Calendar;
 public class InformeErrores {
     
     private static final InformeErrores INFORME = new InformeErrores();
-    private static final String RUTA = "C:\\SicoseoLog\\informe_errores_"; 
+    private static final String RUTA = "C:\\SicoseoLog\\informe_errores.txt"; 
+    private File f;
+        
+    public void escribirError(Exception ex){
+        try {
+            f = new File(RUTA);
+            FileWriter w = new FileWriter(f, true);
+            BufferedWriter bw = new BufferedWriter(w);
+            PrintWriter wr = new PrintWriter(bw);
+            
+            wr.append("--------------- " + Calendar.getInstance().get(Calendar.YEAR)
+                    + "/" + Calendar.getInstance().get(Calendar.MONTH)
+                    + "/" + Calendar.getInstance().get(Calendar.DAY_OF_MONTH)
+                    + " ---------------\r\n");
+            wr.append("Mensaje de error: " + ex.getMessage() + "\r\n");
+            wr.append("Clase de origen: " + ex.getLocalizedMessage() + "\r\n");
+            wr.append("===========================================+ \r\n");
+            wr.append("\r\n");
+            wr.append("\r\n");
+            wr.close();
+            bw.close();
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(null, "Error al crear el archivo", e.getMessage(), JOptionPane.ERROR_MESSAGE);
+        }              
+    }
     
     private InformeErrores(){
-        String fecha =Calendar.getInstance().get(Calendar.YEAR)+
-                "-"+Calendar.getInstance().get(Calendar.MONTH)+
-                "-"+Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
-        String rutaCompleta = RUTA + fecha + ".txt";
         
-        File f = new File(rutaCompleta);      
     }
     
-    public InformeErrores getInformer(){
+    public static InformeErrores getInforme(){
         return INFORME;
-    }
-    
-    public void escribirError(String mensaje, Exception ex){
-        
     }
 }
