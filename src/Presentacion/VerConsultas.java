@@ -5,6 +5,8 @@
  */
 package Presentacion;
 
+import Herramientas.Periodo;
+import Herramientas.MetodosBusqueda;
 import AccesoDatos.ADConsulta;
 import Entidades.Consulta;
 import com.toedter.calendar.JDateChooser;

@@ -1,6 +1,7 @@
 package Presentacion;
 
 //<editor-fold defaultstate="collapsed" desc="Importaciones">
+import Herramientas.MetodosBusqueda;
 import AccesoDatos.ADPaciente;
 import AccesoDatos.ADPoblacion;
 import AccesoDatos.ADTipoIdentificacion;

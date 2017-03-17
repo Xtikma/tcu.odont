@@ -28,7 +28,7 @@ import javax.swing.table.DefaultTableModel;
 
 public class ADConsulta {
 
-    private final Connection conexion = ConexionBD.conexion();
+    private Connection conexion = ConexionBD.conexion();
     private SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
 
     public ArrayList<Consulta> listarConsultasArray(String desde, String hasta) {
@@ -87,7 +87,12 @@ public class ADConsulta {
         int index = 0;
         boolean sucefull = false;
         int agrego = 0;
+        
         try {
+            if (conexion.isClosed()) {
+                conexion.close();
+                conexion = ConexionBD.conexion();
+            }
             CallableStatement cc = conexion.prepareCall("{call insertar_consulta_encabezado(?,?,?,?,?,?)}");
             cc.setString(1, getFecha(c.getFechaConsulta()));
             cc.setDouble(2, c.getTotalConsulta());
@@ -98,6 +103,7 @@ public class ADConsulta {
             agrego = cc.executeUpdate();
 
             if (c.getListaProcedimientos().size() > 0) {
+                
                 cc = conexion.prepareCall("call obtener_ultima_categoria()");
                 rs = cc.executeQuery();
                 rs.first();

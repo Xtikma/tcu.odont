@@ -5,6 +5,7 @@
  */
 package Presentacion;
 
+import Herramientas.MetodosBusqueda;
 import AccesoDatos.*;
 import Entidades.*;
 import java.util.ArrayList;
