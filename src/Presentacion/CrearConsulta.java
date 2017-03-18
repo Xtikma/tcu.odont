@@ -8,6 +8,7 @@ package Presentacion;
 import AccesoDatos.*;
 import Entidades.*;
 import java.awt.event.KeyEvent;
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.ArrayList;
 import javax.swing.JLabel;
@@ -66,36 +67,40 @@ public class CrearConsulta extends javax.swing.JPanel{
     }
     
     
-    public CrearConsulta(Consulta c, Menu menu){
-        initComponents();
-        this.menu = menu;
-        consulta = c;
-        cargarLugares();
-        isNuevo = false;
-        doctor = c.getDoctor();
-        btnDoctor.setText(doctor.getNombre());
-        practicante = c.getPracticante();
-        if (practicante != null) {
-            btnPracticante.setText(practicante.getNombre());
-        }else{
-            btnPracticante.setText("Vacio");
-        }        
-        paciente = c.getPaciente();
-        btnPaciente.setText(paciente.getNombre() + " " + paciente.getPrimerApellido());
-        lugar = c.getLugar();
-        btnPaciente.setEnabled(false);
-        for (int i = 0; i > boxLugar.getItemCount(); i++) {
-            String item = boxLugar.getItemAt(i).toString();
-            if (item.equals(lugar.getLugar()) == true) {
-                boxLugar.setSelectedIndex(i);
-                boxLugar.setEnabled(false);
+    public CrearConsulta(Consulta c, Menu menu) {
+        try {
+            initComponents();
+            this.menu = menu;
+            consulta = c;
+            cargarLugares();
+            isNuevo = false;
+            doctor = c.getDoctor();
+            btnDoctor.setText(doctor.getNombre());
+            practicante = c.getPracticante();
+            if (practicante != null) {
+                btnPracticante.setText(practicante.getNombre());
+            } else {
+                btnPracticante.setText("Vacio");
             }
+            paciente = c.getPaciente();
+            btnPaciente.setText(paciente.getNombre() + " " + paciente.getPrimerApellido());
+            lugar = c.getLugar();
+            btnPaciente.setEnabled(false);
+            for (int i = 0; i > boxLugar.getItemCount(); i++) {
+                String item = boxLugar.getItemAt(i).toString();
+                if (item.equals(lugar.getLugar()) == true) {
+                    boxLugar.setSelectedIndex(i);
+                    boxLugar.setEnabled(false);
+                }
+            }
+            acceso = new ADConsulta();
+            consulta.setListaProcedimientos(acceso.obtenerDetalles(consulta.getIdConsulta()));
+            fechaConsulta.setDate(c.getFechaConsulta());
+            cargarDetalles();
+            sumarTotal();
+        } catch (SQLException e) {
+            Herramientas.InformeErrores.getInforme().escribirError(e, "CrearConsulta", "Contructor");
         }
-        acceso = new ADConsulta();
-        consulta.setListaProcedimientos(acceso.obtenerDetalles(consulta.getIdConsulta()));
-        fechaConsulta.setDate(c.getFechaConsulta());
-        cargarDetalles();
-        sumarTotal();
     }
     
     
@@ -353,11 +358,6 @@ public class CrearConsulta extends javax.swing.JPanel{
 
         panelDetalle.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Detalle de consulta", javax.swing.border.TitledBorder.RIGHT, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 14))); // NOI18N
         panelDetalle.setOpaque(false);
-        panelDetalle.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                panelDetalleKeyPressed(evt);
-            }
-        });
 
         lblProcedimiento.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         lblProcedimiento.setText("Agregar procedimiento:");
@@ -396,6 +396,9 @@ public class CrearConsulta extends javax.swing.JPanel{
 
         txtCantidad.setToolTipText("Agregue la cantidad del mismo procedimiento que agrego");
         txtCantidad.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtCantidadKeyPressed(evt);
+            }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtCantidadKeyTyped(evt);
             }
@@ -604,7 +607,7 @@ public class CrearConsulta extends javax.swing.JPanel{
                 getToolkit().beep();
             }
         } catch (Exception e) {
-            
+            Herramientas.InformeErrores.getInforme().escribirError(e, "CrearConsulta", "btnGuardarCambiosActionPerformed");
             JOptionPane.showMessageDialog(null, "Ha fallado al almacenar la consulta.\n", "Fallido!", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnGuardarCambiosActionPerformed
@@ -634,12 +637,6 @@ public class CrearConsulta extends javax.swing.JPanel{
         menu.intercambiarPaneles(0);
     }//GEN-LAST:event_btnRegresarActionPerformed
 
-    private void panelDetalleKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_panelDetalleKeyPressed
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            agregarDetalle();
-        }
-    }//GEN-LAST:event_panelDetalleKeyPressed
-
     private void txtCantidadKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCantidadKeyTyped
         char c = evt.getKeyChar();
         if (Character.isLetter(c)) {
@@ -647,6 +644,12 @@ public class CrearConsulta extends javax.swing.JPanel{
             evt.consume();
         }
     }//GEN-LAST:event_txtCantidadKeyTyped
+
+    private void txtCantidadKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCantidadKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            agregarDetalle();
+        }
+    }//GEN-LAST:event_txtCantidadKeyPressed
 
     public void setPracticante(Practicante prac) {
         this.practicante = prac;

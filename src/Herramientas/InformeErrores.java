@@ -18,7 +18,7 @@ public class InformeErrores {
     private static final String RUTA = "C:\\SicoseoLog\\informe_errores.txt"; 
     private File f;
         
-    public void escribirError(Exception ex){
+    public void escribirError(Exception ex, String clase, String mensaje){
         try {
             f = new File(RUTA);
             FileWriter w = new FileWriter(f, true);
@@ -30,7 +30,9 @@ public class InformeErrores {
                     + "/" + Calendar.getInstance().get(Calendar.DAY_OF_MONTH)
                     + " ---------------\r\n");
             wr.append("Mensaje de error: " + ex.getMessage() + "\r\n");
-            wr.append("Clase de origen: " + ex.getLocalizedMessage() + "\r\n");
+            wr.append("Más detalles: " + ex.toString()+ "\r\n");
+            wr.append("Clase de origen: " + clase + "\r\n");
+            wr.append("Metodo: " + mensaje + "\r\n");
             wr.append("===========================================+ \r\n");
             wr.append("\r\n");
             wr.append("\r\n");

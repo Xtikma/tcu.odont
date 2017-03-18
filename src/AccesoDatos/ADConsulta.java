@@ -23,12 +23,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
 
 public class ADConsulta {
 
-    private Connection conexion = ConexionBD.conexion();
+    String ClaseError = "AccesoDatos.ADConsulta";
+    private Connection conexion = ConexionBD.conexion();;
     private SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
 
     public ArrayList<Consulta> listarConsultasArray(String desde, String hasta) {
@@ -64,13 +63,14 @@ public class ADConsulta {
 
                     lista.add(temp);
                 } catch (SQLException ex) {
-                    System.out.println("Ubicación: cargarConsultas.while " + ex.getMessage());
+                    conexion.close();
+                    Herramientas.InformeErrores.getInforme().escribirError(ex, ClaseError, "listarConsultasArray.while");
                     throw ex;
                 }
             }
             return lista;
         } catch (Exception e) {
-            System.out.println("Ubicación: cargarConsultas " + e.getMessage());
+            Herramientas.InformeErrores.getInforme().escribirError(e, ClaseError, "listarConsultasArray");
             return lista;
         }
     }
@@ -82,14 +82,13 @@ public class ADConsulta {
      * @param c objeto consulta.
      * @return
      */
-    public boolean almacenarConsulta(Consulta c) throws SQLException{
+    public boolean almacenarConsulta(Consulta c) throws SQLException {
         ResultSet rs;
         int index = 0;
         boolean sucefull = false;
         int agrego = 0;
-        
+
         try {
-            conexion.close();
             CallableStatement cc = conexion.prepareCall("{call insertar_consulta_encabezado(?,?,?,?,?,?)}");
             cc.setString(1, getFecha(c.getFechaConsulta()));
             cc.setDouble(2, c.getTotalConsulta());
@@ -98,19 +97,19 @@ public class ADConsulta {
             cc.setInt(5, c.getIdPracticante());
             cc.setInt(6, c.getIdLugar());
             agrego = cc.executeUpdate();
+            
 
             if (c.getListaProcedimientos().size() > 0) {
-                
+
                 cc = conexion.prepareCall("call obtener_ultima_categoria()");
                 rs = cc.executeQuery();
                 rs.first();
                 index = rs.getInt(1);
-
                 sucefull = guardarDetalles(c.getListaProcedimientos(), index);
-                
+
             }
         } catch (Exception e) {
-            Herramientas.InformeErrores.getInforme().escribirError(e);
+            Herramientas.InformeErrores.getInforme().escribirError(e, ClaseError, "almacenarConsulta");
             throw e;
         }
         if (sucefull == true && agrego > 0) {
@@ -128,7 +127,7 @@ public class ADConsulta {
      * @param idConsulta la id de la consulta recien ingresada.
      * @return true si se agregaron todos los detalles de la consulta
      */
-    private boolean guardarDetalles(ArrayList<ProcedimientoConsulta> detalles, int idConsulta) {
+    private boolean guardarDetalles(ArrayList<ProcedimientoConsulta> detalles, int idConsulta) throws SQLException {
         int agregado = 0;
         try {
             CallableStatement cc = conexion.prepareCall("{call agregar_procedimiento_a_consulta(?,?,?,?)}");
@@ -144,7 +143,7 @@ public class ADConsulta {
                 }
             }
         } catch (Exception e) {
-            System.out.println("Ubicación: guardarDetalles " + e.getMessage());
+            Herramientas.InformeErrores.getInforme().escribirError(e, ClaseError, "guardarDetalles");
             return false;
         }
         if (agregado == detalles.size()) {
@@ -170,15 +169,14 @@ public class ADConsulta {
         }
     }
 
-    private boolean limpiarDetallesConsulta(int idconsulta) {
+    private boolean limpiarDetallesConsulta(int idconsulta) throws SQLException {
         int funciono = 0;
         try {
             CallableStatement cc = conexion.prepareCall("{call limpiar_detalles(?)}");
             cc.setInt(1, idconsulta);
             funciono = cc.executeUpdate();
-
         } catch (Exception e) {
-            System.out.println("Ubicación: almacenarConsulta " + e.getMessage());
+            Herramientas.InformeErrores.getInforme().escribirError(e, ClaseError, "limpiarDetallesConsulta");
             return false;
         }
         if (funciono > 0) {
@@ -188,8 +186,7 @@ public class ADConsulta {
         }
     }
 
-    public boolean actualizarConsulta(Consulta c) {
-        ResultSet rs;
+    public boolean actualizarConsulta(Consulta c) throws SQLException {
         boolean sucefull = false;
         int agrego = 0;
         try {
@@ -207,8 +204,9 @@ public class ADConsulta {
                 limpiarDetallesConsulta(c.getIdConsulta());
                 sucefull = guardarDetalles(c.getListaProcedimientos(), c.getIdConsulta());
             }
+            conexion.close();
         } catch (Exception e) {
-            System.out.println("Ubicación: almacenarConsulta " + e.getMessage());
+            Herramientas.InformeErrores.getInforme().escribirError(e, ClaseError, "actualizarConsulta");
             return false;
         }
         if (sucefull == true && agrego > 0) {
@@ -218,7 +216,7 @@ public class ADConsulta {
         }
     }
 
-    public ArrayList<ProcedimientoConsulta> obtenerDetalles(int idConsulta) {
+    public ArrayList<ProcedimientoConsulta> obtenerDetalles(int idConsulta) throws SQLException {
         ArrayList<ProcedimientoConsulta> lista = new ArrayList<ProcedimientoConsulta>();
         ProcedimientoConsulta temp;
         try {
@@ -237,25 +235,29 @@ public class ADConsulta {
                     temp.setPrecioHistorico(rsConsultas.getDouble(6));
                     lista.add(temp);
                 } catch (SQLException ex) {
-                    System.out.println("Ubicación: cargarConsultas.while " + ex.getMessage());
+                    Herramientas.InformeErrores.getInforme().escribirError(ex, ClaseError, "obtenerDetalles.while");
                     throw ex;
                 }
             }
+            conexion.close();
             return lista;
         } catch (Exception e) {
-            System.out.println("Ubicación: cargarConsultas " + e.getMessage());
+            Herramientas.InformeErrores.getInforme().escribirError(e, ClaseError, "obtenerDetalles");
             return lista;
         }
     }
-    
-    public boolean eliminarConsulta(int idc){
+
+    public boolean eliminarConsulta(int idc) {
         int eliminado = 0;
         try {
+            conexion = ConexionBD.conexion();
             CallableStatement cc = conexion.prepareCall("{CALL eliminar_consulta (?)}");
             cc.setInt(1, idc);
-            
-             eliminado = cc.executeUpdate();
+
+            eliminado = cc.executeUpdate();
+            conexion.close();
         } catch (Exception e) {
+            Herramientas.InformeErrores.getInforme().escribirError(e, ClaseError, "eliminarConsulta");
             return false;
         }
         if (eliminado > 0) {

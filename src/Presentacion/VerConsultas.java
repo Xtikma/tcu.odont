@@ -11,6 +11,7 @@ import AccesoDatos.ADConsulta;
 import Entidades.Consulta;
 import com.toedter.calendar.JDateChooser;
 import java.sql.Date;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -308,7 +309,8 @@ public class VerConsultas extends javax.swing.JPanel {
     private void jBEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBEliminarActionPerformed
         int indiceFila = jT_ListarConsultas.getSelectedRow();
         
-        if (indiceFila >= 0) {
+        try {
+            if (indiceFila >= 0) {
             ADConsulta bd = new ADConsulta();
             boolean resultado = bd.eliminarConsulta(lista.get(indiceFila).getIdConsulta());
             if (resultado == true) {
@@ -321,6 +323,9 @@ public class VerConsultas extends javax.swing.JPanel {
         } else {
             JOptionPane.showMessageDialog(null, "Debe seleccionar una consulta.", "Advertencia", JOptionPane.ERROR_MESSAGE);
         }
+        } catch (SQLException e) {
+        }
+        
     }//GEN-LAST:event_jBEliminarActionPerformed
 
     private void jText_BuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jText_BuscarKeyReleased

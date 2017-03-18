@@ -19,7 +19,8 @@ import java.util.ArrayList;
  */
 public class ADCategoria {
     
-    private final Connection conexion = ConexionBD.conexion();
+    private static Connection conexion = ConexionBD.conexion();;
+    private String Clase = "AccesoDatos.ADCategoria";
     
    // <editor-fold desc="Metodos para categoria">
     
@@ -43,10 +44,10 @@ public class ADCategoria {
                 index = rs.getInt(1);
                 insertarProcedimientos(cat.getProcedimientos(), index);
             }
-            
         } catch (SQLException e) {
-            System.out.println("Ubicación: insertarCategoria " + e.getMessage());
+            Herramientas.InformeErrores.getInforme().escribirError(e, Clase, "insertarCategoria");
         }
+        
     }
     
     public void actualizarCategoria(Categoria cat){
@@ -61,12 +62,12 @@ public class ADCategoria {
                 actualizarProcedimientos(cat.getProcedimientos(), cat.getId());
             }
         } catch (SQLException e) {
-            System.out.println("Ubicación: actualizarCategoria " + e.getMessage());
+            Herramientas.InformeErrores.getInforme().escribirError(e, Clase, "actualizarCategoria");
         }
     }
     
     
-    public ArrayList<Categoria> obtenerCategorias(){
+    public ArrayList<Categoria> obtenerCategorias() {
         try {
             ResultSet rsCategorias = null;
             ArrayList<Categoria> lista = new ArrayList<Categoria>();
@@ -74,26 +75,28 @@ public class ADCategoria {
             copia = cargarProcedimientos();
             Categoria temp;
             CallableStatement cs = conexion.prepareCall("call obtener_categorias()");
-            rsCategorias = cs.executeQuery();            
-            
+            rsCategorias = cs.executeQuery();
+
             while (rsCategorias.next()) {
                 try {
                     temp = new Categoria(rsCategorias.getInt(1), rsCategorias.getString(2));
                     lista.add(temp);
                 } catch (SQLException ex) {
-                    System.out.println("Ubicación: obtenerCategorias.while " + ex.getMessage());
+                    Herramientas.InformeErrores.getInforme().escribirError(ex, Clase, "obtenerCategorias.while");
+                    throw ex;
+
                 }
             }
-            for(int i = 0; i < lista.size(); i++){
-                for (int j = 0; j < copia.size(); j++){
+            for (int i = 0; i < lista.size(); i++) {
+                for (int j = 0; j < copia.size(); j++) {
                     if (lista.get(i).getId() == copia.get(j).getIdCategoria()) {
                         lista.get(i).agregarProcedimiento(copia.get(j));
                     }
                 }
-            }            
-            return lista; 
+            }
+            return lista;
         } catch (SQLException e) {
-            System.out.println("Ubicación: obtenerCategorias " + e.getMessage());
+            Herramientas.InformeErrores.getInforme().escribirError(e, Clase, "obtenerCategorias");
             return null;
         }
     }
@@ -111,7 +114,7 @@ public class ADCategoria {
                 cc.executeUpdate();
             }
         } catch (SQLException e) {
-            System.out.println("Ubicación: insertarProcedimientos " + e.getMessage());
+            Herramientas.InformeErrores.getInforme().escribirError(e, Clase, "insertarProcedimientos");
         }   
     }
     
@@ -135,14 +138,10 @@ public class ADCategoria {
                     cs.setInt(3, index);
                     cs.executeUpdate();
                 }
-            }            
+            }
         } catch (SQLException e) {
-            System.out.println("Ubicación: actualizarProcedimientos " + e.getMessage());
+            Herramientas.InformeErrores.getInforme().escribirError(e, Clase, "actualizarProcedimientos");
         }
-    }
-    
-    public void eliminarProcedimiento(int id){
-        
     }
     
     public void moverProcedimiento(int idProcedimiento, int idCategoria){
@@ -152,7 +151,7 @@ public class ADCategoria {
             cc.setInt(2, idCategoria);
             cc.executeUpdate();
         } catch (SQLException e) {
-            System.out.println("Ubicación: moverProcedimientos " + e.getMessage());
+            Herramientas.InformeErrores.getInforme().escribirError(e, Clase, "moverProcedimiento");
         }
     }
     
@@ -169,13 +168,13 @@ public class ADCategoria {
                     temp = new Procedimiento(rs.getInt(1), rs.getString(2), rs.getDouble(3), rs.getInt(4));
                     lista.add(temp);
                 } catch (SQLException ex) {
-                    System.out.println("Ubicación: cargarProcedimientos.while " + ex.getMessage());
+                    Herramientas.InformeErrores.getInforme().escribirError(ex, Clase, "cargarProcedimientos.while");
                     throw ex;
                 }                
             }
             return lista;
         } catch (Exception e){            
-            System.out.println("Ubicación: cargarProcedimientos " + e.getMessage());
+            Herramientas.InformeErrores.getInforme().escribirError(e, Clase, "cargarProcedimientos");
             return lista;
         }
     }

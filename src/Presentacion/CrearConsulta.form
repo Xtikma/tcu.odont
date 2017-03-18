@@ -447,9 +447,6 @@
         </Property>
         <Property name="opaque" type="boolean" value="false"/>
       </Properties>
-      <Events>
-        <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="panelDetalleKeyPressed"/>
-      </Events>
 
       <Layout>
         <DimensionLayout dim="0">
@@ -570,6 +567,7 @@
             <Property name="toolTipText" type="java.lang.String" value="Agregue la cantidad del mismo procedimiento que agrego"/>
           </Properties>
           <Events>
+            <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtCantidadKeyPressed"/>
             <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtCantidadKeyTyped"/>
           </Events>
         </Component>
