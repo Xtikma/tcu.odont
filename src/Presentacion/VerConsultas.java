@@ -309,8 +309,7 @@ public class VerConsultas extends javax.swing.JPanel {
     private void jBEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBEliminarActionPerformed
         int indiceFila = jT_ListarConsultas.getSelectedRow();
         
-        try {
-            if (indiceFila >= 0) {
+        if (indiceFila >= 0) {
             ADConsulta bd = new ADConsulta();
             boolean resultado = bd.eliminarConsulta(lista.get(indiceFila).getIdConsulta());
             if (resultado == true) {
@@ -322,8 +321,6 @@ public class VerConsultas extends javax.swing.JPanel {
             
         } else {
             JOptionPane.showMessageDialog(null, "Debe seleccionar una consulta.", "Advertencia", JOptionPane.ERROR_MESSAGE);
-        }
-        } catch (SQLException e) {
         }
         
     }//GEN-LAST:event_jBEliminarActionPerformed

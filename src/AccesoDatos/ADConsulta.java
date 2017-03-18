@@ -61,6 +61,7 @@ public class ADConsulta {
                     temp = new Consulta(rsConsultas.getInt(1), rsConsultas.getDate(2),
                             rsConsultas.getDouble(3), pac, dr, pr, lug);
 
+         
                     lista.add(temp);
                 } catch (SQLException ex) {
                     conexion.close();
