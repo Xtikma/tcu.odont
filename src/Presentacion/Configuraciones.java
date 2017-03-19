@@ -5,6 +5,7 @@
  */
 package Presentacion;
 
+import AccesoDatos.ADExtras;
 import javax.swing.JOptionPane;
 import AccesoDatos.ADPassword;
 import java.util.ArrayList;
@@ -42,6 +43,18 @@ private Menu menu = null;
         passOldConfirm = new javax.swing.JPasswordField();
         btnAplicarPass = new javax.swing.JButton();
         btnRegresar = new javax.swing.JButton();
+        panelAjustesAnuales = new javax.swing.JPanel();
+        lb1 = new javax.swing.JLabel();
+        btnEjecutarPrimerIngreso = new javax.swing.JButton();
+        lb2 = new javax.swing.JLabel();
+        btnEjecutarActualizarEdad = new javax.swing.JButton();
+        panelCreditos = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
 
         setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Otros Ajustes", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 14))); // NOI18N
         setMaximumSize(new java.awt.Dimension(1000, 500));
@@ -112,6 +125,7 @@ private Menu menu = null;
                 .addContainerGap(22, Short.MAX_VALUE))
         );
 
+        btnRegresar.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         btnRegresar.setForeground(new java.awt.Color(255, 0, 0));
         btnRegresar.setText("<< Regresar");
         btnRegresar.setMaximumSize(new java.awt.Dimension(100, 35));
@@ -123,6 +137,134 @@ private Menu menu = null;
             }
         });
 
+        panelAjustesAnuales.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Ajustes anuales", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 14))); // NOI18N
+        panelAjustesAnuales.setOpaque(false);
+        panelAjustesAnuales.setPreferredSize(new java.awt.Dimension(311, 203));
+
+        lb1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lb1.setText("Deshacer el primer ingreso del anterior ciclo lectivo.");
+
+        btnEjecutarPrimerIngreso.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        btnEjecutarPrimerIngreso.setText("Deshacer primer ingreso");
+        btnEjecutarPrimerIngreso.setToolTipText("Utilice este botón al iniciar un nuevo ciclo lectivo.");
+        btnEjecutarPrimerIngreso.setPreferredSize(new java.awt.Dimension(172, 35));
+        btnEjecutarPrimerIngreso.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEjecutarPrimerIngresoActionPerformed(evt);
+            }
+        });
+
+        lb2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lb2.setText("Recalcular Edad (Fechas de Nacimiento)");
+
+        btnEjecutarActualizarEdad.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        btnEjecutarActualizarEdad.setText("Actualizar edades");
+        btnEjecutarActualizarEdad.setToolTipText("Utilice este botón para recalcular la edad basandose en la fecha de nacimiento.");
+        btnEjecutarActualizarEdad.setMaximumSize(new java.awt.Dimension(172, 35));
+        btnEjecutarActualizarEdad.setMinimumSize(new java.awt.Dimension(172, 35));
+        btnEjecutarActualizarEdad.setPreferredSize(new java.awt.Dimension(172, 35));
+        btnEjecutarActualizarEdad.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEjecutarActualizarEdadActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout panelAjustesAnualesLayout = new javax.swing.GroupLayout(panelAjustesAnuales);
+        panelAjustesAnuales.setLayout(panelAjustesAnualesLayout);
+        panelAjustesAnualesLayout.setHorizontalGroup(
+            panelAjustesAnualesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelAjustesAnualesLayout.createSequentialGroup()
+                .addGroup(panelAjustesAnualesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelAjustesAnualesLayout.createSequentialGroup()
+                        .addGap(27, 27, 27)
+                        .addGroup(panelAjustesAnualesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnEjecutarPrimerIngreso, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnEjecutarActualizarEdad, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(panelAjustesAnualesLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(lb2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(lb1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        panelAjustesAnualesLayout.setVerticalGroup(
+            panelAjustesAnualesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelAjustesAnualesLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lb1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnEjecutarPrimerIngreso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lb2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnEjecutarActualizarEdad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        panelCreditos.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Creditos", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 14))); // NOI18N
+        panelCreditos.setToolTipText("");
+        panelCreditos.setMaximumSize(new java.awt.Dimension(311, 194));
+        panelCreditos.setMinimumSize(new java.awt.Dimension(311, 194));
+        panelCreditos.setOpaque(false);
+        panelCreditos.setPreferredSize(new java.awt.Dimension(311, 194));
+
+        jLabel1.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("Software realizado durante el TCU 582");
+
+        jLabel2.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setText("Proyecto Interdisciplinario de Atención a la Salud");
+
+        jLabel3.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel3.setText("Realizado por los estudiantes:");
+
+        jLabel4.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel4.setText("Alejandra Anchía");
+
+        jLabel5.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel5.setText("David Olivas");
+
+        jLabel6.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel6.setText("Keylor Vargas");
+
+        javax.swing.GroupLayout panelCreditosLayout = new javax.swing.GroupLayout(panelCreditos);
+        panelCreditos.setLayout(panelCreditosLayout);
+        panelCreditosLayout.setHorizontalGroup(
+            panelCreditosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelCreditosLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panelCreditosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(11, 11, 11))
+            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 322, Short.MAX_VALUE)
+        );
+        panelCreditosLayout.setVerticalGroup(
+            panelCreditosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelCreditosLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel6)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -130,18 +272,28 @@ private Menu menu = null;
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(panelContrasena, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(665, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(panelContrasena, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(panelAjustesAnuales, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(panelCreditos, javax.swing.GroupLayout.DEFAULT_SIZE, 332, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(panelContrasena, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(panelAjustesAnuales, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(panelContrasena, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(panelCreditos, javax.swing.GroupLayout.DEFAULT_SIZE, 203, Short.MAX_VALUE))
+                .addGap(32, 32, 32)
                 .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(224, Short.MAX_VALUE))
+                .addContainerGap(198, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -199,6 +351,26 @@ private Menu menu = null;
         }
     }//GEN-LAST:event_btnAplicarPassActionPerformed
 
+    private void btnEjecutarActualizarEdadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEjecutarActualizarEdadActionPerformed
+        try {
+             ADExtras access = new ADExtras();
+             access.ActualizarEdades();
+             JOptionPane.showMessageDialog(null, "Tarea Ejecutada.", "Exito!",  JOptionPane.INFORMATION_MESSAGE);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Se ha presentado un error al realizar la tarea", "Error!",  JOptionPane.ERROR_MESSAGE);
+        }      
+    }//GEN-LAST:event_btnEjecutarActualizarEdadActionPerformed
+
+    private void btnEjecutarPrimerIngresoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEjecutarPrimerIngresoActionPerformed
+        try {
+             ADExtras access = new ADExtras();
+             access.LimpiarPrimerIngreso();
+             JOptionPane.showMessageDialog(null, "Tarea Ejecutada.", "Exito!",  JOptionPane.INFORMATION_MESSAGE);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Se ha presentado un error al realizar la tarea", "Error!",  JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnEjecutarPrimerIngresoActionPerformed
+
     public boolean consultarListaContrasena(String contrasena) {
         boolean password = false;
         ADPassword pw = new ADPassword();
@@ -228,11 +400,23 @@ private Menu menu = null;
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAplicarPass;
+    private javax.swing.JButton btnEjecutarActualizarEdad;
+    private javax.swing.JButton btnEjecutarPrimerIngreso;
     private javax.swing.JButton btnRegresar;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel lb1;
+    private javax.swing.JLabel lb2;
     private javax.swing.JLabel lbPassConfirmed;
     private javax.swing.JLabel lbPassNew;
     private javax.swing.JLabel lbPassOld;
+    private javax.swing.JPanel panelAjustesAnuales;
     private javax.swing.JPanel panelContrasena;
+    private javax.swing.JPanel panelCreditos;
     private javax.swing.JPasswordField passNew;
     private javax.swing.JPasswordField passOld;
     private javax.swing.JPasswordField passOldConfirm;
