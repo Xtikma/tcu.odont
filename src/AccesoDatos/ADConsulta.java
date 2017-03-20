@@ -90,6 +90,10 @@ public class ADConsulta {
         int agrego = 0;
 
         try {
+            if (conexion.isClosed() == false) {
+                conexion.close();
+                conexion = ConexionBD.conexion();
+            }
             CallableStatement cc = conexion.prepareCall("{call insertar_consulta_encabezado(?,?,?,?,?,?)}");
             cc.setString(1, getFecha(c.getFechaConsulta()));
             cc.setDouble(2, c.getTotalConsulta());
@@ -98,8 +102,7 @@ public class ADConsulta {
             cc.setInt(5, c.getIdPracticante());
             cc.setInt(6, c.getIdLugar());
             agrego = cc.executeUpdate();
-            
-
+        
             if (c.getListaProcedimientos().size() > 0) {
 
                 cc = conexion.prepareCall("call obtener_ultima_categoria()");

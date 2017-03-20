@@ -50,6 +50,7 @@ public class CrearConsulta extends javax.swing.JPanel{
         cargarLugares();
         isNuevo = true;
         centrarColumans();
+        fechaDefecto();
     }
     
     /**
@@ -597,7 +598,7 @@ public class CrearConsulta extends javax.swing.JPanel{
                     }
                     if (exito == true) {
                         JOptionPane.showMessageDialog(null, "Se ha almacenado con exito la consulta.", "Exito!", JOptionPane.INFORMATION_MESSAGE);
-                        limpiarCampos();
+                        menu.intercambiarPaneles(7);
                     }
                 }
 
@@ -709,6 +710,7 @@ public class CrearConsulta extends javax.swing.JPanel{
             tblProcedimientos.setModel(model);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Ha ocurrdio un error alactualizar los detalles de la consulta.", "Fallido!", JOptionPane.ERROR_MESSAGE);
+            Herramientas.InformeErrores.getInforme().escribirError(e, "CrearConsulta", "AgregarDetalle");
         }
                
     }
@@ -725,6 +727,7 @@ public class CrearConsulta extends javax.swing.JPanel{
         txtTotal.setText("");
         DefaultTableModel model = new DefaultTableModel();
         tblProcedimientos.setModel(model);
+        fechaDefecto();
     }
     
     private void agregarDetalle() {
@@ -762,6 +765,10 @@ public class CrearConsulta extends javax.swing.JPanel{
         VentanaBusqueda search = new VentanaBusqueda(3, this);
         search.setLocationRelativeTo(this);
         search.setVisible(true);
+    }
+    
+    private void fechaDefecto(){
+        fechaConsulta.setDate(new Date());
     }
     
     /** centrarColumnas
