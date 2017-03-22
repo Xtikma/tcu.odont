@@ -282,6 +282,11 @@ public class VentanaBusqueda extends javax.swing.JFrame {
         setMaximumSize(new java.awt.Dimension(550, 550));
         setMinimumSize(null);
         setPreferredSize(new java.awt.Dimension(550, 550));
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         lblTexto.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         lblTexto.setText("Buscar:");
@@ -462,13 +467,17 @@ public class VentanaBusqueda extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_boxClasificacionItemStateChanged
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        origen.deslimitarVentanas();
+    }//GEN-LAST:event_formWindowClosing
     
     private void DefinirTema(){
         try {
             JFrame.setDefaultLookAndFeelDecorated(true);
             SubstanceLookAndFeel.setSkin("org.jvnet.substance.skin.OfficeBlue2007Skin");
         } catch (Exception e) {
-            System.out.println("->" + e.getMessage());
+            Herramientas.InformeErrores.getInforme().escribirError(e, "VentanaBusqueda", "DefinirTema");
         }
     }
     

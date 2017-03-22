@@ -93,7 +93,8 @@ public class MetodosBusqueda {
                     c.getPracticante().getNombre().toLowerCase().matches("(.*)" + criterio.toLowerCase() + "(.*)") ||
                     c.getPaciente().getNombre().toLowerCase().matches("(.*)" + criterio.toLowerCase() + "(.*)") ||
                     c.getPaciente().getPrimerApellido().toLowerCase().matches("(.*)" + criterio.toLowerCase() + "(.*)") ||
-                    c.getPaciente().getSegundoApellido().toLowerCase().matches("(.*)" + criterio.toLowerCase() + "(.*)")) {
+                    c.getPaciente().getSegundoApellido().toLowerCase().matches("(.*)" + criterio.toLowerCase() + "(.*)") ||
+                    c.getPaciente().getCarne().toLowerCase().matches("(.*)" + criterio.toLowerCase() + "(.*)")) {
                 copia.add(c);
             }            
         }

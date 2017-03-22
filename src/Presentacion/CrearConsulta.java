@@ -36,7 +36,7 @@ public class CrearConsulta extends javax.swing.JPanel{
     private boolean isNuevo = false;
     private ADConsulta acceso;
     private Menu menu = null;
-    
+    private boolean subVentana = false;
     
     
     
@@ -511,9 +511,16 @@ public class CrearConsulta extends javax.swing.JPanel{
     }//GEN-LAST:event_fechaConsultaKeyTyped
 
     private void btnPacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPacienteActionPerformed
-        VentanaBusqueda search = new VentanaBusqueda(0, this);
-        search.setLocationRelativeTo(this);
-        search.setVisible(true);        
+        try {
+            if (subVentana == false) {
+                VentanaBusqueda search = new VentanaBusqueda(0, this);
+                search.setLocationRelativeTo(this);
+                search.setVisible(true);
+                subVentana = true;
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error al iniciar la busqueda de pacientes", "Error!", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btnPacienteActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
@@ -535,9 +542,12 @@ public class CrearConsulta extends javax.swing.JPanel{
 
     private void btnDoctorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDoctorActionPerformed
         try {
-            VentanaBusqueda searchPaciente = new VentanaBusqueda(1, this);
-            searchPaciente.setLocationRelativeTo(this);
-            searchPaciente.setVisible(true);
+            if (subVentana == false) {
+                VentanaBusqueda searchPaciente = new VentanaBusqueda(1, this);
+                searchPaciente.setLocationRelativeTo(this);
+                searchPaciente.setVisible(true);
+                subVentana = true;
+            }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Ha ocurrido un error al iniciar la busqueda de doctores", "Error!", JOptionPane.ERROR_MESSAGE);
         }        
@@ -545,9 +555,12 @@ public class CrearConsulta extends javax.swing.JPanel{
 
     private void btnPracticanteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPracticanteActionPerformed
         try {
-            VentanaBusqueda search = new VentanaBusqueda(2, this);
-            search.setLocationRelativeTo(this);
-            search.setVisible(true);
+            if (subVentana == false) {
+                VentanaBusqueda search = new VentanaBusqueda(2, this);
+                search.setLocationRelativeTo(this);
+                search.setVisible(true);
+                subVentana = true;
+            }            
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Ha ocurrido un error al iniciar la busqueda de Practicantes", "Error!", JOptionPane.ERROR_MESSAGE);
         }
@@ -781,6 +794,10 @@ public class CrearConsulta extends javax.swing.JPanel{
         tblProcedimientos.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
         tblProcedimientos.getColumnModel().getColumn(2).setCellRenderer(centerRenderer);
         tblProcedimientos.getColumnModel().getColumn(3).setCellRenderer(centerRenderer);
+    }
+    
+    public void deslimitarVentanas(){
+        subVentana = false;
     }
     
 
