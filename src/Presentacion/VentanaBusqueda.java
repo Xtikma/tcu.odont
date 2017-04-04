@@ -414,6 +414,7 @@ public class VentanaBusqueda extends javax.swing.JFrame {
                         }
                     }
                     origen.setPaciente(pac);
+                    origen.deslimitarVentanas();
                     this.dispose();
                     break;
                 case 1:
@@ -421,6 +422,7 @@ public class VentanaBusqueda extends javax.swing.JFrame {
                             tblGenerica.getValueAt(selected, 0).toString().trim()),
                             tblGenerica.getValueAt(selected, 1).toString(),
                             true));
+                    origen.deslimitarVentanas();
                     this.dispose();
                     break;
                 case 2:
@@ -428,6 +430,7 @@ public class VentanaBusqueda extends javax.swing.JFrame {
                             tblGenerica.getValueAt(selected, 0).toString().trim()),
                             tblGenerica.getValueAt(selected, 1).toString(),
                             true));
+                    origen.deslimitarVentanas();
                     this.dispose();
                     break;
                 case 3:
@@ -441,6 +444,7 @@ public class VentanaBusqueda extends javax.swing.JFrame {
                             for (Procedimiento p : ct.getProcedimientos()) {
                                 if (p.getNombre().equals(
                                         tblGenerica.getValueAt(selected, 0)) == true) {
+                                    origen.deslimitarVentanas();
                                     origen.setProcedimiento(p);
                                     this.dispose();
                                 }
