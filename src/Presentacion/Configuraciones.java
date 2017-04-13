@@ -397,6 +397,8 @@ private Menu menu = null;
         }
         return password;
     }
+       
+       //Hola hago prueba
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAplicarPass;
