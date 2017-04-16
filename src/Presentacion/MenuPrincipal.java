@@ -23,7 +23,6 @@ public class MenuPrincipal extends javax.swing.JPanel {
         m = me;
         //Reactivar cuando se agregue la función
         btnFiltros.setEnabled(false);
-        btnInformes.setEnabled(false);
         //
     }
 
@@ -57,12 +56,11 @@ public class MenuPrincipal extends javax.swing.JPanel {
         setOpaque(false);
         setPreferredSize(new java.awt.Dimension(1000, 500));
 
-        panelSecundarios.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Otras Funciones", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 12))); // NOI18N
+        panelSecundarios.setBorder(javax.swing.BorderFactory.createTitledBorder("Otras Funciones"));
         panelSecundarios.setOpaque(false);
         panelSecundarios.setPreferredSize(new java.awt.Dimension(275, 450));
         panelSecundarios.setLayout(null);
 
-        btnDoctor.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         btnDoctor.setText("Configuraciones de Doctor");
         btnDoctor.setPreferredSize(new java.awt.Dimension(182, 50));
         btnDoctor.addActionListener(new java.awt.event.ActionListener() {
@@ -73,7 +71,6 @@ public class MenuPrincipal extends javax.swing.JPanel {
         panelSecundarios.add(btnDoctor);
         btnDoctor.setBounds(11, 18, 253, 50);
 
-        btnPracticantes.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         btnPracticantes.setText("Configuraciones de Estudiantes");
         btnPracticantes.setPreferredSize(new java.awt.Dimension(182, 50));
         btnPracticantes.addActionListener(new java.awt.event.ActionListener() {
@@ -84,7 +81,6 @@ public class MenuPrincipal extends javax.swing.JPanel {
         panelSecundarios.add(btnPracticantes);
         btnPracticantes.setBounds(11, 74, 253, 50);
 
-        btnTiposIden.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         btnTiposIden.setText("Conf. de Tipos de Identificación");
         btnTiposIden.setPreferredSize(new java.awt.Dimension(182, 50));
         btnTiposIden.addActionListener(new java.awt.event.ActionListener() {
@@ -95,7 +91,6 @@ public class MenuPrincipal extends javax.swing.JPanel {
         panelSecundarios.add(btnTiposIden);
         btnTiposIden.setBounds(11, 130, 253, 50);
 
-        btnLugar.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         btnLugar.setText("Configuraciones de Lugares");
         btnLugar.setPreferredSize(new java.awt.Dimension(182, 50));
         btnLugar.addActionListener(new java.awt.event.ActionListener() {
@@ -106,7 +101,6 @@ public class MenuPrincipal extends javax.swing.JPanel {
         panelSecundarios.add(btnLugar);
         btnLugar.setBounds(11, 186, 253, 50);
 
-        btnPoblacion.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         btnPoblacion.setText("Configuraciones de Poblaciones");
         btnPoblacion.setPreferredSize(new java.awt.Dimension(182, 50));
         btnPoblacion.addActionListener(new java.awt.event.ActionListener() {
@@ -117,7 +111,6 @@ public class MenuPrincipal extends javax.swing.JPanel {
         panelSecundarios.add(btnPoblacion);
         btnPoblacion.setBounds(11, 242, 253, 50);
 
-        btnCatProc.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         btnCatProc.setText("Conf. de Categorias y Procedimientos");
         btnCatProc.setPreferredSize(new java.awt.Dimension(182, 50));
         btnCatProc.addActionListener(new java.awt.event.ActionListener() {
@@ -128,7 +121,6 @@ public class MenuPrincipal extends javax.swing.JPanel {
         panelSecundarios.add(btnCatProc);
         btnCatProc.setBounds(11, 298, 253, 50);
 
-        btnAjustes.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         btnAjustes.setText("Otros Ajustes");
         btnAjustes.setPreferredSize(new java.awt.Dimension(182, 50));
         btnAjustes.addActionListener(new java.awt.event.ActionListener() {
@@ -178,6 +170,11 @@ public class MenuPrincipal extends javax.swing.JPanel {
         btnInformes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/generarInformes.png"))); // NOI18N
         btnInformes.setBorderPainted(false);
         btnInformes.setOpaque(false);
+        btnInformes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnInformesActionPerformed(evt);
+            }
+        });
 
         btnBloqueo.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
         btnBloqueo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/bloquearSistema.png"))); // NOI18N
@@ -289,6 +286,10 @@ public class MenuPrincipal extends javax.swing.JPanel {
     private void btnAjustesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAjustesActionPerformed
         m.intercambiarPaneles(10);
     }//GEN-LAST:event_btnAjustesActionPerformed
+
+    private void btnInformesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInformesActionPerformed
+        m.intercambiarPaneles(11);
+    }//GEN-LAST:event_btnInformesActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
