@@ -35,6 +35,7 @@ public class CargarInforme extends javax.swing.JPanel {
     private void initComponents() {
 
         PanelConfiguraciones = new javax.swing.JPanel();
+        panelPlantilla = new javax.swing.JPanel();
 
         setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Elaboración de Informes", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 14))); // NOI18N
         setMaximumSize(new java.awt.Dimension(1000, 500));
@@ -57,13 +58,28 @@ public class CargarInforme extends javax.swing.JPanel {
             .addGap(0, 100, Short.MAX_VALUE)
         );
 
+        panelPlantilla.setOpaque(false);
+
+        javax.swing.GroupLayout panelPlantillaLayout = new javax.swing.GroupLayout(panelPlantilla);
+        panelPlantilla.setLayout(panelPlantillaLayout);
+        panelPlantillaLayout.setHorizontalGroup(
+            panelPlantillaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        panelPlantillaLayout.setVerticalGroup(
+            panelPlantillaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 356, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(PanelConfiguraciones, javax.swing.GroupLayout.PREFERRED_SIZE, 978, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(panelPlantilla, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(PanelConfiguraciones, javax.swing.GroupLayout.PREFERRED_SIZE, 978, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -71,12 +87,17 @@ public class CargarInforme extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(PanelConfiguraciones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(368, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(panelPlantilla, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    
-    public void cargarTareaEspecifica( int tareaCod){
+    /**
+     * 
+     * @param tareaCod 
+     */
+    public void cargarTareaEspecifica(int tareaCod){
         switch(tareaCod){
             case 0:
                 Tareas_Basicas tarea0 = new Tareas_Basicas(this);
@@ -93,6 +114,15 @@ public class CargarInforme extends javax.swing.JPanel {
         }
     }
     
+    public void CargarPlantillaEspecifica(int CodPlantilla){
+        switch(CodPlantilla){
+            case 0:
+                break;
+            case 1:
+                break;
+        }
+    }
+    
     public void insertarTareas(JPanel panel){
         try {
             PanelConfiguraciones.removeAll();
@@ -101,11 +131,24 @@ public class CargarInforme extends javax.swing.JPanel {
             PanelConfiguraciones.repaint();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Existe un problema al cargar la ventana", "Problema visual", JOptionPane.ERROR);
+            Herramientas.InformeErrores.getInforme().escribirError(e, "CargarInforme", "Insertar una tarea");
+        }
+    }
+    
+    public void InsertarPlantilla(JPanel panel){
+        try {
+            panelPlantilla.removeAll();
+            panelPlantilla.add(panel, BorderLayout.CENTER);
+            panelPlantilla.revalidate();
+            panelPlantilla.repaint();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Existe un problema al cargar la ventana", "Problema visual", JOptionPane.ERROR);
         }
     }
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel PanelConfiguraciones;
+    private javax.swing.JPanel panelPlantilla;
     // End of variables declaration//GEN-END:variables
 }

@@ -5,13 +5,27 @@
  */
 package Presentacion;
 
+import AccesoDatos.ADCategoria;
+import AccesoDatos.ADPoblacion;
+import Entidades.Categoria;
+import Entidades.Informe_GPxP;
+import Entidades.Poblacion;
+import Entidades.Procedimiento;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Keylor
  */
 public class Tareas_GastoProcPac extends javax.swing.JPanel {
     
-    CargarInforme ori;
+    private CargarInforme ori;
+    private ArrayList<Categoria> categoriasElegidas;
+    private ArrayList<Informe_GPxP> informe;
+    private List<Poblacion> poblaciones;
+    private Poblacion pobl;
 
     /**
      * Creates new form Tareas_GastoProcPac
@@ -19,6 +33,10 @@ public class Tareas_GastoProcPac extends javax.swing.JPanel {
     public Tareas_GastoProcPac(CargarInforme origen) {
         initComponents();
         ori = origen;
+        informe = new ArrayList<>();
+        categoriasElegidas = new ArrayList<Categoria>();
+        cargarPoblaciones();
+        btnBeneficios.setVisible(false);
     }
 
     /**
@@ -31,9 +49,14 @@ public class Tareas_GastoProcPac extends javax.swing.JPanel {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        boxPoblación = new javax.swing.JComboBox<>();
+        boxPoblacion = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        dateStart = new com.toedter.calendar.JDateChooser();
+        dateFinal = new com.toedter.calendar.JDateChooser();
+        btnCategorias = new javax.swing.JButton();
+        btnGenerar = new javax.swing.JButton();
+        btnBeneficios = new javax.swing.JButton();
 
         setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Gasto y procedimientos por paciente", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 14))); // NOI18N
         setMaximumSize(new java.awt.Dimension(978, 100));
@@ -44,13 +67,34 @@ public class Tareas_GastoProcPac extends javax.swing.JPanel {
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel1.setText("Seleccione población:");
 
-        boxPoblación.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        boxPoblacion.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                boxPoblacionItemStateChanged(evt);
+            }
+        });
 
         jLabel2.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel2.setText("Ciclo, fecha inicio:");
 
         jLabel3.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel3.setText("Ciclo, fecha inicio:");
+        jLabel3.setText("Ciclo, fecha final:");
+
+        btnCategorias.setText("Marcar categorias");
+        btnCategorias.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCategoriasActionPerformed(evt);
+            }
+        });
+
+        btnGenerar.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        btnGenerar.setText("Generar Informe");
+
+        btnBeneficios.setText("Beneficio");
+        btnBeneficios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBeneficiosActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -59,32 +103,113 @@ public class Tareas_GastoProcPac extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
+                    .addComponent(boxPoblacion, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(35, 35, 35)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2)
+                    .addComponent(dateStart, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(35, 35, 35)
-                        .addComponent(jLabel2)
-                        .addGap(44, 44, 44)
-                        .addComponent(jLabel3))
-                    .addComponent(boxPoblación, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(472, Short.MAX_VALUE))
+                        .addComponent(dateFinal, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnCategorias, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnBeneficios, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel3))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
+                .addComponent(btnGenerar, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel3))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(boxPoblación, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(11, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(btnGenerar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel1)
+                                .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(boxPoblacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(dateStart, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(jLabel3)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(dateFinal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnCategorias)
+                            .addComponent(btnBeneficios))))
+                .addGap(9, 9, 9))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnCategoriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCategoriasActionPerformed
+       cargarCategorias();
+    }//GEN-LAST:event_btnCategoriasActionPerformed
 
+    private void btnBeneficiosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBeneficiosActionPerformed
+        String[] opciones = {"No validar","Con beneficio (4-5)", "Sin beneficio (1-3)"};
+        int filtroBecas = 0;
+
+        String seleccion = (String) JOptionPane.showInputDialog(ori, "Seleccione el filtro a aplicar",
+                "Seleccione el filtro de beneficio", JOptionPane.INFORMATION_MESSAGE, null,
+                opciones, opciones[0]);
+        if (seleccion != null) {
+            //Cargar el metodo que edita el filtro
+        }
+    }//GEN-LAST:event_btnBeneficiosActionPerformed
+
+    private void boxPoblacionItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_boxPoblacionItemStateChanged
+        establecerBeneficio();
+    }//GEN-LAST:event_boxPoblacionItemStateChanged
+
+    private void establecerBeneficio(){
+        if (boxPoblacion.getItemCount() > 0) {
+            int item = boxPoblacion.getSelectedIndex();
+            pobl = poblaciones.get(item);
+            if (pobl.getBecado() == true) {
+                btnBeneficios.setVisible(true);
+            }
+        }
+    }
+
+    private void cargarCategorias(){
+        ADCategoria acceso = new ADCategoria();
+        ArrayList<Categoria> list = acceso.obtenerCategorias();
+        MarcarCategorias mc = new MarcarCategorias(list, categoriasElegidas, this);
+        mc.setLocationRelativeTo(ori);
+        mc.setVisible(true);
+    }
+    
+    private void cargarPoblaciones(){
+        ADPoblacion acceso = new ADPoblacion();
+        poblaciones = acceso.ConsultarPoblacion();
+        for (Poblacion p : poblaciones) {
+            boxPoblacion.addItem(p.getNombre());
+        }        
+    }
+    
+    public void setCategorias(ArrayList<Categoria> lista){
+        try {
+            categoriasElegidas = lista;
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(ori, "Error al almacenar las categorias seleccionadas", "Error al almacenar categorias", 0);
+            Herramientas.InformeErrores.getInforme().escribirError(e, "Tareas_GastoProcPac", "Al guardar las categorias");
+        }
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> boxPoblación;
+    private javax.swing.JComboBox<String> boxPoblacion;
+    private javax.swing.JButton btnBeneficios;
+    private javax.swing.JButton btnCategorias;
+    private javax.swing.JButton btnGenerar;
+    private com.toedter.calendar.JDateChooser dateFinal;
+    private com.toedter.calendar.JDateChooser dateStart;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

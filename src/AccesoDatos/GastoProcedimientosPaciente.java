@@ -3,7 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package AccesoDatos.ADInformes;
+package AccesoDatos;
+
+import javax.swing.JTable;
 
 /**
  *
@@ -12,8 +14,8 @@ package AccesoDatos.ADInformes;
 public class GastoProcedimientosPaciente {
     
     private String consultaPacientes = "select paciente.idPaciente, paciente.ValorIdentificacion, paciente.Carne, " +
-            "concat(paciente.Nombre,\" \",paciente.PrimerApellido,\" \",paciente.SegundoApellido) as ncompl " +
-            "from paciente where paciente.IdPoblacion ";
+            "paciente.Nombre, paciente.PrimerApellido, paciente.SegundoApellido " +
+            "from where paciente.Eliminado = false AND paciente.IdPoblacion ";
     private String consultaGasto = "select sum(pc.PrecioHistorico*pc.Cantidad) as total "
             + "from procedimientoxconsulta as pc inner join procedimiento " +
             " on procedimiento.idProcedimiento = pc.IdProcedimiento"
@@ -30,8 +32,10 @@ public class GastoProcedimientosPaciente {
         if (beneficio == true) {
             consultaPacientes = consultaPacientes + " AND paciente.Beca IN (4,5)";
         }else{
-            consultaPacientes = consultaPacientes + " AND paciente.Beca IN (1,2,3)";
+            consultaPacientes = consultaPacientes + " AND paciente.Beca IN (0,1,2,3)";
         }
+        
+       
     }    
     // </editor-fold>
     
