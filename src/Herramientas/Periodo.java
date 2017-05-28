@@ -1,12 +1,16 @@
 package Herramientas;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  *
  * @author doliv
  */
 public class Periodo {
     
-    
+    private SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
+    private SimpleDateFormat formatoVista = new SimpleDateFormat("dd-MM-yyyy");
     
     public Periodo () {
         
@@ -27,5 +31,23 @@ public class Periodo {
             //ver que se hace con las fechas que no pertenecen a ningún semestre
         }
         return semestre;
+    }
+    /**
+     * Formatea un Date a una cadena de texto para almacenarse en base de datos
+     * o presentarla en interfaz grafica.
+     * @param fecha el Date a formatear
+     * @param modo la manera de imprimir que se requiere, modo 1 o 2
+     * @return un formato yyyy-MM-dd con modo 1 y dd-MM-yyyy en modo 2
+     */
+    public String getFecha(Date fecha, int modo) {
+        if (fecha != null) {
+            if (modo == 1) {
+                return formato.format(fecha);
+            }else{
+                return formatoVista.format(fecha);
+            }            
+        } else {
+            return null;
+        }
     }
 }
